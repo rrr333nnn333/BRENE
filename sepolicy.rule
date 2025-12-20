@@ -1,0 +1,9 @@
+## Let netd being able to look for the files/directories of which secontext is "shell", normally the custom hosts file in /data/adb/, for example, bind mounting from /data/adb/hosts to /system/etc/hosts
+allow netd adb_data_file dir {search}
+
+## Let zygote being able to look for the apk files, normally when bind mounting apk from inside /data/adb/
+allow zygote apk_data_file dir {search}
+
+## Let zygote being able to look for the files/directories of which secontext is "shell", normally files/directories in /data/local/tmp/
+allow zygote shell_data_file dir {search}
+

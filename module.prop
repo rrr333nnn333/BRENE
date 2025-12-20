@@ -1,0 +1,6 @@
+id=susfs4ksu
+name=BRENE - SUSFS-FOR-KERNELSU
+version=v0.0.1
+versionCode=001
+author=rrr333nnn333, sidex15 & simonpunk@gitlab.com
+description=Status: ❌ An addon root hiding service for KernelSU compiled with patched kernel source.
