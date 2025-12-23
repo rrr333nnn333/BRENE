@@ -1,7 +1,7 @@
 #!/system/bin/sh
 KSU_BIN=/data/adb/ksu/bin/ksud
 DEST_BIN_DIR=/data/adb/ksu/bin
-PERSISTENT_DIR=/data/adb/susfs4ksu
+# PERSISTENT_DIR=/data/adb/susfs4ksu
 
 if [ -z "$KSU" ]; then
 	abort '[❌] SUSFS is only for KernelSU or forks!'
@@ -32,6 +32,14 @@ if [ -n "$susfsver" ]; then
 	echo "[✅] Detected SUSFS Version: $susfsver"
 else
 	abort "[❌] Not Detected SUSFS Version!"
+fi
+
+# Disable other SuSFS modules
+if [ -d "/data/adb/modules/susfs4ksu" ]; then
+	touch "/data/adb/modules/susfs4ksu/disable"
+fi
+if [ -d "/data/adb/modules/susfs_manager" ]; then
+	touch "/data/adb/modules/susfs_manager/disable"
 fi
 
 # echo '[✅] Preparing susfs4ksu persistent directory'
