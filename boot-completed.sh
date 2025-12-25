@@ -34,14 +34,20 @@ ${KSU_BIN} feature set 1 1
 
 ## Hide some zygisk modules ##
 # ${SUSFS_BIN} add_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
+${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib/libzygisk.so
+${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib64/libzygisk.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so
+${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so
 
 ## Hide some map traces caused by some font modules ##
 ${SUSFS_BIN} add_sus_map /system/fonts/Roboto-Regular.ttf
 ${SUSFS_BIN} add_sus_map /system/fonts/RobotoStatic-Regular.ttf
-${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/rezygisk/lib/libzygisk.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/rezygisk/lib64/libzygisk.so
 
 
 #### For path that needs to be re-flagged as SUS_PATH on each non-root user app / isolated service starts via add_sus_path_loop ####
@@ -81,6 +87,7 @@ while true; do
 	#### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
 	## Now we can add the path ##
 	${SUSFS_BIN} add_sus_path /sdcard/TWRP
+	${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
 	${SUSFS_BIN} add_sus_path /sdcard/Fox
 	${SUSFS_BIN} add_sus_path /sdcard/MT2
 	${SUSFS_BIN} add_sus_path /sdcard/AppManager
