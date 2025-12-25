@@ -4,13 +4,20 @@ KSU_BIN=/data/adb/ksu/bin/ksud
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 
 # Update Description
-text1='Kernel: ❌, Module: ❌, Hiding: ❌ SuSFS module for custom kernels with SuSFS patches'
-text2='Kernel: ✅, Module: ✅, Hiding: ✅ SuSFS module for custom kernels with SuSFS patches'
-if ksu_susfs show version 2>/dev/null; then
-	sed -i "s/$text1/$text2/" ${MODDIR}/module.prop
+description=", A SuSFS module for custom kernels with SuSFS patches"
+if ${SUSFS_BIN} show version 2>/dev/null; then
+	if [ ! -f "/data/adb/modules/rezygisk/disable" ]; then
+		new_description="description=Kernel: ✅, Module: ✅, Hiding: ✅, ReZygisk: ✅${description}"
+		sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
+	else
+		new_description="description=Kernel: ✅, Module: ✅, Hiding: ✅, ReZygisk: ❌${description}"
+		sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
+	fi
 else
-	sed -i "s/$text2/$text1/" ${MODDIR}/module.prop
+	new_description="description=Kernel: ❌, Module: ❌, Hiding: ❌, ReZygisk: ❌${description}"
+	sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
 fi
+
 
 # Enable kernel umount
 ${KSU_BIN} feature set 1 1
