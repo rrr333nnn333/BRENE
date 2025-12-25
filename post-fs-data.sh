@@ -53,11 +53,17 @@ ${SUSFS_BIN} add_sus_path /system/vendor/bin/install-recovery.sh
 # you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
 # pass 'default' to tell susfs to use the default value by uname #
 kernel_release=$(uname -r)
-kernel_release="${kernel_release/Sultan/}"
+kernel_release="${kernel_release,,}"
 kernel_release="${kernel_release/sultan/}"
+kernel_release="${kernel_release/lineage/}"
+kernel_release="${kernel_release/wild/}"
+kernel_release="${kernel_release/ksu/}"
+kernel_release="${kernel_release/sukisu/}"
+kernel_release="${kernel_release/+/}"
 kernel_release="${kernel_release/🟢/}"
+kernel_release="${kernel_release/✅/}"
 kernel_release="${kernel_release}-BRENE"
-${SUSFS_BIN} set_uname "$kernel_release" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2024'
+${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2024'
 
 
 #### Redirect path  ####
