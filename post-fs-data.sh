@@ -52,7 +52,7 @@ ${SUSFS_BIN} add_sus_path /system/vendor/bin/install-recovery.sh
 #### Spoof the uname ####
 # you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
 # pass 'default' to tell susfs to use the default value by uname #
-kernel_release=$(uname -r)
+kernel_release=$(uname -r | cut -d'-' -f1-2)
 kernel_release=$(echo ${kernel_release} | tr '[:upper:]' '[:lower:]')
 kernel_release="${kernel_release/sultan/}"
 kernel_release="${kernel_release/lineage/}"
