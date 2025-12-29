@@ -78,8 +78,7 @@ ${SUSFS_BIN} set_sdcard_root_path /sdcard
 ## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard/Android/data is ##
 ${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
 
-# while true; do
-for i in {0..59}; do
+for i in {0..11}; do
 	${SUSFS_BIN} set_sdcard_root_path /sdcard
 	${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
 
@@ -104,7 +103,7 @@ for i in {0..59}; do
 	${SUSFS_BIN} add_sus_path /sdcard/AppManager
 	${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
 
-	sleep 1
+	sleep 5
 done
 
 # EOF
