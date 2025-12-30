@@ -66,8 +66,8 @@ kernel_release="${kernel_release/ksu/}"
 kernel_release="${kernel_release/sukisu/}"
 kernel_release="${kernel_release/🟢/}"
 kernel_release="${kernel_release/✅/}"
-kernel_release="${kernel_release}-BRENE-$(cat ${MODDIR}/module.prop | grep version= | cut -d'=' -f2)"
-${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2012'
+kernel_release="${kernel_release}-BRENE-$(grep '^version=' ${MODDIR}/module.prop | cut -d'=' -f2)"
+${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2010'
 
 #### Redirect path  ####
 # redirect hosts file to other hosts file somewhere else #
