@@ -1,7 +1,29 @@
 MODDIR=${0%/*}
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
+PERSISTENT_DIR=/data/adb/brene
+# Load config
+[ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
 
 . ${MODDIR}/utils.sh
+
+#### Spoof the uname ####
+# you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
+# pass 'default' to tell susfs to use the default value by uname #
+# ${SUSFS_BIN} set_uname 'default' 'default'
+if [[ $config_uname_spoofing == 1 ]]; then
+	kernel_release=$(uname -r | cut -d'-' -f1-2)
+	kernel_release=$(echo ${kernel_release} | tr '[:upper:]' '[:lower:]')
+	kernel_release="${kernel_release/sultan/}"
+	kernel_release="${kernel_release/lineage/}"
+	kernel_release="${kernel_release/wild/}"
+	kernel_release="${kernel_release/ksu/}"
+	kernel_release="${kernel_release/sukisu/}"
+	kernel_release="${kernel_release/🟢/}"
+	kernel_release="${kernel_release/✅/}"
+	kernel_release="${kernel_release}-BRENE-$(grep '^version=' ${MODDIR}/module.prop | cut -d'=' -f2)"
+	${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2010'
+fi
+
 
 ## Hexpatch prop name for newer pixel device ##
 # cat <<EOF >/dev/null
@@ -23,9 +45,11 @@ SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 # # - Though it is still recommended to set it to 0 after screen is unlocked rathn than in service.sh
 # ${SUSFS_BIN} hide_sus_mnts_for_all_procs 0
 # EOF
+[[ $config_hide_sus_mnts_for_all_procs == 1 ]] && ${SUSFS_BIN} hide_sus_mnts_for_all_procs 1 || ${SUSFS_BIN} hide_sus_mnts_for_all_procs 0
+
 
 # # Disable susfs kernel log ##
-${SUSFS_BIN} enable_log 0
+[[ $config_enable_log == 1 ]] && ${SUSFS_BIN} enable_log 1 || ${SUSFS_BIN} enable_log 0
 
 ## Props ##
 resetprop -w sys.boot_completed 0
@@ -75,4 +99,5 @@ contains_reset_prop "ro.boot.bootmode" "recovery" "unknown"
 contains_reset_prop "vendor.boot.mode" "recovery" "unknown"
 contains_reset_prop "vendor.boot.bootmode" "recovery" "unknown"
 
+echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF

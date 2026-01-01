@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>BRENE</title>
+
+		<link rel="stylesheet" type="text/css" href="/internal/insets.css" />
+
+		<style>
+			:root {
+				--md-sys-color-primary: #3b3b3b;
+				--md-sys-color-on-primary: #000000;
+				--md-sys-color-outline: #6f7979;
+				--md-sys-color-surface-container-highest: #dde4e3;
+
+				--bg: #000000;
+				--fg: #ffffff;
+				--label-pad: 12px;
+				--item-gap: 12px;
+			}
+			body {
+				/* padding-top: var(--top-inset); */
+				margin: 0;
+				display: flex;
+				width: 100%;
+				flex-direction: column;
+				background-color: var(--bg);
+				color: var(--fg);
+				font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+			}
+			.toggle-option {
+				display: flex;
+				align-items: center;
+				padding: 0 var(--label-pad);
+				margin-bottom: var(--item-gap);
+				pointer-events: none;
+			}
+			.title {
+				display: flex;
+				align-items: center;
+				padding: 0 var(--label-pad);
+				margin: 6px 0px;
+			}
+			h1 {
+				display: flex;
+				align-items: center;
+				padding: 0 var(--label-pad);
+				margin: 6px 0px;
+				margin-top: 36px;
+			}
+			.item-version {
+				font-size: 20px;
+				padding: 0px 10px;
+			}
+			md-switch {
+				margin-left: auto;
+				pointer-events: initial;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>
+			BRENE
+			<span class="item-version" id="brene-version"> v0.0.0 </span>
+			SuSFS
+			<span class="item-version" id="susfs-version"> v0.0.0+ </span>
+		</h1>
+
+		<label class="toggle-option">
+			Hide all paths in /data/local/tmp
+			<md-switch selected id="switch_hide_data_local_tmp"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide all paths in /sdcard/Android/data
+			<md-switch selected id="switch_hide_sdcard_android_data"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide Rooted App Folders
+			<md-switch selected id="switch_hide_rooted_app_folders"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide Custom Recovery Folders
+			<md-switch selected id="switch_hide_custom_recovery_folders"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide modules.img
+			<md-switch selected id="switch_hide_modules_img"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide Font Modules
+			<md-switch selected id="switch_hide_font_modules"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide Zygisk Modules
+			<md-switch selected id="switch_hide_zygisk_modules"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Hide Suspicious Mounts For All Processes
+			<md-switch selected id="switch_hide_sus_mnts_for_all_procs"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Enable AVC Log Spoofing
+			<md-switch selected id="switch_enable_avc_log_spoofing"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Enable Kernel Uname Spoofing
+			<md-switch selected id="switch_uname_spoofing"></md-switch>
+		</label>
+
+		<label class="toggle-option">
+			Enable Log
+			<md-switch selected id="switch_enable_log"></md-switch>
+		</label>
+
+		<h2 class="title">Enabled Features</h2>
+
+		<script src="./script.min.js"></script>
+	</body>
+</html>

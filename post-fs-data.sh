@@ -1,6 +1,9 @@
 MODDIR=${0%/*}
 DEST_BIN_DIR=/data/adb/ksu/bin
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
+PERSISTENT_DIR=/data/adb/brene
+# Load config
+[ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
 
 cp -f ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}
 cp -f ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
@@ -54,20 +57,6 @@ ${SUSFS_BIN} add_sus_path /system/vendor/bin/install-recovery.sh
 # ${SUSFS_BIN} add_sus_kstat_statically '/system/framework/services.jar' 'default' 'default' 'default' 'default' '1230768000' '0' '1230768000' '0' '1230768000' '0' 'default' 'default'
 # EOF
 
-#### Spoof the uname ####
-# you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
-# pass 'default' to tell susfs to use the default value by uname #
-kernel_release=$(uname -r | cut -d'-' -f1-2)
-kernel_release=$(echo ${kernel_release} | tr '[:upper:]' '[:lower:]')
-kernel_release="${kernel_release/sultan/}"
-kernel_release="${kernel_release/lineage/}"
-kernel_release="${kernel_release/wild/}"
-kernel_release="${kernel_release/ksu/}"
-kernel_release="${kernel_release/sukisu/}"
-kernel_release="${kernel_release/🟢/}"
-kernel_release="${kernel_release/✅/}"
-kernel_release="${kernel_release}-BRENE-$(grep '^version=' ${MODDIR}/module.prop | cut -d'=' -f2)"
-${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2010'
 
 #### Redirect path  ####
 # redirect hosts file to other hosts file somewhere else #
@@ -102,16 +91,19 @@ ${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UT
 # EOF
 
 #### Hiding the exposed /proc interface of ext4 loop and jdb2 when mounting modules.img using sus_path ####
-for device in $(ls -Ld /proc/fs/jbd2/loop*8 | sed 's|/proc/fs/jbd2/||; s|-8||'); do
-	${SUSFS_BIN} add_sus_path /proc/fs/jbd2/${device}-8
-	${SUSFS_BIN} add_sus_path /proc/fs/ext4/${device}
-done
+if [[ $config_hide_modules_img == 1 ]]; then
+	for device in $(ls -Ld /proc/fs/jbd2/loop*8 | sed 's|/proc/fs/jbd2/||; s|-8||'); do
+		${SUSFS_BIN} add_sus_path /proc/fs/jbd2/${device}-8
+		${SUSFS_BIN} add_sus_path /proc/fs/ext4/${device}
+	done
+fi
 
 
 #### Enable avc log spoofing to bypass 'su' domain detection via /proc/<pid> enumeration ####
-${SUSFS_BIN} enable_avc_log_spoofing 1
+[[ $config_enable_avc_log_spoofing == 1 ]] && ${SUSFS_BIN} enable_avc_log_spoofing 1 || ${SUSFS_BIN} enable_avc_log_spoofing 0
 
 ## disable it when users want to do some debugging with the permission issue or selinux issue ##
 #ksu_susfs enable_avc_log_spoofing 0
 
+echo "EOF" > "${PERSISTENT_DIR}/log.txt"
 # EOF

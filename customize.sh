@@ -1,7 +1,7 @@
 KSU_BIN=/data/adb/ksu/bin/ksud
 DEST_BIN_DIR=/data/adb/ksu/bin
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
-# PERSISTENT_DIR=/data/adb/susfs4ksu
+PERSISTENT_DIR=/data/adb/brene
 
 # Remove outdated/useless modules
 modules="
@@ -56,10 +56,11 @@ else
 fi
 
 # Disable other SuSFS modules
-[ -d "/data/adb/modules/susfs4ksu" ] && touch "/data/adb/modules/susfs4ksu/disable"
-[ -d "/data/adb/modules/susfs_manager" ] && touch "/data/adb/modules/susfs_manager/disable"
+[ -d "/data/adb/modules/susfs4ksu" ] && touch "/data/adb/modules/susfs4ksu/disable" && echo '[✅] Disabling another SuSFS module'
+[ -d "/data/adb/modules/susfs_manager" ] && touch "/data/adb/modules/susfs_manager/disable" && echo '[✅] Disabling another SuSFS module'
 
-# echo '[✅] Preparing susfs4ksu persistent directory'
-# mkdir -p "$PERSISTENT_DIR"
+echo '[✅] Preparing brene persistent directory'
+mkdir -p "${PERSISTENT_DIR}"
+[ ! -f ${PERSISTENT_DIR}/config.sh ] && cp ${MODPATH}/config.sh ${PERSISTENT_DIR}
 
 # EOF

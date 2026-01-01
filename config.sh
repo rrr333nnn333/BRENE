@@ -1,0 +1,13 @@
+config_enable_log=0
+config_enable_avc_log_spoofing=1
+config_hide_sus_mnts_for_all_procs=1
+config_uname_spoofing=1
+config_hide_data_local_tmp=1
+config_hide_modules_img=0
+config_hide_zygisk_modules=1
+config_hide_font_modules=1
+config_hide_custom_recovery_folders=1
+config_hide_rooted_app_folders=1
+config_hide_sdcard_android_data=1
+# config_kernel_release='default'
+# config_kernel_version='default'

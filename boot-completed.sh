@@ -1,6 +1,10 @@
 MODDIR=${0%/*}
 KSU_BIN=/data/adb/ksu/bin/ksud
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
+PERSISTENT_DIR=/data/adb/brene
+# Load config
+[ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
+
 
 # Update Description
 description=", A SuSFS module for custom kernels with SuSFS patches"
@@ -41,20 +45,24 @@ ${KSU_BIN} feature set 1 1
 
 ## Hide some zygisk modules ##
 # ${SUSFS_BIN} add_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
-${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib/libzygisk.so
-${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib64/libzygisk.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so
-${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so
+if [[ $config_hide_zygisk_modules == 1 ]]; then
+	${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib/libzygisk.so
+	${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib64/libzygisk.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so
+	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so
+fi
 
 ## Hide some map traces caused by some font modules ##
-${SUSFS_BIN} add_sus_map /system/fonts/Roboto-Regular.ttf
-${SUSFS_BIN} add_sus_map /system/fonts/RobotoStatic-Regular.ttf
+if [[ $config_hide_font_modules == 1 ]]; then
+	${SUSFS_BIN} add_sus_map /system/fonts/Roboto-Regular.ttf
+	${SUSFS_BIN} add_sus_map /system/fonts/RobotoStatic-Regular.ttf
+fi
 
 
 #### For path that needs to be re-flagged as SUS_PATH on each non-root user app / isolated service starts via add_sus_path_loop ####
@@ -63,10 +71,11 @@ ${SUSFS_BIN} add_sus_map /system/fonts/RobotoStatic-Regular.ttf
 ## - Please also note that only paths NOT inside '/sdcard/' or '/storage/' can be added via add_sus_path_loop ##
 ## - ONLY USE THIS WHEN NECCESSARY !!! ##
 # ${SUSFS_BIN} add_sus_path_loop /sys/block/loop0
-for i in $(ls /data/local/tmp); do
-	${SUSFS_BIN} add_sus_path_loop "/data/local/tmp/$i"
-done
-
+if [[ $config_hide_data_local_tmp == 1 ]]; then
+	for i in $(ls /data/local/tmp); do
+		${SUSFS_BIN} add_sus_path_loop "/data/local/tmp/$i"
+	done
+fi
 
 ## Please note that sometimes the path needs to be added twice or above to be effective ##
 ## Besides, all user apps without root access cannot see the hidden path '/sdcard/<hidden_path>' unless you grant it root access ##
@@ -84,24 +93,31 @@ for i in {0..11}; do
 
 	#### Hide the leaking app path like /sdcard/Android/data/<app_package_name> from syscall ####
 	## Now we can add the path ##
-	for i in $(ls /sdcard/Android/data); do
-		${SUSFS_BIN} add_sus_path /sdcard/Android/data/${i}
-	done
-	# for i in $(ls /sdcard/Android/media); do
-	# 	${SUSFS_BIN} add_sus_path /sdcard/Android/media/${i}
-	# done
-	# for i in $(ls /sdcard/Android/obb); do
-	# 	${SUSFS_BIN} add_sus_path /sdcard/Android/obb/${i}
-	# done
+	if [[ $config_hide_sdcard_android_data == 1 ]]; then
+		for i in $(ls /sdcard/Android/data); do
+			${SUSFS_BIN} add_sus_path /sdcard/Android/data/${i}
+		done
+		# for i in $(ls /sdcard/Android/media); do
+		# 	${SUSFS_BIN} add_sus_path /sdcard/Android/media/${i}
+		# done
+		# for i in $(ls /sdcard/Android/obb); do
+		# 	${SUSFS_BIN} add_sus_path /sdcard/Android/obb/${i}
+		# done
+	fi
 
 	#### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
 	## Now we can add the path ##
-	${SUSFS_BIN} add_sus_path /sdcard/Fox
-	${SUSFS_BIN} add_sus_path /sdcard/MT2
-	${SUSFS_BIN} add_sus_path /sdcard/TWRP
-	${SUSFS_BIN} add_sus_path /sdcard/OhMyFont
-	${SUSFS_BIN} add_sus_path /sdcard/AppManager
-	${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
+	if [[ $config_hide_custom_recovery_folders == 1 ]]; then
+		${SUSFS_BIN} add_sus_path /sdcard/Fox
+		${SUSFS_BIN} add_sus_path /sdcard/TWRP
+		${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
+	fi
+	
+	if [[ $config_hide_rooted_app_folders == 1 ]]; then
+		${SUSFS_BIN} add_sus_path /sdcard/MT2
+		${SUSFS_BIN} add_sus_path /sdcard/OhMyFont
+		${SUSFS_BIN} add_sus_path /sdcard/AppManager
+	fi
 
 	sleep 5
 done
