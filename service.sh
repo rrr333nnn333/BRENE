@@ -6,25 +6,6 @@ PERSISTENT_DIR=/data/adb/brene
 
 . ${MODDIR}/utils.sh
 
-#### Spoof the uname ####
-# you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
-# pass 'default' to tell susfs to use the default value by uname #
-# ${SUSFS_BIN} set_uname 'default' 'default'
-if [[ $config_uname_spoofing == 1 ]]; then
-	kernel_release=$(uname -r | cut -d'-' -f1-2)
-	kernel_release=$(echo ${kernel_release} | tr '[:upper:]' '[:lower:]')
-	kernel_release="${kernel_release/sultan/}"
-	kernel_release="${kernel_release/lineage/}"
-	kernel_release="${kernel_release/wild/}"
-	kernel_release="${kernel_release/ksu/}"
-	kernel_release="${kernel_release/sukisu/}"
-	kernel_release="${kernel_release/🟢/}"
-	kernel_release="${kernel_release/✅/}"
-	kernel_release="${kernel_release}-BRENE-$(grep '^version=' ${MODDIR}/module.prop | cut -d'=' -f2)"
-	${SUSFS_BIN} set_uname "${kernel_release}" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2010'
-fi
-
-
 ## Hexpatch prop name for newer pixel device ##
 # cat <<EOF >/dev/null
 # # Remember the length of search value and replace value has to be the same #
