@@ -10,7 +10,7 @@ PERSISTENT_DIR=/data/adb/brene
 description=", A SuSFS module for custom kernels with SuSFS patches"
 susfs_ver=$(${SUSFS_BIN} show version 2>/dev/null)
 if [ -n ${susfs_ver} ]; then
-	if [ ! -f "/data/adb/modules/rezygisk/disable" ]; then
+	if [ -d "/data/adb/modules/rezygisk" ] && [ ! -f "/data/adb/modules/rezygisk/disable" ]; then
 		new_description="description=Kernel: ${susfs_ver} ✅, Module: ✅, Hiding: ✅, ReZygisk: ✅${description}"
 		sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
 	else
