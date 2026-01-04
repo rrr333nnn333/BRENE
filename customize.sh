@@ -61,6 +61,15 @@ fi
 
 echo '[✅] Preparing brene persistent directory'
 mkdir -p "${PERSISTENT_DIR}"
-[ ! -f ${PERSISTENT_DIR}/config.sh ] && cp ${MODPATH}/config.sh ${PERSISTENT_DIR}
+
+if [ ! -f ${PERSISTENT_DIR}/config.sh ]; then
+	cp ${MODPATH}/config.sh ${PERSISTENT_DIR}
+else
+	while IFS='=' read -r key value; do
+
+		grep -q "^${key}=" ${PERSISTENT_DIR}/config.sh || echo "${key}=${value}" >> ${PERSISTENT_DIR}/config.sh
+
+	done < ${MODPATH}/config.sh
+fi
 
 # EOF
