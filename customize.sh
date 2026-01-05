@@ -3,7 +3,8 @@ DEST_BIN_DIR=/data/adb/ksu/bin
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 PERSISTENT_DIR=/data/adb/brene
 
-# Remove outdated/useless modules
+# Disable outdated modules
+echo "[✅] Disabling outdated modules"
 modules="
 zygisk_shamiko
 zygisk-assistant
