@@ -12,69 +12,75 @@
 		<div class="preload-hidden">
 			<h1 class="title">
 				BRENE
-				<span class="item-version" id="brene-version"> v0.0.0 </span>
+				<span class="item-version" id="brene-version"> v0.0.00 </span>
 				SuSFS
 				<span class="item-version" id="susfs-version"> v0.0.0+ </span>
 			</h1>
 
+			<h2 class="title">Hiding</h2>
+
 			<label class="toggle-option">
-				Hide all items in /data/local/tmp
+				All Items in /data/local/tmp
 				<md-switch selected id="switch_hide_data_local_tmp"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Hide all items in /sdcard/Android/data
+				All Items in /sdcard/Android/data
 				<md-switch selected id="switch_hide_sdcard_android_data"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Hide Rooted App Folders
+				Rooted App Folders
 				<md-switch selected id="switch_hide_rooted_app_folders"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Hide Custom Recovery Folders
+				Custom Recovery Folders
 				<md-switch selected id="switch_hide_custom_recovery_folders"></md-switch>
 			</label>
 
 			<!-- <label class="toggle-option">
-				Hide modules.img
+				modules.img
 				<md-switch selected id="switch_hide_modules_img"></md-switch>
 			</label> -->
 
 			<label class="toggle-option">
-				Hide Font Modules
+				Some Font Modules
 				<md-switch selected id="switch_hide_font_modules"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Hide Zygisk Modules
+				Some Zygisk Modules
 				<md-switch selected id="switch_hide_zygisk_modules"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Hide Suspicious Mounts For All Processes
+				Suspicious Mounts For All Processes
 				<md-switch selected id="switch_hide_sus_mnts_for_all_procs"></md-switch>
 			</label>
 
-			<label class="toggle-option">
-				Enable AVC Log Spoofing
-				<md-switch selected id="switch_enable_avc_log_spoofing"></md-switch>
-			</label>
+			<h2 class="title">Spoofing</h2>
 
 			<label class="toggle-option">
-				Enable Uname Spoofing
+				Uname
 				<md-switch selected id="switch_uname_spoofing"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Enable Kernel Umount
-				<md-switch selected id="switch_kernel_umount"></md-switch>
+				AVC Log
+				<md-switch selected id="switch_enable_avc_log_spoofing"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Enable SuSFS Logs
+				SuSFS Logs
 				<md-switch selected id="switch_enable_log"></md-switch>
+			</label>
+
+			<h2 class="title">KernelSU Settings</h2>
+
+			<label class="toggle-option">
+				Enable Kernel Umount
+				<md-switch selected id="switch_kernel_umount"></md-switch>
 			</label>
 
 			<label class="toggle-option">
