@@ -1,74 +1,101 @@
-/* @import url('https://mui.kernelsu.org/internal/insets.css'); */
+@import './theme.css';
 
-:root {
-	/* --md-sys-color-primary: #6d6b6b; */
-	--md-sys-color-primary: #006a6a;
-	--md-sys-color-outline: #6d6b6b;
-	--md-sys-color-on-primary: #000000c8;
-	--md-sys-color-surface-container-highest: #000000;
-
-	--md-outlined-text-field-input-text-color: #ffffff;
-	--md-outlined-text-field-focus-input-text-color: #ffffff;
-
-	--bg: #000000;
-	--fg: #ffffff;
-	--label-pad: 12px;
-	--item-gap: 12px;
-}
 body {
-	padding-top: var(--window-inset-top, 0px);
-	padding-bottom: var(--window-inset-bottom, 0px);
+	padding-top: var(--top-inset);
+	padding-bottom: calc(var(--bottom-inset) + 32px);
 	margin: 0;
 	display: flex;
 	width: 100%;
 	flex-direction: column;
-	background-color: var(--bg);
-	color: var(--fg);
+	background-color: var(--md-sys-color-surface-container);
+	color: var(--md-sys-color-on-surface);
 	font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 }
+.body-content {
+	width: 100%;
+	padding: 0 16px;
+	box-sizing: border-box;
+}
+.toggle-container {
+	background-color: var(--md-sys-color-surface);
+	position: relative;
+	padding: 12px 16px;
+	box-sizing: border-box;
+}
+.settings-group {
+	margin-bottom: 8px;
+	border-radius: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	overflow: hidden;
+}
 .toggle-option {
+	min-height: 32px;
 	display: flex;
 	align-items: center;
-	font-size: 1.1em;
-	padding: 0 var(--label-pad);
-	margin-bottom: var(--item-gap);
-	pointer-events: none;
+	justify-content: space-between;
+	font-size: 1em;
+	user-select: none;
+	gap: 8px;
+}
+.settings-group-title {
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+	padding: 8px 16px;
+	font-size: 0.8em;
+	color: var(--md-sys-color-primary);
+	box-sizing: border-box;
+	user-select: none;
+}
+.header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	height: 64px;
+	padding: 0 16px;
+	box-sizing: border-box;
+	user-select: none;
 }
 .title {
+	font-size: 1.3em;
+	line-height: 1;
 	display: flex;
-	align-items: center;
-	padding: 0 var(--label-pad);
-	margin: 6px 0px;
+	align-items: flex-end;
 }
 .item-version {
-	font-size: 22px;
-	padding: 0px 10px;
+	font-size: 0.5em;
+	font-weight: 500;
+	padding: 2px 5px;
+	background-color: var(--md-sys-color-surface-variant);
+	color: var(--md-sys-color-on-surface-variant);
+	border-radius: 4px;
+	margin: 2px 4px;
+	box-sizing: border-box;
 }
-md-switch {
-	margin-left: auto;
-	pointer-events: initial;
+.enabled-config {
+	font-family: monospace;
+	padding: 16px;
+	font-size: 1.2em;
+	background-color: var(--md-sys-color-surface);
 }
 .preload-hidden {
 	display: none;
 }
-
 /* Custom uname spoofing */
 .custom-uname-content {
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
-	padding: 0 var(--label-pad);
-	margin-bottom: var(--item-gap);
-}
-.custom-uname-switch-item {
-	display: flex;
-	font-size: 1.3em;
+	padding: 16px;
+	box-sizing: border-box;
 }
 .custom-uname-buttons {
 	display: flex;
 	gap: 8px;
 }
-.custom-uname-buttons md-outlined-button,
-.custom-uname-buttons md-filled-button {
+.custom-uname-buttons>* {
 	flex: 1;
 }

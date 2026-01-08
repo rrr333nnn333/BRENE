@@ -6,107 +6,158 @@
 		<title>BRENE</title>
 
 		<link rel="stylesheet" href="./styles.css" type="text/css" />
-		<link rel="stylesheet" type="text/css" href="/internal/insets.css" />
 	</head>
 	<body>
-		<div class="preload-hidden">
-			<h1 class="title">
-				BRENE
-				<span class="item-version" id="brene-version"> v0.0.00 </span>
-				SuSFS
-				<span class="item-version" id="susfs-version"> v0.0.0+ </span>
-			</h1>
-
-			<h2 class="title">Hiding</h2>
-
-			<label class="toggle-option">
-				All Items in /data/local/tmp
-				<md-switch selected id="switch_hide_data_local_tmp"></md-switch>
-			</label>
-
-			<label class="toggle-option">
-				All Items in /sdcard/Android/data
-				<md-switch selected id="switch_hide_sdcard_android_data"></md-switch>
-			</label>
-
-			<label class="toggle-option">
-				Rooted App Folders
-				<md-switch selected id="switch_hide_rooted_app_folders"></md-switch>
-			</label>
-
-			<label class="toggle-option">
-				Custom Recovery Folders
-				<md-switch selected id="switch_hide_custom_recovery_folders"></md-switch>
-			</label>
-
-			<!-- <label class="toggle-option">
-				modules.img
-				<md-switch selected id="switch_hide_modules_img"></md-switch>
-			</label> -->
-
-			<label class="toggle-option">
-				Some Font Modules
-				<md-switch selected id="switch_hide_font_modules"></md-switch>
-			</label>
-
-			<label class="toggle-option">
-				Some Zygisk Modules
-				<md-switch selected id="switch_hide_zygisk_modules"></md-switch>
-			</label>
-
-			<label class="toggle-option">
-				Suspicious Mounts For All Processes
-				<md-switch selected id="switch_hide_sus_mnts_for_all_procs"></md-switch>
-			</label>
-
-			<h2 class="title">Spoofing</h2>
-
-			<label class="toggle-option">
-				Uname
-				<md-switch selected id="switch_uname_spoofing"></md-switch>
-			</label>
-
-			<div class="custom-uname-content">
-				<div class="custom-uname-switch-item">
-					<label>Set custom uname on boot</label>
-					<md-switch selected id="switch_custom_uname_set_on_boot"></md-switch>
+		<div class="header">
+			<div class="title">
+				BRENE<span class="item-version" id="brene-version"> v0.0.00 </span>
+				SuSFS<span class="item-version" id="susfs-version"> v0.0.0+ </span>
+			</div>
+		</div>
+		<div class="preload-hidden body-content">
+			<div class="settings-group-title">Hiding</div>
+			<div class="settings-group">
+				<div class="toggle-container">
+					<label class="toggle-option">
+						All Items in /data/local/tmp
+						<md-switch icons selected id="hide_data_local_tmp"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
 				</div>
-				<md-outlined-text-field label="Kernel Release" id="text_field_custom_uname_release"></md-outlined-text-field>
-				<md-outlined-text-field label="Kernel Version" id="text_field_custom_uname_version"></md-outlined-text-field>
-				<div class="custom-uname-buttons">
-					<md-outlined-button id="button_custom_uname_reset">Reset</md-outlined-button>
-					<md-filled-button id="button_custom_uname_apply">Apply</md-filled-button>
+
+				<div class="toggle-container">
+					<label class="toggle-option">
+						All Items in /sdcard/Android/data
+						<md-switch icons selected id="hide_sdcard_android_data"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Rooted App Folders
+						<md-switch icons selected id="hide_rooted_app_folders"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Custom Recovery Folders
+						<md-switch icons selected id="hide_custom_recovery_folders"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+
+				<!-- <div class="toggle-container">
+					<label class="toggle-option">
+						modules.img
+						<md-switch icons selected id="hide_modules_img"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div> -->
+
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Some Font Modules
+						<md-switch icons selected id="hide_font_modules"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Some Zygisk Modules
+						<md-switch icons selected id="hide_zygisk_modules"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Suspicious Mounts For All Processes
+						<md-switch icons selected id="hide_sus_mnts_for_all_procs"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
 				</div>
 			</div>
 
-			<label class="toggle-option">
-				AVC Log
-				<md-switch selected id="switch_enable_avc_log_spoofing"></md-switch>
-			</label>
+			<div class="settings-group-title">Spoofing</div>
+			<div class="settings-group">
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Uname
+						<md-switch icons selected id="uname_spoofing"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
 
-			<label class="toggle-option">
-				SuSFS Logs
-				<md-switch selected id="switch_enable_log"></md-switch>
-			</label>
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Set custom uname on boot
+						<md-switch icons selected id="custom_uname_spoofing"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
 
-			<h2 class="title">KernelSU Settings</h2>
+				<div class="custom-uname-content toggle-container">
+					<md-outlined-text-field label="Kernel Release"
+						id="text_field_custom_uname_release"></md-outlined-text-field>
+					<md-outlined-text-field label="Kernel Version"
+						id="text_field_custom_uname_version"></md-outlined-text-field>
+					<div class="custom-uname-buttons">
+						<md-outlined-button id="button_custom_uname_reset">RESET</md-outlined-button>
+						<md-filled-button id="button_custom_uname_apply">APPLY</md-filled-button>
+					</div>
+				</div>
+			</div>
 
-			<label class="toggle-option">
-				Enable Kernel Umount
-				<md-switch selected id="switch_kernel_umount"></md-switch>
-			</label>
+			<div class="settings-group-title"></div>
+			<div class="settings-group">
+				<div class="toggle-container">
+					<label class="toggle-option">
+						AVC Log
+						<md-switch icons selected id="enable_avc_log_spoofing"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
 
-			<label class="toggle-option">
-				Enable All KernelSU Modules
-				<md-switch id="switch_enable_ksu_modules"></md-switch>
-			</label>
+				<div class="toggle-container">
+					<label class="toggle-option">
+						SuSFS Logs
+						<md-switch icons selected id="enable_log"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+			</div>
 
-			<label class="toggle-option">
-				Disable All KernelSU Modules
-				<md-switch id="switch_disable_ksu_modules"></md-switch>
-			</label>
+			<div class="settings-group-title">Settings</div>
+			<div class="settings-group">
+				<div class="toggle-container">
+					<label class="toggle-option">
+						Enable Kernel Umount
+						<md-switch icons selected id="kernel_umount"></md-switch>
+					</label>
+					<md-ripple></md-ripple>
+				</div>
 
-			<h2 class="title">Enabled Features in Kernel</h2>
+				<div class="toggle-container">
+					<label class="toggle-option" id="enable_ksu_modules">
+						Enable All KernelSU Modules
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="toggle-container">
+					<label class="toggle-option" id="disable_ksu_modules">
+						Disable All KernelSU Modules
+					</label>
+					<md-ripple></md-ripple>
+				</div>
+			</div>
+
+			<div class="settings-group-title">Enabled Features in Kernel</div>
+			<div class="settings-group enabled-config" id="kernel-features-container"></div>
 		</div>
 
 		<script type="module" src="./script.js"></script>
