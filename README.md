@@ -16,9 +16,9 @@ More information soon.
 - Hide some traces caused by some `Custom Kernels`
 - Hide some map traces caused by some `Font Modules`
 - Hide some map traces caused by some `Zygisk Modules`
-- Hide the exposed /proc interface of ext4 loop and jdb2 when mounting `modules.img`
 - Spoof some `Android System Properties`
 - Spoof the sus `'su'` tcontext shown in avc log
+<!-- - Hide the exposed /proc interface of ext4 loop and jdb2 when mounting `modules.img` -->
 
 ## Tip
 
@@ -29,4 +29,5 @@ More information soon.
 - [`Magisk`](https://github.com/topjohnwu/Magisk)
 - [`KernelSU`](https://github.com/tiann/KernelSU)
 - [`susfs4ksu`](https://gitlab.com/simonpunk/susfs4ksu)
-- [`sidex15's susfs4ksu-module`](https://github.com/sidex15/susfs4ksu-module)
+- [`susfs4ksu-module`](https://github.com/sidex15/susfs4ksu-module)
+- [`KOWX712`](https://github.com/KOWX712)

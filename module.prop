@@ -2,5 +2,5 @@ id=brene
 name=BRENE - SUSFS-FOR-KERNELSU
 version=v0.0.12
 versionCode=1
-author=rrr333nnn333, sidex15 & simonpunk@gitlab.com
+author=rrr333nnn333, KOWX712, sidex15 & simonpunk@gitlab.com
 description=Kernel: ❓, Module: ❓, Hiding: ❓, ReZygisk: ❓, A SuSFS module for custom kernels with SuSFS patches
