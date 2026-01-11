@@ -16,6 +16,10 @@ body {
 	padding: 0 16px;
 	box-sizing: border-box;
 }
+.body-content >* {
+	max-width: 768px;
+	margin: 0 auto;
+}
 .list-item {
 	background-color: var(--md-sys-color-surface);
 	position: relative;
@@ -46,7 +50,7 @@ body {
 	width: 100%;
 	padding: 8px 16px;
 	font-size: 0.8em;
-	font-weight: 500;
+	font-weight: 600;
 	color: var(--md-sys-color-primary);
 	box-sizing: border-box;
 	user-select: none;
@@ -82,6 +86,7 @@ body {
 	padding: 16px;
 	font-size: 1.2em;
 	background-color: var(--md-sys-color-surface);
+	box-sizing: border-box;
 }
 .preload-hidden {
 	display: none;
