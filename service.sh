@@ -49,8 +49,9 @@ resetprop_n "ro.secureboot.lockstate" "locked"
 resetprop_n "ro.warranty_bit" "0"
 resetprop_n "ro.is_ever_orange" "0"
 
-resetprop_n "ro.build.tags" "release-keys"
 resetprop_n "ro.build.type" "user"
+resetprop_n "ro.build.tags" "release-keys"
+resetprop_n "ro.bootimage.build.tags" "release-keys"
 
 resetprop_n "ro.vendor.boot.warranty_bit" "0"
 resetprop_n "ro.vendor.warranty_bit" "0"
