@@ -1,4 +1,4 @@
-import { exec, toast } from './assets/kernelsu.js'
+import {exec, toast} from './assets/kernelsu.js'
 import './assets/mwc.js'
 
 document.querySelector('div.preload-hidden').classList.remove('preload-hidden')
@@ -8,25 +8,25 @@ const PERSISTENT_DIR = '/data/adb/brene'
 const SUSFS_BIN = '/data/adb/ksu/bin/ksu_susfs'
 const KSU_BIN = '/data/adb/ksu/bin/ksud'
 const configs = [
-	{ id: 'enable_log' },
-	{ id: 'enable_avc_log_spoofing' },
+	{id: 'enable_log'},
+	{id: 'enable_avc_log_spoofing'},
 	{
 		id: 'hide_sus_mnts_for_all_procs',
-		action: (enabled) => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_all_procs ${enabled ? 1 : 0}`)
+		action: enabled => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_all_procs ${enabled ? 1 : 0}`)
 	},
-	{ id: 'uname_spoofing' },
-	{ id: 'hide_data_local_tmp' },
+	{id: 'uname_spoofing'},
+	{id: 'hide_data_local_tmp'},
 	// { id: 'hide_modules_img' },
-	{ id: 'hide_zygisk_modules' },
-	{ id: 'hide_font_modules' },
-	{ id: 'hide_custom_recovery_folders' },
-	{ id: 'hide_rooted_app_folders' },
-	{ id: 'hide_sdcard_android_data' },
+	{id: 'hide_zygisk_modules'},
+	{id: 'hide_font_modules'},
+	{id: 'hide_custom_recovery_folders'},
+	{id: 'hide_rooted_app_folders'},
+	{id: 'hide_sdcard_android_data'},
 	{
 		id: 'kernel_umount',
-		action: (enabled) => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`)
+		action: enabled => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`)
 	},
-	{ id: 'custom_uname_spoofing' },
+	{id: 'custom_uname_spoofing'}
 ]
 
 // Load enabled features
@@ -54,7 +54,7 @@ exec('susfs show version').then(result => {
 
 // Helper function to update config
 function updateConfig(config, value) {
-	exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
+	exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then(result => {
 		if (result.errno !== 0) toast('Failed to update config')
 	})
 }
@@ -74,11 +74,18 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 	}
 
 	const configValues = Object.fromEntries(
-		result.stdout.split('\n')
+		result.stdout
+			.split('\n')
 			.filter(line => line.includes('='))
 			.map(line => {
 				const [key, ...val] = line.split('=')
-				return [key.trim(), val.join('=').trim().replace(/^['"](.*)['"]$/, '$1')]
+				return [
+					key.trim(),
+					val
+						.join('=')
+						.trim()
+						.replace(/^['"](.*)['"]$/, '$1')
+				]
 			})
 	)
 
@@ -107,17 +114,17 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 })
 
 // KSU Modules toggles
-; (() => {
+;(() => {
 	const enableSwitch = document.getElementById('enable_ksu_modules')
 	const disableSwitch = document.getElementById('disable_ksu_modules')
 
-	const toggleAllModules = (enable) => {
+	const toggleAllModules = enable => {
 		exec(`
 			for i in /data/adb/modules/*; do
 				${enable ? 'rm -f' : 'touch'} "$i/disable"
 			done
 		`).then(result => {
-			toast(result.errno === 0 ? 'success' : result.stderr)
+			toast(result.errno === 0 ? 'Success' : result.stderr)
 		})
 	}
 
@@ -126,7 +133,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 })()
 
 // Custom Uname buttons
-; (() => {
+;(() => {
 	const unameRelease = document.getElementById('custom_uname_release')
 	const unameVersion = document.getElementById('custom_uname_version')
 	const updateUname = (release, version) => {
