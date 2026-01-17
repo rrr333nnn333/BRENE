@@ -59,6 +59,14 @@ function updateConfig(config, value) {
 	})
 }
 
+// TEMP
+// Helper function to update config
+function updateConfig2(config, value) {
+	exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then(result => {
+		if (result.errno !== 0) toast('Failed to update config')
+	})
+}
+
 // Helper funtino to set config immedialtely that no need to reboot
 function setFeature(cmd) {
 	exec(cmd).then(result => {
@@ -89,7 +97,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 			})
 	)
 
-	// uname
+	// custom uname
 	document.getElementById('custom_uname_release').value = configValues['config_custom_uname_kernel_release']
 	document.getElementById('custom_uname_version').value = configValues['config_custom_uname_kernel_version']
 
@@ -137,8 +145,8 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 	const unameRelease = document.getElementById('custom_uname_release')
 	const unameVersion = document.getElementById('custom_uname_version')
 	const updateUname = (release, version) => {
-		updateConfig('config_custom_uname_kernel_release', release)
-		updateConfig('config_custom_uname_kernel_version', version.trim() === '' ? 'default' : version)
+		updateConfig2('config_custom_uname_kernel_release', release)
+		updateConfig2('config_custom_uname_kernel_version', version.trim() === '' ? 'default' : version)
 		setFeature(`${SUSFS_BIN} set_uname "${release}" "${version}"`)
 		unameRelease.value = release
 		unameVersion.value = version.trim() === '' ? 'default' : version
