@@ -105,5 +105,11 @@ chmod 755 ${DEST_BIN_DIR}/ksu_susfs
 ## disable it when users want to do some debugging with the permission issue or selinux issue ##
 #ksu_susfs enable_avc_log_spoofing 0
 
+#### Hide all sus mounts in this stage just to prevent zygote from seeing them ####
+## This should be applied only if you DO NOT have any zygisk enabled !! ##
+# cat <<EOF >/dev/null
+# ksu_susfs hide_sus_mnts_for_all_procs 1
+# EOF
+
 echo "EOF" > "${PERSISTENT_DIR}/log.txt"
 # EOF

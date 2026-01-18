@@ -26,7 +26,6 @@ PERSISTENT_DIR=/data/adb/brene
 # # - Though it is still recommended to set it to 0 after screen is unlocked rathn than in service.sh
 # ${SUSFS_BIN} hide_sus_mnts_for_all_procs 0
 # EOF
-[[ $config_hide_sus_mnts_for_all_procs == 1 ]] && ${SUSFS_BIN} hide_sus_mnts_for_all_procs 1 || ${SUSFS_BIN} hide_sus_mnts_for_all_procs 0
 
 
 # # Disable susfs kernel log ##

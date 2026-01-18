@@ -25,6 +25,12 @@ ${KSU_BIN} feature set kernel_umount $config_kernel_umount
 ${KSU_BIN} feature save
 
 
+# - Two scenarios:
+#   1. No any zygisk enabled => Turn it on in post-fs-data.sh and turn it off in boot-completed.sh
+#   2. Zygisk enabled => No need to do anything and DO NOT turn it on before zygote, but it is fine to turn it on after zygote is fully started
+[[ $config_hide_sus_mnts_for_all_procs == 1 ]] && ${SUSFS_BIN} hide_sus_mnts_for_all_procs 1 || ${SUSFS_BIN} hide_sus_mnts_for_all_procs 0
+
+
 #### Hide the mmapped real file from various maps in /proc/self/ ####
 ## - Please note that it is better to do it in boot-completed starge
 ##   Since some target path may be mounted by ksu, and make sure the
@@ -141,6 +147,12 @@ if [[ $config_hide_rooted_app_folders == 1 ]]; then
 	[ -d /storage/emulated/0/OhMyFont ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/OhMyFont
 	[ -d /storage/emulated/0/AppManager ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/AppManager
 fi
+
+#### Unhide all sus mounts ####
+## This is up to you to unhide them all or not in this stage ##
+# cat <<EOF >/dev/null
+# ksu_susfs hide_sus_mnts_for_all_procs 0
+# EOF
 
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
