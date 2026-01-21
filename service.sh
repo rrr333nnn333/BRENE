@@ -18,15 +18,6 @@ PERSISTENT_DIR=/data/adb/brene
 # resetprop --delete "crashrecovery.rescue_boot_count"
 # EOF
 
-## Do not hide sus mounts for all processes but only non ksu process ##
-# cat <<EOF >/dev/null
-# # - By default the kernel hides all sus mounts for all processes,
-# #   and some rooted app may rely on mounts mounted by ksu process,
-# #   so here we can make it hide for non ksu process only.
-# # - Though it is still recommended to set it to 0 after screen is unlocked rathn than in service.sh
-# ${SUSFS_BIN} hide_sus_mnts_for_all_procs 0
-# EOF
-
 
 # # Disable susfs kernel log ##
 [[ $config_enable_log == 1 ]] && ${SUSFS_BIN} enable_log 1 || ${SUSFS_BIN} enable_log 0

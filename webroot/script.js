@@ -11,8 +11,8 @@ const configs = [
 	{id: 'enable_log'},
 	{id: 'enable_avc_log_spoofing'},
 	{
-		id: 'hide_sus_mnts_for_all_procs',
-		action: enabled => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_all_procs ${enabled ? 1 : 0}`)
+		id: 'hide_sus_mnts_for_non_su_procs',
+		action: enabled => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_non_su_procs ${enabled ? 1 : 0}`)
 	},
 	{id: 'uname_spoofing'},
 	{id: 'uname2_spoofing'},
