@@ -37,17 +37,24 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Rooted App Folders
+						Folders of Rooted Apps
 						<md-switch selected id="hide_rooted_app_folders"></md-switch>
 					</label>
+					<label class="toggle-info"> /sdcard/MT2 </label>
+					<label class="toggle-info"> /sdcard/OhMyFont </label>
+					<label class="toggle-info"> /sdcard/AppManager </label>
+					<label class="toggle-info"> /sdcard/Android/fas-rs </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Custom Recovery Folders
+						Folders of Custom Recovery
 						<md-switch selected id="hide_custom_recovery_folders"></md-switch>
 					</label>
+					<label class="toggle-info"> /sdcard/Fox </label>
+					<label class="toggle-info"> /sdcard/TWRP </label>
+					<label class="toggle-info"> /storage/emulated/TWRP </label>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -64,14 +71,20 @@
 						Some Font Modules
 						<md-switch selected id="hide_font_modules"></md-switch>
 					</label>
+					<label class="toggle-info"> /system/fonts/Roboto-Regular.ttf </label>
+					<label class="toggle-info"> /system/fonts/RobotoStatic-Regular.ttf </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Some Zygisk Modules
+						Some Zygisk Modules Traces
 						<md-switch selected id="hide_zygisk_modules"></md-switch>
 					</label>
+					<label class="toggle-info"> Sui </label>
+					<label class="toggle-info"> Treat Wheel </label>
+					<label class="toggle-info"> Play Integrity Fix </label>
+					<label class="toggle-info"> ReLSPosed/LSPosed </label>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -105,6 +118,7 @@
 						Uname
 						<md-switch selected id="uname_spoofing"></md-switch>
 					</label>
+					<label class="toggle-info"> 5.10.696-android12-BRENE-v0.0.69 (e.g.) </label>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -113,6 +127,7 @@
 						Uname2
 						<md-switch selected id="uname2_spoofing"></md-switch>
 					</label>
+					<label class="toggle-info"> 5.10.696-android12 (e.g.) </label>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -125,7 +140,7 @@
 				</div>
 
 				<div class="custom-uname-content list-item">
-					<md-outlined-text-field label="Kernel Release" placeholder="5.10.246-android12" id="custom_uname_release"></md-outlined-text-field>
+					<md-outlined-text-field label="Kernel Release" placeholder="5.10.696-android12" id="custom_uname_release"></md-outlined-text-field>
 					<md-outlined-text-field
 						label="Kernel Version"
 						placeholder="#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2026"

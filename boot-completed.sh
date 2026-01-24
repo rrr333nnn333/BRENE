@@ -85,18 +85,18 @@ fi
 ## Please note that sometimes the path needs to be added twice or above to be effective ##
 ## Besides, all user apps without root access cannot see the hidden path '/sdcard/<hidden_path>' unless you grant it root access ##
 ## First we need to wait until files are accessible in /sdcard ##
-until [ -d "/storage/emulated/0/Android/data" ]; do sleep 1; done
+until [ -d "/sdcard/Android/data" ]; do sleep 1; done
 
 while true; do
-	items=$(ls /storage/emulated/0/Android/data | wc -l)
+	items=$(ls /sdcard/Android/data | wc -l)
 	sleep 5
-	[[ "${items}" -eq "$(ls /storage/emulated/0/Android/data | wc -l)" ]] && break
+	[[ "${items}" -eq "$(ls /sdcard/Android/data | wc -l)" ]] && break
 done
 
 ## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard is ##
-${SUSFS_BIN} set_sdcard_root_path /storage/emulated/0
+${SUSFS_BIN} set_sdcard_root_path /sdcard
 ## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard/Android/data is ##
-${SUSFS_BIN} set_android_data_root_path /storage/emulated/0/Android/data
+${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
 
 # Load custom_sus_map.txt
 if [ -f "${PERSISTENT_DIR}/custom_sus_map.txt" ]; then
@@ -130,23 +130,25 @@ fi
 #### Hide the leaking app path like /sdcard/Android/data/<app_package_name> from syscall ####
 ## Now we can add the path ##
 if [[ $config_hide_sdcard_android_data == 1 ]]; then
-	for i in $(ls /storage/emulated/0/Android/data); do
-		${SUSFS_BIN} add_sus_path "/storage/emulated/0/Android/data/${i}"
+	for i in $(ls /sdcard/Android/data); do
+		${SUSFS_BIN} add_sus_path "/sdcard/Android/data/${i}"
 	done
 fi
 
 #### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
 ## Now we can add the path ##
-if [[ $config_hide_custom_recovery_folders == 1 ]]; then
-	[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
-	[ -d /storage/emulated/0/Fox ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/Fox
-	[ -d /storage/emulated/0/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/TWRP
+if [[ $config_hide_rooted_app_folders == 1 ]]; then
+	[ -d /sdcard/MT2 ] && ${SUSFS_BIN} add_sus_path /sdcard/MT2
+	[ -d /sdcard/OhMyFont ] && ${SUSFS_BIN} add_sus_path /sdcard/OhMyFont
+	[ -d /sdcard/AppManager ] && ${SUSFS_BIN} add_sus_path /sdcard/AppManager
+	[ -d /sdcard/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path /sdcard/Android/fas-rs
+	[ -d /storage/emulated/0/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/Android/fas-rs
 fi
 
-if [[ $config_hide_rooted_app_folders == 1 ]]; then
-	[ -d /storage/emulated/0/MT2 ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/MT2
-	[ -d /storage/emulated/0/OhMyFont ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/OhMyFont
-	[ -d /storage/emulated/0/AppManager ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/AppManager
+if [[ $config_hide_custom_recovery_folders == 1 ]]; then
+	[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
+	[ -d /sdcard/Fox ] && ${SUSFS_BIN} add_sus_path /sdcard/Fox
+	[ -d /sdcard/TWRP ] && ${SUSFS_BIN} add_sus_path /sdcard/TWRP
 fi
 
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"

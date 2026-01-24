@@ -9,7 +9,13 @@ body {
 	flex-direction: column;
 	background-color: var(--md-sys-color-surface-container);
 	color: var(--md-sys-color-on-surface);
-	font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+	font-family:
+		Roboto,
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		Arial,
+		sans-serif;
 }
 .body-content {
 	width: 100%;
@@ -44,6 +50,13 @@ body {
 	user-select: none;
 	gap: 8px;
 	pointer-events: none;
+}
+.toggle-info {
+	padding: 0px 16px;
+	display: flex;
+}
+.toggle-info:last-of-type {
+	padding-bottom: 12px;
 }
 .settings-group-title {
 	display: flex;
