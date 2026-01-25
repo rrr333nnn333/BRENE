@@ -1,10 +1,10 @@
-# BRENE - A SuSFS module for custom kernels with SuSFS patches
+# BRENE - A SuSFS/KernelSU module for SuSFS patched kernels
 
 More information soon.
 
 ## Supported Versions
 
-- `KernelSU` v2.0.0+
+- `KernelSU` v3.0.0+
 - `susfs4ksu` v2.0.0+
 
 ## Features
