@@ -161,54 +161,74 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 
 // Custom sus map
 ;(() => {
-	const textField = document.getElementById('custom_sus_map_text_field')
-	const button = document.getElementById('custom_sus_map_button')
+	const mapField = document.getElementById('custom_sus_map_text_field')
+	const pathField = document.getElementById('custom_sus_path_text_field')
+	const loopField = document.getElementById('custom_sus_path_loop_text_field')
+	const applyButton = document.getElementById('unified_apply_button')
+	const tabs = document.getElementById('sus_tabs')
+	const scrollContainer = document.getElementById('horizontal_scroll_container')
 
+	// Load all contents
 	exec(`cat ${PERSISTENT_DIR}/custom_sus_map.txt`).then(result => {
-		textField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+		mapField.value = result.errno === 0 ? `${result.stdout}\n` : ''
 	})
-
-	button.addEventListener('click', () => {
-		exec(`
-			printf "${textField.value}" > ${PERSISTENT_DIR}/custom_sus_map.txt
-		`).then(result => {
-			toast(result.errno === 0 ? 'Success' : result.stderr)
-		})
-	})
-})()
-
-// Custom sus path
-;(() => {
-	const textField = document.getElementById('custom_sus_path_text_field')
-	const button = document.getElementById('custom_sus_path_button')
-
 	exec(`cat ${PERSISTENT_DIR}/custom_sus_path.txt`).then(result => {
-		textField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+		pathField.value = result.errno === 0 ? `${result.stdout}\n` : ''
 	})
-
-	button.addEventListener('click', () => {
-		exec(`
-			printf "${textField.value}" > ${PERSISTENT_DIR}/custom_sus_path.txt
-		`).then(result => {
-			toast(result.errno === 0 ? 'Success' : result.stderr)
-		})
-	})
-})()
-
-// Custom sus path loop
-;(() => {
-	const textField = document.getElementById('custom_sus_path_loop_text_field')
-	const button = document.getElementById('custom_sus_path_loop_button')
-
 	exec(`cat ${PERSISTENT_DIR}/custom_sus_path_loop.txt`).then(result => {
-		textField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+		loopField.value = result.errno === 0 ? `${result.stdout}\n` : ''
 	})
 
-	button.addEventListener('click', () => {
-		exec(`
-			printf "${textField.value}" > ${PERSISTENT_DIR}/custom_sus_path_loop.txt
-		`).then(result => {
-			toast(result.errno === 0 ? 'Success' : result.stderr)
+	// Tabs and Scroll Sync
+	tabs.addEventListener('change', () => {
+		const index = tabs.activeTabIndex
+		const width = scrollContainer.getBoundingClientRect().width
+		scrollContainer.scrollTo({
+			left: width * index,
+			behavior: 'smooth'
 		})
 	})
+
+	let scrollTimeout
+	scrollContainer.addEventListener('scroll', () => {
+		clearTimeout(scrollTimeout)
+		scrollTimeout = setTimeout(() => {
+			const width = scrollContainer.getBoundingClientRect().width
+			const index = Math.round(scrollContainer.scrollLeft / width)
+			if (tabs.activeTabIndex !== index) {
+				tabs.activeTabIndex = index
+			}
+		}, 50)
+	})
+
+	applyButton.onclick = () => {
+		const index = tabs.activeTabIndex
+		let file = ''
+		let content = ''
+
+		switch (index) {
+			case 0:
+				file = 'custom_sus_map.txt'
+				content = mapField.value
+				break
+			case 1:
+				file = 'custom_sus_path.txt'
+				content = pathField.value
+				break
+			case 2:
+				file = 'custom_sus_path_loop.txt'
+				content = loopField.value
+				break
+		}
+
+		if (file) {
+			exec(`
+cat <<'UNIQUE_EOF' > ${PERSISTENT_DIR}/${file}
+${content}
+UNIQUE_EOF
+		`).then(result => {
+				toast(result.errno === 0 ? 'Success' : result.stderr)
+			})
+		}
+	}
 })()
