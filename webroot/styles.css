@@ -7,7 +7,7 @@ body {
 	display: flex;
 	width: 100%;
 	flex-direction: column;
-	background-color: var(--md-sys-color-surface-container);
+	background-color: var(--md-sys-color-surface);
 	color: var(--md-sys-color-on-surface);
 	font-family:
 		Roboto,
@@ -27,7 +27,7 @@ body {
 	margin: 0 auto;
 }
 .list-item {
-	background-color: var(--md-sys-color-surface);
+	background-color: var(--md-sys-color-surface-container-lowest);
 	position: relative;
 	border-radius: 4px;
 	box-sizing: border-box;
@@ -63,7 +63,7 @@ body {
 	justify-content: flex-start;
 	width: 100%;
 	padding: 8px 16px;
-	font-size: 1.3em;
+	font-size: 1.5em;
 	font-weight: 600;
 	color: var(--md-sys-color-primary);
 	box-sizing: border-box;
@@ -80,7 +80,7 @@ body {
 	user-select: none;
 }
 .title {
-	font-size: 1.4em;
+	font-size: 1.8em;
 	line-height: 1;
 	display: flex;
 	align-items: flex-end;
@@ -99,7 +99,7 @@ body {
 	font-family: monospace;
 	padding: 16px;
 	font-size: 1.2em;
-	background-color: var(--md-sys-color-surface);
+	background-color: var(--md-sys-color-surface-container-lowest);
 	box-sizing: border-box;
 }
 .preload-hidden {
