@@ -158,3 +158,57 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 		if (unameRelease.value !== '') updateUname(unameRelease.value, unameVersion.value)
 	}
 })()
+
+// Custom sus map
+;(() => {
+	const textField = document.getElementById('custom_sus_map_text_field')
+	const button = document.getElementById('custom_sus_map_button')
+
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_map.txt`).then(result => {
+		textField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
+
+	button.addEventListener('click', () => {
+		exec(`
+			printf "${textField.value}" > ${PERSISTENT_DIR}/custom_sus_map.txt
+		`).then(result => {
+			toast(result.errno === 0 ? 'Success' : result.stderr)
+		})
+	})
+})()
+
+// Custom sus path
+;(() => {
+	const textField = document.getElementById('custom_sus_path_text_field')
+	const button = document.getElementById('custom_sus_path_button')
+
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_path.txt`).then(result => {
+		textField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
+
+	button.addEventListener('click', () => {
+		exec(`
+			printf "${textField.value}" > ${PERSISTENT_DIR}/custom_sus_path.txt
+		`).then(result => {
+			toast(result.errno === 0 ? 'Success' : result.stderr)
+		})
+	})
+})()
+
+// Custom sus path loop
+;(() => {
+	const textField = document.getElementById('custom_sus_path_loop_text_field')
+	const button = document.getElementById('custom_sus_path_loop_button')
+
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_path_loop.txt`).then(result => {
+		textField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
+
+	button.addEventListener('click', () => {
+		exec(`
+			printf "${textField.value}" > ${PERSISTENT_DIR}/custom_sus_path_loop.txt
+		`).then(result => {
+			toast(result.errno === 0 ? 'Success' : result.stderr)
+		})
+	})
+})()
