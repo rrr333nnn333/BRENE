@@ -49,14 +49,10 @@ body {
 	font-size: 1em;
 	user-select: none;
 	gap: 8px;
-	pointer-events: none;
 }
 .toggle-info {
-	padding: 0px 16px;
-	display: flex;
-}
-.toggle-info:last-of-type {
-	padding-bottom: 12px;
+	font-size: 0.8em;
+	color: var(--md-sys-color-outline);
 }
 .settings-group-title {
 	display: flex;
@@ -105,10 +101,6 @@ body {
 .preload-hidden {
 	display: none;
 }
-md-switch {
-	pointer-events: initial;
-}
-
 /* Custom uname spoofing */
 .custom-uname-content {
 	display: flex;
@@ -123,4 +115,29 @@ md-switch {
 }
 .custom-uname-buttons > * {
 	flex: 1;
+}
+md-tabs {
+	--md-sys-color-surface: var(--md-sys-color-surface-container-lowest);
+}
+.snap-container {
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+}
+.snap-item {
+	scroll-snap-align: start;
+	min-width: 100%;
+	flex: 0 0 100%;
+	box-sizing: border-box;
+}
+.textarea-container {
+	padding: 0;
+	padding-bottom: 16px;
+}
+.textarea-container .content {
+	width: 100%;
+	padding: 0 16px;
+	box-sizing: border-box;
 }

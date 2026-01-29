@@ -37,24 +37,28 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Folders of Rooted Apps
+						<div class="toggle-option-content">
+							<div> Folders of Rooted Apps </div>
+							<div class="toggle-info">/sdcard/MT2</div>
+							<div class="toggle-info">/sdcard/OhMyFont</div>
+							<div class="toggle-info">/sdcard/AppManager</div>
+							<div class="toggle-info">/sdcard/Android/fas-rs</div>
+						</div>
 						<md-switch selected id="hide_rooted_app_folders"></md-switch>
 					</label>
-					<label class="toggle-info"> /sdcard/MT2 </label>
-					<label class="toggle-info"> /sdcard/OhMyFont </label>
-					<label class="toggle-info"> /sdcard/AppManager </label>
-					<label class="toggle-info"> /sdcard/Android/fas-rs </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Folders of Custom Recovery
+						<div class="toggle-option-content">
+							<div> Folders of Custom Recovery </div>
+							<div class="toggle-info">/sdcard/Fox </div>
+							<div class="toggle-info">/sdcard/TWRP </div>
+							<div class="toggle-info">/storage/emulated/TWRP </div>
+						</div>
 						<md-switch selected id="hide_custom_recovery_folders"></md-switch>
 					</label>
-					<label class="toggle-info"> /sdcard/Fox </label>
-					<label class="toggle-info"> /sdcard/TWRP </label>
-					<label class="toggle-info"> /storage/emulated/TWRP </label>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -68,23 +72,27 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Some Font Modules
+						<div class="toggle-option-content">
+							<div>Some Font Modules</div>
+							<div class="toggle-info">/system/fonts/Roboto-Regular.ttf </div>
+							<div class="toggle-info">/system/fonts/RobotoStatic-Regular.ttf </div>
+						</div>
 						<md-switch selected id="hide_font_modules"></md-switch>
 					</label>
-					<label class="toggle-info"> /system/fonts/Roboto-Regular.ttf </label>
-					<label class="toggle-info"> /system/fonts/RobotoStatic-Regular.ttf </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Some Zygisk Modules Traces
+						<div class="toggle-option-content">
+							<div>Some Zygisk Modules Traces</div>
+							<div class="toggle-info">Sui </div>
+							<div class="toggle-info">Treat Wheel </div>
+							<div class="toggle-info">Play Integrity Fix </div>
+							<div class="toggle-info">ReLSPosed/LSPosed </div>
+						</div>
 						<md-switch selected id="hide_zygisk_modules"></md-switch>
 					</label>
-					<label class="toggle-info"> Sui </label>
-					<label class="toggle-info"> Treat Wheel </label>
-					<label class="toggle-info"> Play Integrity Fix </label>
-					<label class="toggle-info"> ReLSPosed/LSPosed </label>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -98,19 +106,26 @@
 					<md-ripple></md-ripple>
 				</div>
 
-				<div class="list-item custom-uname-content">
-					<md-filled-text-field id="custom_sus_map_text_field" type="textarea" rows="9" label="Custom sus map"></md-filled-text-field>
-					<md-filled-button id="custom_sus_map_button">APPLY</md-filled-button>
-				</div>
-
-				<div class="list-item custom-uname-content">
-					<md-filled-text-field id="custom_sus_path_text_field" type="textarea" rows="9" label="Custom sus path"></md-filled-text-field>
-					<md-filled-button id="custom_sus_path_button">APPLY</md-filled-button>
-				</div>
-
-				<div class="list-item custom-uname-content">
-					<md-filled-text-field id="custom_sus_path_loop_text_field" type="textarea" rows="9" label="Custom sus path loop"></md-filled-text-field>
-					<md-filled-button id="custom_sus_path_loop_button">APPLY</md-filled-button>
+				<div class="list-item custom-uname-content textarea-container">
+					<md-tabs id="sus_tabs">
+						<md-primary-tab id="tab_sus_map" aria-controls="panel_sus_map">MAP</md-primary-tab>
+						<md-primary-tab id="tab_sus_path" aria-controls="panel_sus_path">PATH</md-primary-tab>
+						<md-primary-tab id="tab_sus_path_loop" aria-controls="panel_sus_path_loop">PATH LOOP</md-primary-tab>
+					</md-tabs>
+					<div class="snap-container" id="horizontal_scroll_container">
+						<div class="snap-item">
+							<md-filled-text-field class="content" id="custom_sus_map_text_field" type="textarea" rows="9" label="Custom sus map"></md-filled-text-field>
+						</div>
+						<div class="snap-item">
+							<md-filled-text-field class="content" id="custom_sus_path_text_field" type="textarea" rows="9" label="Custom sus path"></md-filled-text-field>
+						</div>
+						<div class="snap-item">
+							<md-filled-text-field class="content" id="custom_sus_path_loop_text_field" type="textarea" rows="9" label="Custom sus path loop"></md-filled-text-field>
+						</div>
+					</div>
+					<div class="custom-uname-buttons content">
+						<md-filled-button id="unified_apply_button">APPLY</md-filled-button>
+					</div>
 				</div>
 			</div>
 
@@ -126,19 +141,23 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Uname
+						<div class="toggle-option-content">
+							<div> Uname </div>
+							<div class="toggle-info">5.10.696-android12-BRENE-v0.0.69 (e.g.)</div>
+						</div>
 						<md-switch selected id="uname_spoofing"></md-switch>
 					</label>
-					<label class="toggle-info"> 5.10.696-android12-BRENE-v0.0.69 (e.g.) </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Uname2
+						<div class="toggle-option-content">
+							<div> Uname2 </div>
+							<div class="toggle-info">5.10.696-android12 (e.g.)</div>
+						</div>
 						<md-switch selected id="uname2_spoofing"></md-switch>
 					</label>
-					<label class="toggle-info"> 5.10.696-android12 (e.g.) </label>
 					<md-ripple></md-ripple>
 				</div>
 
