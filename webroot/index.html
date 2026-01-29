@@ -90,9 +90,11 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Hide Suspicious Mounts For Non Su Processes
+						Hide Suspicious Mounts For Non-su Processes
 						<md-switch selected id="hide_sus_mnts_for_non_su_procs"></md-switch>
 					</label>
+					<label class="toggle-info"> Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes. </label>
+					<label class="toggle-info"> Prevent traces left by zygote. e.g., Zygote Mountinfo Leak == NT Futile Hide (08). </label>
 					<md-ripple></md-ripple>
 				</div>
 
