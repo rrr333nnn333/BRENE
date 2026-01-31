@@ -53,14 +53,9 @@ ${KSU_BIN} feature save
 ## Hide some zygisk modules ##
 # ${SUSFS_BIN} add_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
 if [[ $config_hide_zygisk_modules == 1 ]]; then
-	[ -f /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
-	[ -f /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
-	[ -f /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
-	[ -f /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so
-	[ -f /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so
-	[ -f /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so
-	[ -f /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so
-	[ -f /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so
+	for i in $(find /data/adb/modules -name *.so | grep /zygisk/); do
+		${SUSFS_BIN} add_sus_map "${i}"
+	done
 fi
 
 ## Hide some map traces caused by some font modules ##
