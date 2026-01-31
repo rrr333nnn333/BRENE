@@ -38,7 +38,7 @@
 				<div class="list-item">
 					<label class="toggle-option">
 						<div class="toggle-option-content">
-							<div> Folders of Rooted Apps </div>
+							<div>Folders of Rooted Apps</div>
 							<div class="toggle-info">/sdcard/MT2</div>
 							<div class="toggle-info">/sdcard/OhMyFont</div>
 							<div class="toggle-info">/sdcard/AppManager</div>
@@ -52,10 +52,10 @@
 				<div class="list-item">
 					<label class="toggle-option">
 						<div class="toggle-option-content">
-							<div> Folders of Custom Recovery </div>
-							<div class="toggle-info">/sdcard/Fox </div>
-							<div class="toggle-info">/sdcard/TWRP </div>
-							<div class="toggle-info">/storage/emulated/TWRP </div>
+							<div>Folders of Custom Recovery</div>
+							<div class="toggle-info">/sdcard/Fox</div>
+							<div class="toggle-info">/sdcard/TWRP</div>
+							<div class="toggle-info">/storage/emulated/TWRP</div>
 						</div>
 						<md-switch selected id="hide_custom_recovery_folders"></md-switch>
 					</label>
@@ -74,7 +74,7 @@
 					<label class="toggle-option">
 						<div class="toggle-option-content">
 							<div>Font Module Injections</div>
-							<div class="toggle-info"> Hide all font file injections, /data/adb/modules/module_name/system/fonts/*.ttf </div>
+							<div class="toggle-info">Hide all font file injections, /data/adb/modules/module_name/system/fonts/*.ttf</div>
 						</div>
 						<md-switch selected id="hide_font_modules"></md-switch>
 					</label>
@@ -85,7 +85,7 @@
 					<label class="toggle-option">
 						<div class="toggle-option-content">
 							<div>Some Zygisk Module Injections</div>
-							<div class="toggle-info"> Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so </div>
+							<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
 						</div>
 						<md-switch selected id="hide_zygisk_modules"></md-switch>
 					</label>
@@ -97,7 +97,7 @@
 						<div class="toggle-option-content">
 							<div>Hide Suspicious Mounts For Non-su Processes</div>
 							<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
-							<div class="toggle-info">Prevent traces left by zygote. e.g., Zygote Mountinfo Leak == NT Futile Hide (08).</div>
+							<div class="toggle-info">e.g., Prevent traces left by zygote, Zygote Mountinfo Leak (NT Futile Hide (08)).</div>
 						</div>
 						<md-switch selected id="hide_sus_mnts_for_non_su_procs"></md-switch>
 					</label>
@@ -112,13 +112,31 @@
 					</md-tabs>
 					<div class="snap-container" id="horizontal_scroll_container">
 						<div class="snap-item">
-							<md-filled-text-field class="content" id="custom_sus_map_text_field" type="textarea" rows="9" label="Custom sus map"></md-filled-text-field>
+							<md-filled-text-field
+								class="content"
+								id="custom_sus_map_text_field"
+								type="textarea"
+								rows="9"
+								label="Custom sus map"
+							></md-filled-text-field>
 						</div>
 						<div class="snap-item">
-							<md-filled-text-field class="content" id="custom_sus_path_text_field" type="textarea" rows="9" label="Custom sus path"></md-filled-text-field>
+							<md-filled-text-field
+								class="content"
+								id="custom_sus_path_text_field"
+								type="textarea"
+								rows="9"
+								label="Custom sus path"
+							></md-filled-text-field>
 						</div>
 						<div class="snap-item">
-							<md-filled-text-field class="content" id="custom_sus_path_loop_text_field" type="textarea" rows="9" label="Custom sus path loop"></md-filled-text-field>
+							<md-filled-text-field
+								class="content"
+								id="custom_sus_path_loop_text_field"
+								type="textarea"
+								rows="9"
+								label="Custom sus path loop"
+							></md-filled-text-field>
 						</div>
 					</div>
 					<div class="custom-uname-buttons content">
@@ -131,7 +149,14 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						AVC Log
+						<div class="toggle-option-content">
+							<div>AVC Log</div>
+							<div class="toggle-info">Spoofing the sus 'su' tcontext shown in avc log in kernel.</div>
+							<div class="toggle-info">
+								Enable this will sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issue,
+								so users are advised to disbale this when doing so.
+							</div>
+						</div>
 						<md-switch selected id="enable_avc_log_spoofing"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -140,8 +165,9 @@
 				<div class="list-item">
 					<label class="toggle-option">
 						<div class="toggle-option-content">
-							<div> Uname </div>
-							<div class="toggle-info">5.10.696-android12-BRENE-v0.0.69 (e.g.)</div>
+							<div>Uname</div>
+							<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+							<div class="toggle-info">e.g., 5.10.123-android12-BRENE-v0.0.69</div>
 						</div>
 						<md-switch selected id="uname_spoofing"></md-switch>
 					</label>
@@ -151,8 +177,9 @@
 				<div class="list-item">
 					<label class="toggle-option">
 						<div class="toggle-option-content">
-							<div> Uname2 </div>
-							<div class="toggle-info">5.10.696-android12 (e.g.)</div>
+							<div>Uname2</div>
+							<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+							<div class="toggle-info">e.g., 5.10.123-android12</div>
 						</div>
 						<md-switch selected id="uname2_spoofing"></md-switch>
 					</label>
@@ -168,7 +195,7 @@
 				</div>
 
 				<div class="custom-uname-content list-item">
-					<md-outlined-text-field label="Kernel Release" placeholder="5.10.696-android12" id="custom_uname_release"></md-outlined-text-field>
+					<md-outlined-text-field label="Kernel Release" placeholder="5.10.123-android12" id="custom_uname_release"></md-outlined-text-field>
 					<md-outlined-text-field
 						label="Kernel Version"
 						placeholder="#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2026"
@@ -185,7 +212,10 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						SuSFS Logs
+						<div class="toggle-option-content">
+							<div>SuSFS Logs</div>
+							<div class="toggle-info">SuSFS log in kernel</div>
+						</div>
 						<md-switch selected id="enable_log"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -196,7 +226,10 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						Kernel Umount
+						<div class="toggle-option-content">
+							<div>Kernel Umount</div>
+							<div class="toggle-info">Controls whether kernel automatically unmounts modules when not needed.</div>
+						</div>
 						<md-switch selected id="kernel_umount"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
