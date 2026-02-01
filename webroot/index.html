@@ -11,9 +11,9 @@
 		<div class="header">
 			<div class="title">
 				BRENE
-				<span class="item-version" id="brene-version"> v0.0.00 </span>
+				<span class="item-version" id="brene-version"> v0.0.20 </span>
 				SuSFS
-				<span class="item-version" id="susfs-version"> v0.0.0+ </span>
+				<span class="item-version" id="susfs-version"> v2.0.0+ </span>
 			</div>
 		</div>
 		<div class="preload-hidden body-content">
@@ -22,7 +22,7 @@
 				<div class="list-item">
 					<label class="toggle-option">
 						All Items in /data/local/tmp
-						<md-switch selected id="hide_data_local_tmp"></md-switch>
+						<md-switch id="hide_data_local_tmp"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
 				</div>
@@ -30,77 +30,77 @@
 				<div class="list-item">
 					<label class="toggle-option">
 						All Items in /sdcard/Android/data
-						<md-switch selected id="hide_sdcard_android_data"></md-switch>
+						<md-switch id="hide_sdcard_android_data"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Folders of Rooted Apps</div>
-							<div class="toggle-info">/sdcard/MT2</div>
-							<div class="toggle-info">/sdcard/OhMyFont</div>
-							<div class="toggle-info">/sdcard/AppManager</div>
-							<div class="toggle-info">/sdcard/Android/fas-rs</div>
-						</div>
-						<md-switch selected id="hide_rooted_app_folders"></md-switch>
+						Folders of Rooted Apps
+						<md-switch id="hide_rooted_app_folders"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">/sdcard/MT2</div>
+						<div class="toggle-info">/sdcard/OhMyFont</div>
+						<div class="toggle-info">/sdcard/AppManager</div>
+						<div class="toggle-info">/sdcard/Android/fas-rs</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Folders of Custom Recovery</div>
-							<div class="toggle-info">/sdcard/Fox</div>
-							<div class="toggle-info">/sdcard/TWRP</div>
-							<div class="toggle-info">/storage/emulated/TWRP</div>
-						</div>
-						<md-switch selected id="hide_custom_recovery_folders"></md-switch>
+						Folders of Custom Recovery
+						<md-switch id="hide_custom_recovery_folders"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">/sdcard/Fox</div>
+						<div class="toggle-info">/sdcard/TWRP</div>
+						<div class="toggle-info">/storage/emulated/TWRP</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<!-- <div class="list-item">
 					<label class="toggle-option">
 						modules.img
-						<md-switch selected id="hide_modules_img"></md-switch>
+						<md-switch id="hide_modules_img"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
 				</div> -->
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Font Module Injections</div>
-							<div class="toggle-info">Hide all font file injections, /data/adb/modules/module_name/system/fonts/*.ttf</div>
-						</div>
-						<md-switch selected id="hide_font_modules"></md-switch>
+						Font Module Injections
+						<md-switch id="hide_font_modules"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide all font file injections, /data/adb/modules/module_name/system/fonts/*.ttf</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Some Zygisk Module Injections</div>
-							<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
-						</div>
-						<md-switch selected id="hide_zygisk_modules"></md-switch>
+						Some Zygisk Module Injections
+						<md-switch id="hide_zygisk_modules"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Hide Suspicious Mounts For Non-su Processes</div>
-							<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
-							<div class="toggle-info">e.g., Prevent traces left by zygote, Zygote Mountinfo Leak (NT Futile Hide (08)).</div>
-						</div>
-						<md-switch selected id="hide_sus_mnts_for_non_su_procs"></md-switch>
+						Hide Suspicious Mounts For Non-su Processes
+						<md-switch id="hide_sus_mnts_for_non_su_procs"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
+						<div class="toggle-info">e.g. Prevent traces left by zygote, Zygote Mountinfo Leak (NT Futile Hide (08)).</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
@@ -149,47 +149,47 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>AVC Log</div>
-							<div class="toggle-info">Spoofing the sus 'su' tcontext shown in avc log in kernel.</div>
-							<div class="toggle-info">
-								Enable this will sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issue,
-								so users are advised to disbale this when doing so.
-							</div>
-						</div>
-						<md-switch selected id="enable_avc_log_spoofing"></md-switch>
+						AVC Log
+						<md-switch id="enable_avc_log_spoofing"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Spoofing the sus 'su' tcontext shown in avc log in kernel.</div>
+						<div class="toggle-info">
+							Enable this will sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issue, so
+							users are advised to disbale this when doing so.
+						</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Uname</div>
-							<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
-							<div class="toggle-info">e.g., 5.10.123-android12-BRENE-v0.0.69</div>
-						</div>
-						<md-switch selected id="uname_spoofing"></md-switch>
+						Uname
+						<md-switch id="uname_spoofing"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+						<div class="toggle-info">e.g. 5.10.123-android12-BRENE-v0.0.69</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Uname2</div>
-							<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
-							<div class="toggle-info">e.g., 5.10.123-android12</div>
-						</div>
-						<md-switch selected id="uname2_spoofing"></md-switch>
+						Uname2
+						<md-switch id="uname2_spoofing"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+						<div class="toggle-info">e.g. 5.10.123-android12</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
 						Set custom uname on boot
-						<md-switch selected id="custom_uname_spoofing"></md-switch>
+						<md-switch id="custom_uname_spoofing"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
 				</div>
@@ -212,12 +212,12 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>SuSFS Logs</div>
-							<div class="toggle-info">SuSFS log in kernel</div>
-						</div>
-						<md-switch selected id="enable_log"></md-switch>
+						SuSFS Logs
+						<md-switch id="enable_log"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">SuSFS log in kernel</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 			</div>
@@ -226,22 +226,22 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						<div class="toggle-option-content">
-							<div>Kernel Umount</div>
-							<div class="toggle-info">Controls whether kernel automatically unmounts modules when not needed.</div>
-						</div>
-						<md-switch selected id="kernel_umount"></md-switch>
+						Kernel Umount
+						<md-switch id="kernel_umount"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Controls whether kernel automatically unmounts modules when not needed.</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
-					<label class="toggle-option" id="enable_ksu_modules" style="pointer-events: initial"> Enable All KernelSU Modules </label>
+					<label class="toggle-option" id="enable_ksu_modules"> Enable All KernelSU Modules </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
-					<label class="toggle-option" id="disable_ksu_modules" style="pointer-events: initial"> Disable All KernelSU Modules </label>
+					<label class="toggle-option" id="disable_ksu_modules"> Disable All KernelSU Modules </label>
 					<md-ripple></md-ripple>
 				</div>
 			</div>
