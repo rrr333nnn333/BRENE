@@ -1,6 +1,6 @@
 id=brene
 name=BRENE - SUSFS-FOR-KERNELSU
-version=v0.0.22
+version=v0.0.23
 versionCode=1
 author=rrr333nnn333, KOWX712, sidex15 & simonpunk@gitlab.com
 description=[SuSFS patches: ❓, Module: ❓, Hiding: ❓] A SuSFS/KernelSU module for SuSFS patched kernels
