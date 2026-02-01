@@ -37,6 +37,39 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
+						APK Injections
+						<md-switch id="hide_apk_injections"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide apk injections, /data/adb/modules/module_name/system/ [vendor|product|system_ext]/*/*.apk</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
+						Font Module Injections
+						<md-switch id="hide_font_modules"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide all font file injections, /data/adb/modules/module_name/system/fonts/*.ttf</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
+						Some Zygisk Module Injections
+						<md-switch id="hide_zygisk_modules"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
 						Folders of Rooted Apps
 						<md-switch id="hide_rooted_app_folders"></md-switch>
 					</label>
@@ -69,28 +102,6 @@
 					</label>
 					<md-ripple></md-ripple>
 				</div> -->
-
-				<div class="list-item">
-					<label class="toggle-option">
-						Font Module Injections
-						<md-switch id="hide_font_modules"></md-switch>
-					</label>
-					<div class="toggle-option-content">
-						<div class="toggle-info">Hide all font file injections, /data/adb/modules/module_name/system/fonts/*.ttf</div>
-					</div>
-					<md-ripple></md-ripple>
-				</div>
-
-				<div class="list-item">
-					<label class="toggle-option">
-						Some Zygisk Module Injections
-						<md-switch id="hide_zygisk_modules"></md-switch>
-					</label>
-					<div class="toggle-option-content">
-						<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
-					</div>
-					<md-ripple></md-ripple>
-				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">

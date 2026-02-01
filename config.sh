@@ -8,6 +8,7 @@ config_kernel_umount=1
 config_uname_spoofing=1
 config_hide_font_modules=1
 config_hide_zygisk_modules=1
+config_hide_apk_injections=1
 config_enable_log=0
 config_uname2_spoofing=0
 config_hide_modules_img=0
