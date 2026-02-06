@@ -167,9 +167,11 @@ if [[ $config_hide_custom_recovery_folders == 1 ]]; then
 	[ -d /sdcard/Fox ] && ${SUSFS_BIN} add_sus_path /sdcard/Fox
 	[ -d /storage/emulated/0/Fox ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/Fox
 
+	[ -d /sdcard/PBRP ] && ${SUSFS_BIN} add_sus_path /sdcard/PBRP
+	[ -d /storage/emulated/0/PBRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/PBRP
+
 	[ -d /sdcard/TWRP ] && ${SUSFS_BIN} add_sus_path /sdcard/TWRP
 	[ -d /storage/emulated/0/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/TWRP
-
 	[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
 fi
 
