@@ -55,11 +55,20 @@ resetprop_n() {
 	resetprop -n $1 $2
 }
 
-contains_reset_prop() {
-  local NAME=$1
-  local CONTAINS=$2
-  local NEWVAL=$3
-  [[ "$(resetprop $NAME)" = *"$CONTAINS"* ]] && resetprop -n $NAME $NEWVAL
+if_prop_value_exits_resetprop_n() {
+	local PROP_NAME=$1
+  local EXPECTED_VALUE=$2
+  local CURRENT_VALUE=$(resetprop "${PROP_NAME}")
+
+	[ -z "${CURRENT_VALUE}" ] || [ "${CURRENT_VALUE}" = "${EXPECTED_VALUE}" ] || resetprop -n "${PROP_NAME}" "${EXPECTED_VALUE}"
 }
+
+# if_contains_resetprop_n() {
+# 	local PROP_NAME=$1
+#   local CONTAINS_VALUE=$2
+#   local NEW_VALUE=$3
+
+#   [[ "$(resetprop ${PROP_NAME})" = *"${CONTAINS_VALUE}"* ]] && resetprop -n "${PROP_NAME}" "${NEW_VALUE}"
+# }
 
 # EOF

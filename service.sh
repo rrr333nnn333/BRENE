@@ -22,54 +22,6 @@ PERSISTENT_DIR=/data/adb/brene
 # # Disable susfs kernel log ##
 [[ $config_enable_log == 1 ]] && ${SUSFS_BIN} enable_log 1 || ${SUSFS_BIN} enable_log 0
 
-## Props ##
-resetprop -w sys.boot_completed 0
-
-resetprop_n "init.svc.adbd" "stopped"
-resetprop_n "init.svc_debug_pid.adbd" ""
-resetprop_n "persist.sys.usb.config" "mtp"
-resetprop_n "sys.oem_unlock_allowed" "0"
-resetprop_n "ro.adb.secure" "1"
-resetprop_n "ro.crypto.state" "encrypted"
-resetprop_n "ro.debuggable" "0"
-resetprop_n "ro.force.debuggable" "0"
-resetprop_n "ro.kernel.qemu" ""
-resetprop_n "ro.secure" "1"
-resetprop_n "ro.secureboot.lockstate" "locked"
-resetprop_n "ro.warranty_bit" "0"
-resetprop_n "ro.is_ever_orange" "0"
-
-resetprop_n "ro.build.type" "user"
-resetprop_n "ro.build.tags" "release-keys"
-resetprop_n "ro.bootimage.build.tags" "release-keys"
-
-resetprop_n "ro.vendor.boot.warranty_bit" "0"
-resetprop_n "ro.vendor.warranty_bit" "0"
-
-resetprop_n "vendor.boot.vbmeta.device_state" "locked"
-resetprop_n "vendor.boot.verifiedbootstate" "green"
-
-resetprop_n "ro.boot.flash.locked" "1"
-resetprop_n "ro.boot.realme.lockstate" "1"
-resetprop_n "ro.boot.realmebootstate" "green"
-resetprop_n "ro.boot.verifiedbooterror" ""
-resetprop_n "ro.boot.verifiedbootstate" "green"
-resetprop_n "ro.boot.veritymode" "enforcing"
-resetprop_n "ro.boot.warranty_bit" "0"
-resetprop_n "ro.boot.veritymode.managed" "yes"
-
-resetprop_n "ro.boot.vbmeta.size" "4096"
-resetprop_n "ro.boot.vbmeta.hash_alg" "sha256"
-resetprop_n "ro.boot.vbmeta.avb_version" "1.3"
-resetprop_n "ro.boot.vbmeta.device_state" "locked"
-resetprop_n "ro.boot.vbmeta.invalidate_on_error" "yes"
-
-# Hide that we booted from recovery when magisk is in recovery mode
-contains_reset_prop "ro.bootmode" "recovery" "unknown"
-contains_reset_prop "ro.boot.mode" "recovery" "unknown"
-contains_reset_prop "ro.boot.bootmode" "recovery" "unknown"
-contains_reset_prop "vendor.boot.mode" "recovery" "unknown"
-contains_reset_prop "vendor.boot.bootmode" "recovery" "unknown"
 
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
