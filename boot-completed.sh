@@ -202,6 +202,9 @@ if [[ $config_hide_rooted_app_folders == 1 ]]; then
 	[ -d /sdcard/AppManager ] && ${SUSFS_BIN} add_sus_path /sdcard/AppManager
 	[ -d /storage/emulated/0/AppManager ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/AppManager
 	
+	[ -d /sdcard/DataBackup ] && ${SUSFS_BIN} add_sus_path /sdcard/DataBackup
+	[ -d /storage/emulated/0/DataBackup ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/DataBackup
+	
 	[ -d /sdcard/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path /sdcard/Android/fas-rs
 	[ -d /storage/emulated/0/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/Android/fas-rs
 fi
