@@ -78,6 +78,15 @@ if [[ $config_hide_apk_injections == 1 ]]; then
 	done
 fi
 
+if [[ $config_hide_injections == 1 ]]; then
+	for i in $(ls /data/adb/modules); do
+		if [ -d "/data/adb/modules/${i}/system" ]; then
+			for x in $(find "/data/adb/modules/${i}/system" -type f -name "*.*"); do
+				${SUSFS_BIN} add_sus_map "${x}"
+			done
+		fi
+	done
+fi
 
 #### For path that needs to be re-flagged as SUS_PATH on each non-root user app / isolated service starts via add_sus_path_loop ####
 ## - Path added via add_sus_path_loop will be re-flagged as SUS_PATH on each non-root process / isolated service starts ##
