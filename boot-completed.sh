@@ -61,7 +61,7 @@ fi
 
 ## Hide some map traces caused by some font modules ##
 if [[ $config_hide_font_modules == 1 ]]; then
-	for i in $(find /data/adb/modules -name *.ttf | grep /system/fonts/); do
+	for i in $(find /data/adb/modules \( -name "*.otf" -o -name "*.ttf" \) | grep "/system/fonts/"); do
 		${SUSFS_BIN} add_sus_map "${i}"
 	done
 fi
