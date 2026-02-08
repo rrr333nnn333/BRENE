@@ -19,7 +19,6 @@ const configs = [
 	{id: 'hide_data_local_tmp'},
 	// { id: 'hide_modules_img' },
 	{id: 'hide_zygisk_modules'},
-	{id: 'hide_font_modules'},
 	{id: 'hide_custom_recovery_folders'},
 	{id: 'hide_rooted_app_folders'},
 	{id: 'hide_sdcard_android_data'},
@@ -28,7 +27,6 @@ const configs = [
 		action: enabled => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`)
 	},
 	{id: 'custom_uname_spoofing'},
-	{id: 'hide_apk_injections'},
 	{id: 'hide_injections'}
 ]
 

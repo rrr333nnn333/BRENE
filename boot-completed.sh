@@ -59,25 +59,6 @@ if [[ $config_hide_zygisk_modules == 1 ]]; then
 	done
 fi
 
-## Hide some map traces caused by some font modules ##
-if [[ $config_hide_font_modules == 1 ]]; then
-	for i in $(find /data/adb/modules \( -name "*.otf" -o -name "*.ttf" \) | grep "/system/fonts/"); do
-		${SUSFS_BIN} add_sus_map "${i}"
-	done
-fi
-
-if [[ $config_hide_apk_injections == 1 ]]; then
-	for i in $(find /data/adb/modules -name *.apk | grep /system/vendor/); do
-		${SUSFS_BIN} add_sus_map "${i}"
-	done
-	for i in $(find /data/adb/modules -name *.apk | grep /system/product/); do
-		${SUSFS_BIN} add_sus_map "${i}"
-	done
-	for i in $(find /data/adb/modules -name *.apk | grep /system/system_ext/); do
-		${SUSFS_BIN} add_sus_map "${i}"
-	done
-fi
-
 if [[ $config_hide_injections == 1 ]]; then
 	for i in $(ls /data/adb/modules); do
 		if [ -d "/data/adb/modules/${i}/system" ]; then
