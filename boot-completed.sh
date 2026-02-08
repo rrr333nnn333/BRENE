@@ -137,12 +137,12 @@ if_prop_value_exits_resetprop_n "ro.boot.warranty_bit" "0"
 ## Please note that sometimes the path needs to be added twice or above to be effective ##
 ## Besides, all user apps without root access cannot see the hidden path '/sdcard/<hidden_path>' unless you grant it root access ##
 ## First we need to wait until files are accessible in /sdcard ##
-until [ -d "/storage/emulated/0/Android/data" ]; do sleep 1; done
+until [ -d "/data/media/0/Android" ]; do sleep 1; done
 
 while true; do
-	items=$(ls /storage/emulated/0/Android/data | wc -l)
-	sleep 5
-	[[ "${items}" -eq "$(ls /storage/emulated/0/Android/data | wc -l)" ]] && break
+	items=$(ls /data/media/0/Android/data | wc -l)
+	sleep 10
+	[[ "${items}" -eq "$(ls /data/media/0/Android/data | wc -l)" ]] && break
 done
 
 ## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard is ##
