@@ -12,5 +12,6 @@ config_enable_log=0
 config_uname2_spoofing=0
 config_hide_modules_img=0
 config_custom_uname_spoofing=0
+config_verified_boot_hash=''
 config_custom_uname_kernel_release='default'
 config_custom_uname_kernel_version='default'

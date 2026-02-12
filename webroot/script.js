@@ -102,6 +102,9 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 	document.getElementById('custom_uname_release').value = configValues['config_custom_uname_kernel_release']
 	document.getElementById('custom_uname_version').value = configValues['config_custom_uname_kernel_version']
 
+	// Verified Boot Hash
+	document.getElementById('verified_boot_hash_text_field').value = configValues['config_verified_boot_hash']
+
 	// toggle
 	configs.forEach(config => {
 		const configId = `config_${config.id}`
@@ -157,6 +160,17 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 	document.getElementById(`button_custom_uname_apply`).onclick = () => {
 		if (unameRelease.value !== '') updateUname(unameRelease.value, unameVersion.value)
 	}
+})()
+
+// Verified Boot Hash
+;(() => {
+	const textField = document.getElementById('verified_boot_hash_text_field')
+	const button = document.getElementById('verified_boot_hash_button')
+
+	button.addEventListener('click', () => {
+		updateConfig2('config_verified_boot_hash', textField.value)
+		toast('Success')
+	})
 })()
 
 // Custom sus map

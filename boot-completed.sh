@@ -27,6 +27,12 @@ ${KSU_BIN} feature set kernel_umount $config_kernel_umount
 ${KSU_BIN} feature save
 
 
+# Verified Boot Hash
+if [[ $config_verified_boot_hash != '' ]]; then
+	resetprop_n "ro.boot.vbmeta.digest" "${config_verified_boot_hash}"
+fi
+
+
 #### Unhide all sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes ####
 ## It is suggested to unhide it in this stage, and let kernel or zygisk to umount them for user processes, but this is up to you ##
 # cat <<EOF >/dev/null
