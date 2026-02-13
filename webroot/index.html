@@ -37,7 +37,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Injections
+						Module Injections
 						<md-switch id="hide_injections"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -53,6 +53,18 @@
 					</label>
 					<div class="toggle-option-content">
 						<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
+						Hide Suspicious Mounts For Non-su Processes
+						<md-switch id="hide_sus_mnts_for_non_su_procs"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
+						<div class="toggle-info">e.g. Prevent traces left by zygote, Zygote Mountinfo Leak (Native Test Futile Hide (08)).</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -93,18 +105,6 @@
 					</label>
 					<md-ripple></md-ripple>
 				</div> -->
-
-				<div class="list-item">
-					<label class="toggle-option">
-						Hide Suspicious Mounts For Non-su Processes
-						<md-switch id="hide_sus_mnts_for_non_su_procs"></md-switch>
-					</label>
-					<div class="toggle-option-content">
-						<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
-						<div class="toggle-info">e.g. Prevent traces left by zygote, Zygote Mountinfo Leak (NT Futile Hide (08)).</div>
-					</div>
-					<md-ripple></md-ripple>
-				</div>
 
 				<div class="list-item custom-uname-content textarea-container">
 					<md-tabs id="sus_tabs">
@@ -197,10 +197,10 @@
 				</div>
 
 				<div class="custom-uname-content list-item">
-					<md-outlined-text-field label="Kernel Release" placeholder="5.10.123-android12" id="custom_uname_release"></md-outlined-text-field>
+					<md-outlined-text-field label="Kernel Release" placeholder="e.g. 5.10.123-android12" id="custom_uname_release"></md-outlined-text-field>
 					<md-outlined-text-field
 						label="Kernel Version"
-						placeholder="#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2026"
+						placeholder="e.g. #1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2026"
 						id="custom_uname_version"
 					></md-outlined-text-field>
 					<div class="custom-uname-buttons">
@@ -217,7 +217,7 @@
 						id="verified_boot_hash_text_field"
 						type="textarea"
 						label="Verified Boot Hash"
-						placeholder="e.g. 0123456789012345678901234567890123456789012345678901234567890123"
+						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a"
 					></md-outlined-text-field>
 					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
 				</div>
