@@ -27,7 +27,15 @@ const configs = [
 		action: enabled => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`)
 	},
 	{id: 'custom_uname_spoofing'},
-	{id: 'hide_injections'}
+	{id: 'hide_injections'},
+	{
+		id: 'developer_options',
+		action: enabled => setFeature(`settings put global development_settings_enabled ${enabled ? 1 : 0}`)
+	},
+	{
+		id: 'usb_debugging',
+		action: enabled => setFeature(`settings put global adb_enabled ${enabled ? 1 : 0}`)
+	}
 ]
 
 // Load enabled features

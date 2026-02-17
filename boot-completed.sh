@@ -33,6 +33,14 @@ if [[ $config_verified_boot_hash != '' ]]; then
 fi
 
 
+# Developer options
+[[ $config_developer_options == 1 ]] && settings put global development_settings_enabled 1 || settings put global development_settings_enabled 0
+
+
+# USB debugging
+[[ $config_usb_debugging == 1 ]] && settings put global adb_enabled 1 || settings put global adb_enabled 0
+
+
 #### Unhide all sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes ####
 ## It is suggested to unhide it in this stage, and let kernel or zygisk to umount them for user processes, but this is up to you ##
 # cat <<EOF >/dev/null

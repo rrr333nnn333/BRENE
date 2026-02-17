@@ -210,18 +210,8 @@
 				</div>
 			</div>
 
-			<div class="settings-group-title"></div>
+			<div class="settings-group-title">Other options</div>
 			<div class="settings-group">
-				<div class="list-item custom-uname-content">
-					<md-outlined-text-field
-						id="verified_boot_hash_text_field"
-						type="textarea"
-						label="Verified Boot Hash"
-						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a"
-					></md-outlined-text-field>
-					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
-				</div>
-
 				<div class="list-item">
 					<label class="toggle-option">
 						SuSFS Logs
@@ -231,6 +221,38 @@
 						<div class="toggle-info">SuSFS log in kernel</div>
 					</div>
 					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
+						Developer options
+						<md-switch id="developer_options"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Enable/Disable the developer options</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
+						USB debugging
+						<md-switch id="usb_debugging"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Enable/Disable the USB debugging</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item custom-uname-content">
+					<md-outlined-text-field
+						id="verified_boot_hash_text_field"
+						type="textarea"
+						label="Verified Boot Hash"
+						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a"
+					></md-outlined-text-field>
+					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
 				</div>
 			</div>
 
