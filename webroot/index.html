@@ -17,6 +17,31 @@
 			</div>
 		</div>
 		<div class="preload-hidden body-content">
+			<div class="settings-group-title">Android Settings</div>
+			<div class="settings-group">
+				<div class="list-item">
+					<label class="toggle-option">
+						Developer Options
+						<md-switch id="developer_options"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Enable or Disable the developer options</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
+						USB Debugging
+						<md-switch id="usb_debugging"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Enable or Disable the USB debugging</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+			</div>
+
 			<div class="settings-group-title">Hiding</div>
 			<div class="settings-group">
 				<div class="list-item">
@@ -93,7 +118,7 @@
 						<div class="toggle-info">/sdcard/Fox (OrangeFox Recovery)</div>
 						<div class="toggle-info">/sdcard/PBRP (PitchBlack Recovery Project)</div>
 						<div class="toggle-info">/sdcard/TWRP (Team Win Recovery Project)</div>
-						<div class="toggle-info">/storage/emulated/TWRP (Team Win Recovery Project)</div>
+						<div class="toggle-info">/storage/emulated/TWRP</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -170,7 +195,7 @@
 						<md-switch id="uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+						<div class="toggle-info">Spoof uname for all processes</div>
 						<div class="toggle-info">e.g. 5.10.123-android12-BRENE-v0.0.69</div>
 					</div>
 					<md-ripple></md-ripple>
@@ -178,11 +203,11 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Uname2
+						Uname 2 (Better Hiding)
 						<md-switch id="uname2_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+						<div class="toggle-info">Spoof uname for all processes</div>
 						<div class="toggle-info">e.g. 5.10.123-android12</div>
 					</div>
 					<md-ripple></md-ripple>
@@ -190,12 +215,14 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Set custom uname on boot
+						Set Custom Uname on Boot
 						<md-switch id="custom_uname_spoofing"></md-switch>
 					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+					</div>
 					<md-ripple></md-ripple>
 				</div>
-
 				<div class="custom-uname-content list-item">
 					<md-outlined-text-field label="Kernel Release" placeholder="e.g. 5.10.123-android12" id="custom_uname_release"></md-outlined-text-field>
 					<md-outlined-text-field
@@ -208,9 +235,19 @@
 						<md-filled-button id="button_custom_uname_apply">APPLY</md-filled-button>
 					</div>
 				</div>
+
+				<div class="list-item custom-uname-content">
+					<md-outlined-text-field
+						id="verified_boot_hash_text_field"
+						type="textarea"
+						label="Verified Boot Hash"
+						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a"
+					></md-outlined-text-field>
+					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
+				</div>
 			</div>
 
-			<div class="settings-group-title">Other options</div>
+			<div class="settings-group-title">Other Options</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
@@ -221,38 +258,6 @@
 						<div class="toggle-info">SuSFS log in kernel</div>
 					</div>
 					<md-ripple></md-ripple>
-				</div>
-
-				<div class="list-item">
-					<label class="toggle-option">
-						Developer options
-						<md-switch id="developer_options"></md-switch>
-					</label>
-					<div class="toggle-option-content">
-						<div class="toggle-info">Enable/Disable the developer options</div>
-					</div>
-					<md-ripple></md-ripple>
-				</div>
-
-				<div class="list-item">
-					<label class="toggle-option">
-						USB debugging
-						<md-switch id="usb_debugging"></md-switch>
-					</label>
-					<div class="toggle-option-content">
-						<div class="toggle-info">Enable/Disable the USB debugging</div>
-					</div>
-					<md-ripple></md-ripple>
-				</div>
-
-				<div class="list-item custom-uname-content">
-					<md-outlined-text-field
-						id="verified_boot_hash_text_field"
-						type="textarea"
-						label="Verified Boot Hash"
-						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a"
-					></md-outlined-text-field>
-					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
 				</div>
 			</div>
 
