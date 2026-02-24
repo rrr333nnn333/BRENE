@@ -35,6 +35,10 @@ const configs = [
 	{
 		id: 'usb_debugging',
 		action: enabled => setFeature(`settings put global adb_enabled ${enabled ? 1 : 0}`)
+	},
+	{
+		id: 'wireless_debugging',
+		action: enabled => setFeature(`settings put global adb_wifi_enabled ${enabled ? 1 : 0}`)
 	}
 ]
 
