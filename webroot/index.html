@@ -25,7 +25,7 @@
 						<md-switch id="developer_options"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or Disable the developer options</div>
+						<div class="toggle-info">Enable or disable developer options</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -36,17 +36,17 @@
 						<md-switch id="usb_debugging"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or Disable the USB debugging</div>
+						<div class="toggle-info">Enable or disable USB debugging</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 			</div>
 
-			<div class="settings-group-title">Hiding</div>
+			<div class="settings-group-title">Hiding Features</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						All Items in /data/local/tmp
+						All Items In /data/local/tmp
 						<md-switch id="hide_data_local_tmp"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -54,7 +54,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						All Items in /sdcard/Android/data
+						All Items In /sdcard/Android/data
 						<md-switch id="hide_sdcard_android_data"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -96,7 +96,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Folders of Rooted Apps
+						Rooted Apps Folders
 						<md-switch id="hide_rooted_app_folders"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -111,7 +111,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Folders of Custom Recovery
+						Custom Recovery Folders
 						<md-switch id="hide_custom_recovery_folders"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -172,7 +172,7 @@
 				</div>
 			</div>
 
-			<div class="settings-group-title">Spoofing</div>
+			<div class="settings-group-title">Spoofing Features</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
@@ -182,8 +182,8 @@
 					<div class="toggle-option-content">
 						<div class="toggle-info">Spoofing the sus 'su' tcontext shown in avc log in kernel.</div>
 						<div class="toggle-info">
-							Enable this will sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issue, so
-							users are advised to disbale this when doing so.
+							Enabling this will sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issue,
+							so users are advised to disable this when doing so.
 						</div>
 					</div>
 					<md-ripple></md-ripple>
@@ -191,7 +191,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Uname
+						Custom uname
 						<md-switch id="uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -203,7 +203,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Uname 2 (Better Hiding)
+						Custom uname 2 (Better Hiding)
 						<md-switch id="uname2_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -215,7 +215,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Set Custom Uname on Boot
+						Set Custom uname on Boot
 						<md-switch id="custom_uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -241,13 +241,13 @@
 						id="verified_boot_hash_text_field"
 						type="textarea"
 						label="Verified Boot Hash"
-						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a"
+						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a (64 digits)"
 					></md-outlined-text-field>
 					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
 				</div>
 			</div>
 
-			<div class="settings-group-title">Other Options</div>
+			<div class="settings-group-title">Other Features</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
@@ -261,7 +261,7 @@
 				</div>
 			</div>
 
-			<div class="settings-group-title">KernelSU Settings</div>
+			<div class="settings-group-title">KernelSU Features and Settings</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
@@ -285,7 +285,7 @@
 				</div>
 			</div>
 
-			<div class="settings-group-title">Enabled Features in Kernel</div>
+			<div class="settings-group-title">Enabled Features In Kernel</div>
 			<div class="settings-group enabled-config" id="kernel-features-container"></div>
 		</div>
 
