@@ -11,13 +11,12 @@ PERSISTENT_DIR=/data/adb/brene
 description="A SuSFS/KernelSU module for SuSFS patched kernels"
 susfs_ver=$(${SUSFS_BIN} show version 2>/dev/null)
 if [ -n ${susfs_ver} ]; then
-	if [ -d "/data/adb/modules/rezygisk" ] && [ ! -f "/data/adb/modules/rezygisk/disable" ]; then
-		status="[SuSFS patches: ${susfs_ver}+, Module: ✅, Hiding: ✅, ReZygisk: ✅]\\\\n"
-	else
-		status="[SuSFS patches: ${susfs_ver}+, Module: ✅, Hiding: ✅]\\\\n"
-	fi
+	# if [ -d "/data/adb/modules/rezygisk" ] && [ ! -f "/data/adb/modules/rezygisk/disable" ]; then
+	# else
+	# fi
+	status="[Module Status: ✅, SuSFS Patches: ${susfs_ver}+]\\\\n"
 else
-	status="[SuSFS patches: ❌, Module: ❌, Hiding: ❌]\\\\n"
+	status="[Module Status: ❌, SuSFS Patches: ❌]\\\\n"
 fi
 sed -i "s|^description=.*|description=${status}${description}|" ${MODDIR}/module.prop
 
