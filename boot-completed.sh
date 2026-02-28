@@ -44,6 +44,10 @@ fi
 [[ $config_wireless_debugging == 1 ]] && settings put global adb_wifi_enabled 1 || settings put global adb_wifi_enabled 0
 
 
+# SELinux
+[[ $config_selinux == 1 ]] && setenforce 1 || setenforce 0
+
+
 #### Unhide all sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes ####
 ## It is suggested to unhide it in this stage, and let kernel or zygisk to umount them for user processes, but this is up to you ##
 # cat <<EOF >/dev/null

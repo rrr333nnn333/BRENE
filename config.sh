@@ -8,6 +8,7 @@ config_kernel_umount=1
 config_uname_spoofing=1
 config_hide_zygisk_modules=1
 config_hide_injections=1
+config_selinux=1
 config_usb_debugging=0
 config_developer_options=0
 config_wireless_debugging=0
