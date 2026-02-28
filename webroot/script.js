@@ -43,7 +43,8 @@ const configs = [
 	{
 		id: 'selinux',
 		action: enabled => setFeature(`setenforce ${enabled ? 1 : 0}`)
-	}
+	},
+	{id: 'proc_cmdline_bootconfig_spoofing'}
 ]
 
 // Load enabled features

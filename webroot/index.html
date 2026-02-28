@@ -202,6 +202,19 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
+						Spoof /proc/cmdline or /proc/bootconfig
+						<md-switch id="proc_cmdline_bootconfig_spoofing"></md-switch>
+					</label>
+					<div class="toggle-option-content">
+						<div class="toggle-info">No root process detects it for now, and this spoofing won't help much actually</div>
+						<div class="toggle-info">androidboot.warranty_bit = "0"</div>
+						<div class="toggle-info">androidboot.verifiedbootstate = "green"</div>
+					</div>
+					<md-ripple></md-ripple>
+				</div>
+
+				<div class="list-item">
+					<label class="toggle-option">
 						Custom uname
 						<md-switch id="uname_spoofing"></md-switch>
 					</label>

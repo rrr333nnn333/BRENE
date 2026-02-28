@@ -90,6 +90,27 @@ chmod 755 ${DEST_BIN_DIR}/ksu_susfs
 # ${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_PROC_CMDLINE_FILE}
 # EOF
 
+if [[ $config_proc_cmdline_bootconfig_spoofing == 1 ]]; then
+	susfs_variant=$(${SUSFS_BIN} show variant)
+
+	if [[ $susfs_variant == "GKI" ]]; then
+		FAKE_BOOTCONFIG=${PERSISTENT_DIR}/fake_bootconfig.txt
+		
+		cat /proc/bootconfig > ${FAKE_BOOTCONFIG}
+		sed -i 's/androidboot.warranty_bit = "1"/androidboot.warranty_bit = "0"/' ${FAKE_BOOTCONFIG}
+		sed -i 's/androidboot.verifiedbootstate = "orange"/androidboot.verifiedbootstate = "green"/' ${FAKE_BOOTCONFIG}
+		${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_BOOTCONFIG}
+	else
+		FAKE_CMDLINE=${PERSISTENT_DIR}/fake_cmdline.txt
+		
+		cat /proc/cmdline > ${FAKE_CMDLINE}
+		sed -i 's/androidboot.warranty_bit=1/androidboot.warranty_bit=0/' ${FAKE_CMDLINE}
+		sed -i 's/androidboot.verifiedbootstate=orange/androidboot.verifiedbootstate=green/' ${FAKE_CMDLINE}
+		${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_CMDLINE}
+	fi
+fi
+
+
 #### Hiding the exposed /proc interface of ext4 loop and jdb2 when mounting modules.img using sus_path ####
 # if [[ $config_hide_modules_img == 1 ]]; then
 # 	for device in $(ls -Ld /proc/fs/jbd2/loop*8 | sed 's|/proc/fs/jbd2/||; s|-8||'); do
