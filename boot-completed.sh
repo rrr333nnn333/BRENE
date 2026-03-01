@@ -144,6 +144,9 @@ if_prop_value_exits_resetprop_n "ro.vendor.boot.warranty_bit" "0"
 if_prop_value_exits_resetprop_n "ro.vendor.warranty_bit" "0"
 if_prop_value_exits_resetprop_n "ro.boot.warranty_bit" "0"
 
+fingerprint=$(resetprop ro.build.fingerprint)
+resetprop_n "ro.build.fingerprint" "${fingerprint//userdebug/user}"
+
 
 ## Please note that sometimes the path needs to be added twice or above to be effective ##
 ## Besides, all user apps without root access cannot see the hidden path '/sdcard/<hidden_path>' unless you grant it root access ##
