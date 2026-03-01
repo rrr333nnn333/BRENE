@@ -195,9 +195,11 @@ fi
 if [[ $config_hide_sdcard_android_data == 1 ]]; then
 	for i in $(ls /sdcard/Android/data); do
 		${SUSFS_BIN} add_sus_path "/sdcard/Android/data/${i}"
+		${SUSFS_BIN} add_sus_path_loop "/sdcard/Android/data/${i}"
 	done
 	for i in $(ls /storage/emulated/0/Android/data); do
 		${SUSFS_BIN} add_sus_path "/storage/emulated/0/Android/data/${i}"
+		${SUSFS_BIN} add_sus_path_loop "/storage/emulated/0/Android/data/${i}"
 	done
 fi
 
