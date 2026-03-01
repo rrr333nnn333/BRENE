@@ -57,7 +57,7 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						All Items In /data/local/tmp
+						Hide /data/local/tmp Items
 						<md-switch id="hide_data_local_tmp"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -65,7 +65,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						All Items In /sdcard/Android/data
+						Hide /sdcard/Android/data Items
 						<md-switch id="hide_sdcard_android_data"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -73,7 +73,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Module Injections
+						Module Injections Hiding
 						<md-switch id="hide_injections"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -84,11 +84,11 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Some Zygisk Module Injections
+						Zygisk Module Injections Hiding
 						<md-switch id="hide_zygisk_modules"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Hide some zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
+						<div class="toggle-info">Hide zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -100,14 +100,16 @@
 					</label>
 					<div class="toggle-option-content">
 						<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
-						<div class="toggle-info">e.g. Prevent traces left by zygote, Zygote Mountinfo Leak (Native Test Futile Hide (08)).</div>
+						<div class="toggle-info">e.g. Prevent traces left by zygote, Zygote Mountinfo Leak</div>
+						<div class="toggle-info">Holmes: Futile Trace Hide</div>
+						<div class="toggle-info">Native Test: Futile Hide (08)</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Rooted Apps Folders
+						Rooted Apps Folders Hiding
 						<md-switch id="hide_rooted_app_folders"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -122,7 +124,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Custom Recovery Folders
+						Custom Recovery Folders Hiding
 						<md-switch id="hide_custom_recovery_folders"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -187,7 +189,7 @@
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						AVC Log
+						AVC Log Spoofing
 						<md-switch id="enable_avc_log_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -202,7 +204,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Spoof /proc/cmdline or /proc/bootconfig
+						/proc/cmdline or /proc/bootconfig Spoofing
 						<md-switch id="proc_cmdline_bootconfig_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -215,7 +217,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Custom uname
+						Uname Spoofing
 						<md-switch id="uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -227,7 +229,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Custom uname 2 (Better Hiding)
+						Uname Spoofing (Better Hiding)
 						<md-switch id="uname2_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -239,7 +241,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Set Custom uname on Boot
+						Custom Uname Spoofing
 						<md-switch id="custom_uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -264,7 +266,7 @@
 					<md-outlined-text-field
 						id="verified_boot_hash_text_field"
 						type="textarea"
-						label="Verified Boot Hash"
+						label="Verified Boot Hash Spoofing"
 						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a (64 digits)"
 					></md-outlined-text-field>
 					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
@@ -279,7 +281,7 @@
 						<md-switch id="enable_log"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">SuSFS log in kernel</div>
+						<div class="toggle-info">Enable or disable log in kernel</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -290,7 +292,7 @@
 						<md-switch id="selinux"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or disable Enforcing mode</div>
+						<div class="toggle-info">Enable or disable enforcing mode</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -310,12 +312,12 @@
 				</div>
 
 				<div class="list-item">
-					<label class="toggle-option" id="enable_ksu_modules"> Enable All KernelSU Modules </label>
+					<label class="toggle-option" id="enable_ksu_modules"> Enable KernelSU Modules </label>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
-					<label class="toggle-option" id="disable_ksu_modules"> Disable All KernelSU Modules </label>
+					<label class="toggle-option" id="disable_ksu_modules"> Disable KernelSU Modules </label>
 					<md-ripple></md-ripple>
 				</div>
 			</div>

@@ -31,6 +31,9 @@ body {
 	border-radius: 4px;
 	box-sizing: border-box;
 }
+md-switch {
+	pointer-events: all;
+}
 .settings-group {
 	margin-bottom: 10px;
 	border-radius: 20px;
@@ -42,18 +45,19 @@ body {
 .toggle-option {
 	font-size: 1.2em;
 	min-height: 32px;
-	padding: 12px 16px;
+	padding: 8px 16px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	user-select: none;
 	gap: 8px;
+	pointer-events: none;
 }
 .toggle-option-content {
 	font-size: 1.2em;
 	min-height: 32px;
 	padding: 0px 16px;
-	padding-bottom: 16px;
+	padding-bottom: 8px;
 	display: block;
 	align-items: center;
 	justify-content: space-between;
@@ -105,7 +109,7 @@ body {
 .enabled-config {
 	font-family: monospace;
 	padding: 16px;
-	font-size: 1.2em;
+	font-size: 1.4em;
 	background-color: var(--md-sys-color-surface-container-lowest);
 	box-sizing: border-box;
 }
