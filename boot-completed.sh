@@ -45,7 +45,11 @@ fi
 
 
 # SELinux
-[[ $config_selinux == 1 ]] && setenforce 1 || setenforce 0
+if [[ $config_selinux == 1 ]]; then
+	[[ $(getenforce) == "Permissive" ]] && setenforce 1
+else
+	[[ $(getenforce) == "Enforcing" ]] && setenforce 0
+fi
 
 
 #### Unhide all sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes ####
