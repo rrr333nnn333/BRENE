@@ -211,6 +211,7 @@ fi
 ## Now we can add the path ##
 if [[ $config_hide_rooted_app_folders == 1 ]]; then
 	[ -d /sdcard/MT2 ] && ${SUSFS_BIN} add_sus_path /sdcard/MT2
+	[ -d /sdcard/xinhao ] && ${SUSFS_BIN} add_sus_path /sdcard/xinhao
 	[ -d /sdcard/OhMyFont ] && ${SUSFS_BIN} add_sus_path /sdcard/OhMyFont
 	[ -d /sdcard/AppManager ] && ${SUSFS_BIN} add_sus_path /sdcard/AppManager
 	[ -d /sdcard/DataBackup ] && ${SUSFS_BIN} add_sus_path /sdcard/DataBackup
