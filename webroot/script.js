@@ -189,6 +189,17 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 	})
 })()
 
+// Simplified Chinese WebUI
+;(() => {
+	const button = document.getElementById('simplified_chinese_webui')
+
+	button.addEventListener('click', () => {
+		exec(`cp -f ${MODDIR}/simplified_chinese_webui.html ${MODDIR}/webroot/index.html`).then(result => {
+			toast(result.errno === 0 ? 'Success' : result.stderr)
+		})
+	})
+})()
+
 // Custom sus map
 ;(() => {
 	const mapField = document.getElementById('custom_sus_map_text_field')

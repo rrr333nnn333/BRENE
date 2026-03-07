@@ -17,47 +17,47 @@
 			</div>
 		</div>
 		<div class="preload-hidden body-content">
-			<div class="settings-group-title">Android Settings</div>
+			<div class="settings-group-title">Android 设置</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						Developer Options
+						开发者选项
 						<md-switch icons id="developer_options"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or disable developer options</div>
+						<div class="toggle-info">启用或禁用开发者选项</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						USB Debugging
+						USB 调试
 						<md-switch icons id="usb_debugging"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or disable USB debugging</div>
+						<div class="toggle-info">启用或禁用 USB 调试</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Wireless Debugging
+						无线调试
 						<md-switch icons id="wireless_debugging"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or disable wireless debugging</div>
+						<div class="toggle-info">启用或禁用无线调试</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 			</div>
 
-			<div class="settings-group-title">Hiding Features</div>
+			<div class="settings-group-title">隐藏功能</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						Hide /data/local/tmp Items
+						/data/local/tmp 目录下的所有项目
 						<md-switch icons id="hide_data_local_tmp"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -65,7 +65,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Hide /sdcard/Android/data Items
+						/sdcard/Android/data 目录下的所有项目
 						<md-switch icons id="hide_sdcard_android_data"></md-switch>
 					</label>
 					<md-ripple></md-ripple>
@@ -73,43 +73,43 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Module Injections Hiding
+						模块注入文件
 						<md-switch icons id="hide_injections"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Hide injections, /data/adb/modules/module_name/system/*/*.*</div>
+						<div class="toggle-info">隐藏注入文件，路径：/data/adb/modules/module_name/system/*/*.*</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Zygisk Module Injections Hiding
+						部分 Zygisk 模块注入
 						<md-switch icons id="hide_zygisk_modules"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Hide zygisk injections, /data/adb/modules/module_name/zygisk/*.so</div>
+						<div class="toggle-info">隐藏部分 Zygisk 注入，路径：/data/adb/modules/模块名称/zygisk/*.so</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Hide Suspicious Mounts For Non-su Processes
+						对非 su 进程隐藏可疑挂载点
 						<md-switch icons id="hide_sus_mnts_for_non_su_procs"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Hide sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes.</div>
-						<div class="toggle-info">e.g. Prevent traces left by zygote, Zygote Mountinfo Leak</div>
-						<div class="toggle-info">Holmes: Futile Trace Hide</div>
-						<div class="toggle-info">Native Test: Futile Hide (08)</div>
+						<div class="toggle-info">从非 su 进程的 /proc/self/[mounts|mountinfo|mountstat] 中隐藏可疑挂载信息</div>
+						<div class="toggle-info">例如：防止 Zygote 进程泄露痕迹，修复 Zygote 挂载信息泄露</div>
+						<div class="toggle-info">Holmes 测试: Futile Trace Hide</div>
+						<div class="toggle-info">原生测试: Futile Hide (08)</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Rooted Apps Folders Hiding
+						Root 工具相关文件夹
 						<md-switch icons id="hide_rooted_app_folders"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -126,7 +126,7 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Custom Recovery Folders Hiding
+						自定义 Recovery 文件夹
 						<md-switch icons id="hide_custom_recovery_folders"></md-switch>
 					</label>
 					<div class="toggle-option-content">
@@ -148,9 +148,9 @@
 
 				<div class="list-item custom-uname-content textarea-container">
 					<md-tabs id="sus_tabs">
-						<md-primary-tab id="tab_sus_map" aria-controls="panel_sus_map">MAP</md-primary-tab>
-						<md-primary-tab id="tab_sus_path" aria-controls="panel_sus_path">PATH</md-primary-tab>
-						<md-primary-tab id="tab_sus_path_loop" aria-controls="panel_sus_path_loop">PATH LOOP</md-primary-tab>
+						<md-primary-tab id="tab_sus_map" aria-controls="panel_sus_map">映射规则（MAP）</md-primary-tab>
+						<md-primary-tab id="tab_sus_path" aria-controls="panel_sus_path">路径规则（PATH）</md-primary-tab>
+						<md-primary-tab id="tab_sus_path_loop" aria-controls="panel_sus_path_loop">路径循环规则（PATH LOOP）</md-primary-tab>
 					</md-tabs>
 					<div class="snap-container" id="horizontal_scroll_container">
 						<div class="snap-item">
@@ -182,35 +182,32 @@
 						</div>
 					</div>
 					<div class="custom-uname-buttons content">
-						<md-filled-button id="unified_apply_button">APPLY</md-filled-button>
+						<md-filled-button id="unified_apply_button">应用（APPLY）</md-filled-button>
 					</div>
 				</div>
 			</div>
 
-			<div class="settings-group-title">Spoofing Features</div>
+			<div class="settings-group-title">伪装功能</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						AVC Log Spoofing
+						AVC 日志（SELinux 拒绝日志）
 						<md-switch icons id="enable_avc_log_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Spoofing the sus 'su' tcontext shown in avc log in kernel.</div>
-						<div class="toggle-info">
-							Enabling this will sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issue,
-							so users are advised to disable this when doing so.
-						</div>
+						<div class="toggle-info">伪装内核日志中显示的 'su' 相关 SELinux 上下文标签。</div>
+						<div class="toggle-info">启用此功能可能会使开发人员在调试权限或 SELinux 问题时难以定位原因，建议在调试时禁用此功能。</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						/proc/cmdline or /proc/bootconfig Spoofing
+						伪装 /proc/cmdline 或 /proc/bootconfig
 						<md-switch icons id="proc_cmdline_bootconfig_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">No root process detects it for now, and this spoofing won't help much actually</div>
+						<div class="toggle-info">目前暂无 Root 进程可检测此，该伪装实际作用不大</div>
 						<div class="toggle-info">androidboot.warranty_bit = "0"</div>
 						<div class="toggle-info">androidboot.verifiedbootstate = "green"</div>
 					</div>
@@ -219,23 +216,23 @@
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Uname Spoofing
+						系统信息伪装（Uname）
 						<md-switch icons id="uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Spoof uname for all processes</div>
-						<div class="toggle-info">e.g. 5.10.123-android12-9-g690101101069</div>
+						<div class="toggle-info">为所有进程伪装 Uname 信息</div>
+						<div class="toggle-info">例如：5.10.123-android12-9-g690101101069</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item">
 					<label class="toggle-option">
-						Custom Uname Spoofing
+						在启动时设置自定义系统信息
 						<md-switch icons id="custom_uname_spoofing"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Spoof uname for all processes, set string to 'default' to imply the function to use original string.</div>
+						<div class="toggle-info">为所有进程伪装 Uname 信息，将字符串设置为 'default' 表示使用原始字符串。</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -247,8 +244,8 @@
 						id="custom_uname_version"
 					></md-outlined-text-field>
 					<div class="custom-uname-buttons">
-						<md-outlined-button id="button_custom_uname_reset">RESET</md-outlined-button>
-						<md-filled-button id="button_custom_uname_apply">APPLY</md-filled-button>
+						<md-outlined-button id="button_custom_uname_reset">重置（RESET）</md-outlined-button>
+						<md-filled-button id="button_custom_uname_apply">应用（APPLY）</md-filled-button>
 					</div>
 				</div>
 
@@ -260,19 +257,19 @@
 						rows="3"
 						placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a (64 digits)"
 					></md-outlined-text-field>
-					<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
+					<md-filled-button id="verified_boot_hash_button">应用（APPLY）</md-filled-button>
 				</div>
 			</div>
 
-			<div class="settings-group-title">Other Features</div>
+			<div class="settings-group-title">其他选项</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						SuSFS Logs
+						SuSFS 内核日志
 						<md-switch icons id="enable_log"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or disable log in kernel</div>
+						<div class="toggle-info">启用内核中的 SuSFS 日志记录</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
@@ -283,43 +280,37 @@
 						<md-switch icons id="selinux"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Enable or disable enforcing mode</div>
+						<div class="toggle-info">启用或关闭严格模式</div>
 					</div>
-					<md-ripple></md-ripple>
-				</div>
-
-				<!-- TEMP -->
-				<div class="list-item custom-uname-content">
-					<md-filled-button id="simplified_chinese_webui">Simplified Chinese WebUI</md-filled-button>
 					<md-ripple></md-ripple>
 				</div>
 			</div>
 
-			<div class="settings-group-title">KernelSU Features and Settings</div>
+			<div class="settings-group-title">KernelSU 功能与设置</div>
 			<div class="settings-group">
 				<div class="list-item">
 					<label class="toggle-option">
-						Kernel Umount
+						内核自动卸载模块(Kernel Umount)
 						<md-switch icons id="kernel_umount"></md-switch>
 					</label>
 					<div class="toggle-option-content">
-						<div class="toggle-info">Controls whether kernel automatically unmounts modules when not needed.</div>
+						<div class="toggle-info">控制内核是否在不需要时自动卸载模块。</div>
 					</div>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item custom-uname-content">
-					<md-filled-button id="enable_ksu_modules"> Enable KernelSU Modules </md-filled-button>
+					<md-filled-button id="enable_ksu_modules"> 启用所有 KernelSU 模块 </md-filled-button>
 					<md-ripple></md-ripple>
 				</div>
 
 				<div class="list-item custom-uname-content">
-					<md-filled-button id="disable_ksu_modules"> Disable KernelSU Modules </md-filled-button>
+					<md-filled-button id="disable_ksu_modules"> 禁用所有 KernelSU 模块 </md-filled-button>
 					<md-ripple></md-ripple>
 				</div>
 			</div>
 
-			<div class="settings-group-title">Enabled Features In Kernel</div>
+			<div class="settings-group-title">内核中已启用的功能</div>
 			<div class="settings-group enabled-config" id="kernel-features-container"></div>
 		</div>
 
