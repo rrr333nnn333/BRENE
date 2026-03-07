@@ -1,6 +1,6 @@
 KSU_BIN=/data/adb/ksu/bin/ksud
 DEST_BIN_DIR=/data/adb/ksu/bin
-SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
+SUSFS_BIN=/data/adb/ksu/bin/susfs
 PERSISTENT_DIR=/data/adb/brene
 
 # Disable outdated modules
@@ -43,10 +43,8 @@ if [ ! -d ${DEST_BIN_DIR} ]; then
 	abort "[❌] '${DEST_BIN_DIR}' not existed, installation aborted!"
 fi
 
-cp -f ${MODPATH}/tools/ksu_susfs ${DEST_BIN_DIR}
-cp -f ${MODPATH}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
+cp -f ${MODPATH}/tools/susfs ${DEST_BIN_DIR}
 chmod 755 ${DEST_BIN_DIR}/susfs
-chmod 755 ${DEST_BIN_DIR}/ksu_susfs
 chmod 644 ${MODPATH}/post-fs-data.sh ${MODPATH}/service.sh ${MODPATH}/uninstall.sh ${MODPATH}/boot-completed.sh
 
 susfs_ver=$(${SUSFS_BIN} show version 2>/dev/null)

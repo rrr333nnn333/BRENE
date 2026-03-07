@@ -1,14 +1,9 @@
 MODDIR=${0%/*}
 DEST_BIN_DIR=/data/adb/ksu/bin
-SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
+SUSFS_BIN=/data/adb/ksu/bin/susfs
 PERSISTENT_DIR=/data/adb/brene
 # Load config
 [ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
-
-cp -f ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}
-cp -f ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
-chmod 755 ${DEST_BIN_DIR}/susfs
-chmod 755 ${DEST_BIN_DIR}/ksu_susfs
 
 . ${MODDIR}/utils.sh
 
