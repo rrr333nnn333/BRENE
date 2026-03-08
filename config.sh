@@ -13,6 +13,7 @@ config_proc_cmdline_bootconfig_spoofing=1
 config_usb_debugging=0
 config_developer_options=0
 config_wireless_debugging=0
+config_pif_props=0
 config_enable_log=0
 config_hide_modules_img=0
 config_custom_uname_spoofing=0

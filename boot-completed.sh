@@ -227,5 +227,12 @@ if [[ $config_hide_custom_recovery_folders == 1 ]]; then
 	[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path_loop /storage/emulated/TWRP
 fi
 
+
+# Remove Play Integrity Fix Props (EXPERIMENTAL)
+if [[ $config_pif_props == 1 ]]; then
+	resetprop | grep -E "pihook|pixelprops" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+fi
+
+
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
