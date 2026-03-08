@@ -44,7 +44,8 @@ const configs = [
 		action: enabled => setFeature(`setenforce ${enabled ? 1 : 0}`)
 	},
 	{id: 'proc_cmdline_bootconfig_spoofing'},
-	{id: 'pif_props'}
+	{id: 'pif_props'},
+    {id: 'rom_props'}
 ]
 
 // Load enabled features
