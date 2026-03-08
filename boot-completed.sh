@@ -216,6 +216,7 @@ if [[ $config_hide_rooted_app_folders == 1 ]]; then
 	[ -d /sdcard/OhMyFont ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/OhMyFont
 	[ -d /sdcard/AppManager ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/AppManager
 	[ -d /sdcard/DataBackup ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/DataBackup
+	[ -d /sdcard/KernelFlasher ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/KernelFlasher
 	[ -d /sdcard/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/Android/fas-rs
 fi
 
