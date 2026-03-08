@@ -233,6 +233,10 @@ if [[ $config_pif_props == 1 ]]; then
 	resetprop | grep -E "pihook|pixelprops" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
 fi
 
+# Remove Custom ROM Props (EXPERIMENTAL)
+if [[ $config_rom_props == 1 ]]; then
+	resetprop | grep -E "lineage|crdroid" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+fi
 
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
