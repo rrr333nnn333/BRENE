@@ -45,7 +45,7 @@ const configs = [
 	},
 	{id: 'proc_cmdline_bootconfig_spoofing'},
 	{id: 'pif_props'},
-    {id: 'rom_props'}
+	{id: 'rom_props'}
 ]
 
 // Load enabled features
@@ -195,7 +195,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 ;(() => {
 	const button = document.getElementById('simplified_chinese_webui')
 
-	button.addEventListener('click', () => {
+	button?.addEventListener('click', () => {
 		exec(`cp -f ${MODDIR}/simplified_chinese_webui.html ${MODDIR}/webroot/index.html`).then(result => {
 			toast(result.errno === 0 ? 'Success' : result.stderr)
 		})
