@@ -1,0 +1,97 @@
+name: Build module zip and publish release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.ref }}
+
+      - name: Read version and set versionCode in module.prop for zip
+        id: version
+        run: |
+          set +x
+          VERSION=$(grep '^version=' module.prop | cut -d= -f2-)
+          RAW=$(echo "$VERSION" | sed 's/^v//' | tr -d '.')
+          VERSION_CODE=$((10#${RAW:-0}))
+          sed -i "s/^versionCode=.*/versionCode=${VERSION_CODE}/" module.prop
+          sed -i "s|^updateJson=.*|updateJson=https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/update.json|" module.prop
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "versionCode=$VERSION_CODE" >> $GITHUB_OUTPUT
+          echo "Using version=$VERSION from module.prop, setting versionCode=$VERSION_CODE"
+
+      - name: Create module zip
+        run: |
+          set +x
+          zip -r "BRENE-${{ steps.version.outputs.version }}.zip" . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x "update.json"
+          echo "Created BRENE-${{ steps.version.outputs.version }}.zip"
+          ls -la "BRENE-${{ steps.version.outputs.version }}.zip"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          files: "BRENE-${{ steps.version.outputs.version }}.zip"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch release body and update changelog.md
+        run: |
+          set +x
+          VERSION="${{ steps.version.outputs.version }}"
+          RESPONSE=$(curl -sS -w "\n%{http_code}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${VERSION}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          PAYLOAD=$(echo "$RESPONSE" | sed '$d')
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Release API returned HTTP $HTTP_CODE"
+            exit 1
+          fi
+          BODY=$(echo "$PAYLOAD" | jq -r '.body // empty')
+          if [ -z "$BODY" ]; then
+            BODY="(No release notes for this version.)"
+          fi
+          printf '## %s\n\n%s\n\n' "$VERSION" "$BODY" > changelog_section.md
+          if [ -f changelog.md ]; then
+            cat changelog_section.md changelog.md > changelog.md.tmp
+          else
+            cp changelog_section.md changelog.md.tmp
+          fi
+          mv changelog.md.tmp changelog.md
+          rm -f changelog_section.md
+
+      - name: Write update.json and push
+        run: |
+          set +x
+          VERSION="${{ steps.version.outputs.version }}"
+          VERSION_CODE="${{ steps.version.outputs.versionCode }}"
+          BRANCH="${{ github.ref_name }}"
+          ZIP_URL="https://github.com/${{ github.repository }}/releases/download/${VERSION}/BRENE-${VERSION}.zip"
+          CHANGELOG_URL="https://raw.githubusercontent.com/${{ github.repository }}/${BRANCH}/changelog.md"
+          jq -n \
+            --arg version "$VERSION" \
+            --argjson versionCode $VERSION_CODE \
+            --arg zipUrl "$ZIP_URL" \
+            --arg changelog "$CHANGELOG_URL" \
+            '{version: $version, versionCode: $versionCode, zipUrl: $zipUrl, changelog: $changelog}' > update.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add module.prop update.json changelog.md
+          if git diff --staged --quiet; then
+            echo "No changes to module.prop, update.json or changelog.md"
+          else
+            git commit -m "chore(ci): sync module.prop, update.json and changelog.md for release ${VERSION}"
+            git push origin HEAD
+          fi
