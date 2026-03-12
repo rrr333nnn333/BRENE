@@ -23,6 +23,7 @@ jobs:
           RAW=$(echo "$VERSION" | sed 's/^v//' | tr -d '.')
           VERSION_CODE=$((10#${RAW:-0}))
           sed -i "s/^versionCode=.*/versionCode=${VERSION_CODE}/" module.prop
+          sed -i "s|^updateJson=.*|updateJson=https://raw.githubusercontent.com/${{ github.repository }}/main/update.json|" module.prop
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "versionCode=$VERSION_CODE" >> $GITHUB_OUTPUT
           echo "Using version=$VERSION from module.prop, setting versionCode=$VERSION_CODE"
