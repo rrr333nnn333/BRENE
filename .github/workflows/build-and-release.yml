@@ -1,0 +1,70 @@
+name: Build module zip and publish release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Read version and set versionCode in module.prop for zip
+        id: version
+        run: |
+          set +x
+          VERSION=$(grep '^version=' module.prop | cut -d= -f2-)
+          RAW=$(echo "$VERSION" | sed 's/^v//' | tr -d '.')
+          VERSION_CODE=$((10#${RAW:-0}))
+          sed -i "s/^versionCode=.*/versionCode=${VERSION_CODE}/" module.prop
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "versionCode=$VERSION_CODE" >> $GITHUB_OUTPUT
+          echo "Using version=$VERSION from module.prop, setting versionCode=$VERSION_CODE"
+
+      - name: Create module zip
+        run: |
+          set +x
+          zip -r "BRENE-${{ steps.version.outputs.version }}.zip" . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x "update.json"
+          echo "Created BRENE-${{ steps.version.outputs.version }}.zip"
+          ls -la "BRENE-${{ steps.version.outputs.version }}.zip"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          files: "BRENE-${{ steps.version.outputs.version }}.zip"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write update.json and push to main
+        run: |
+          set +x
+          VERSION="${{ steps.version.outputs.version }}"
+          VERSION_CODE="${{ steps.version.outputs.versionCode }}"
+          ZIP_URL="https://github.com/${{ github.repository }}/releases/download/${VERSION}/BRENE-${VERSION}.zip"
+          CHANGELOG_URL="https://github.com/${{ github.repository }}/releases/tag/${VERSION}"
+          jq -n \
+            --arg version "$VERSION" \
+            --argjson versionCode $VERSION_CODE \
+            --arg zipUrl "$ZIP_URL" \
+            --arg changelog "$CHANGELOG_URL" \
+            '{version: $version, versionCode: $versionCode, zipUrl: $zipUrl, changelog: $changelog}' > update.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add module.prop update.json
+          if git diff --staged --quiet; then
+            echo "No changes to module.prop or update.json"
+          else
+            git commit -m "chore(ci): sync module.prop and update.json for release ${VERSION}"
+            git push
+          fi
