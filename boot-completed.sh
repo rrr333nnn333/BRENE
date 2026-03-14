@@ -22,8 +22,7 @@ sed -i "s|^description=.*|description=${status}${description}|" ${MODDIR}/module
 
 
 # Enable kernel umount
-# ${KSU_BIN} feature set kernel_umount ${config_kernel_umount}
-${KSU_BIN} feature set kernel_umount 1 # Always enable kernel umount feature at boot
+${KSU_BIN} feature set kernel_umount ${config_kernel_umount}
 ${KSU_BIN} feature save
 
 
