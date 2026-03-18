@@ -12,16 +12,7 @@ PERSISTENT_DIR=/data/adb/brene
 ## - This module is just an demo showing how to use ksu_susfs tool to commuicate with kernel
 ##
 
-#### Hide target path and all its sub-paths from all user app processes which have no root permission granted ####
-## Make sure the target file/directory has no more overlay/mount operation on going. Or add it after it is done being overlayed or mounted ##
-# For some custom ROM #
-[ -d /system/addon.d ] && ${SUSFS_BIN} add_sus_path_loop /system/addon.d
-[ -f /vendor/bin/install-recovery.sh ] && ${SUSFS_BIN} add_sus_path_loop /vendor/bin/install-recovery.sh
-[ -f /system/bin/install-recovery.sh ] && ${SUSFS_BIN} add_sus_path_loop /system/bin/install-recovery.sh
-[ -f /system/vendor/bin/install-recovery.sh ] && ${SUSFS_BIN} add_sus_path_loop /system/vendor/bin/install-recovery.sh
-
-
-#### Spoof the stat of file/directory dynamically ####
+#### Spoof the stat of file/directory dynamically, effective only for processes that are marked umounted with uid >= 10000 ####
 ## Important Note: 
 ##  - It is stronly suggested to use dynamically if the target path will be mounted
 # cat <<EOF >/dev/null
@@ -42,7 +33,7 @@ PERSISTENT_DIR=/data/adb/brene
 # #${SUSFS_BIN} update_sus_kstat_full_clone '/system/etc/hosts'
 # EOF
 
-#### Spoof the stat of file/directory statically ####
+#### Spoof the stat of file/directory statically, effective only for processes that are marked umounted with uid >= 10000 ####
 ## Important Note:
 ##  - It is suggested to use statically if you don't need to mount anything but simply change the stat of a target path
 # cat <<EOF >/dev/null
@@ -53,16 +44,15 @@ PERSISTENT_DIR=/data/adb/brene
 # EOF
 
 
-#### Redirect path  ####
+#### Redirect path, effective for processes with uid < 2000 ####
 # redirect hosts file to other hosts file somewhere else #
-# cat <<EOF >/dev/null
-# # plesae be reminded that only process with uid < 2000 is effective #
-# # and before doing that, make sure you setup proper permission and selinux for your redirected file #
+# First make sure you setup proper permission and selinux for your redirected file #
 # susfs_clone_perm '/data/local/tmp/my_hosts' '/system/etc/hosts'
+# And then add them via 'add_path_redirect'
 # ${SUSFS_BIN} add_path_redirect '/system/etc/hosts' '/data/local/tmp/my_hosts'
-# EOF
 
-#### Spoof /proc/cmdline or /proc/bootconfig ####
+
+#### Spoof /proc/cmdline or /proc/bootconfig, effective for all processes ####
 # No root process detects it for now, and this spoofing won't help much actually #
 # /proc/bootconfig #
 # cat <<EOF >/dev/null
@@ -73,7 +63,7 @@ PERSISTENT_DIR=/data/adb/brene
 # sed -i 's/^androidboot.verifiedbootstate.*$/androidboot.verifiedbootstate = "green"/g' ${FAKE_BOOTCONFIG}
 # sed -i '/androidboot.verifiedbooterror/d' ${FAKE_BOOTCONFIG}
 # sed -i '/androidboot.verifyerrorpart/d' ${FAKE_BOOTCONFIG}
-# ${SUSFS_BIN} set_cmdline_or_bootconfig /data/adb/modules/susfs4ksu/fake_bootconfig.txt
+# ${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_BOOTCONFIG}
 # EOF
 
 # /proc/cmdline #
@@ -106,23 +96,26 @@ if [[ $config_proc_cmdline_bootconfig_spoofing == 1 ]]; then
 fi
 
 
-#### Hiding the exposed /proc interface of ext4 loop and jdb2 when mounting modules.img using sus_path ####
+#### Hiding the exposed /proc interface of ext4 loop and jdb2 when mounting ext4 img using sus_path ####
 # if [[ $config_hide_modules_img == 1 ]]; then
+## Hide all sus ext4 loops and jbd2 journals if they are still mounted and with jdb2 journal enabled ##
 # 	for device in $(ls -Ld /proc/fs/jbd2/loop*8 | sed 's|/proc/fs/jbd2/||; s|-8||'); do
 # 		${SUSFS_BIN} add_sus_path /proc/fs/jbd2/${device}-8
 # 		${SUSFS_BIN} add_sus_path /proc/fs/ext4/${device}
 # 	done
+## Also we need to spoof the nlink of /proc/fs/jbd2 to 2 ##
+# ${SUSFS_BIN} add_sus_kstat_statically '/proc/fs/jbd2' 'default' 'default' '2' 'default' 'default' 'default' 'default' 'default' 'default' 'default' 'default' 'default'
 # fi
 
 
-#### Enable avc log spoofing to bypass 'su' domain detection via /proc/<pid> enumeration ####
+#### Enable avc log spoofing to bypass 'su' domain detection via /proc/<pid> enumeration, effective for all processes ####
 [[ $config_enable_avc_log_spoofing == 1 ]] && ${SUSFS_BIN} enable_avc_log_spoofing 1 || ${SUSFS_BIN} enable_avc_log_spoofing 0
 
 ## disable it when users want to do some debugging with the permission issue or selinux issue ##
 #ksu_susfs enable_avc_log_spoofing 0
 
 
-#### Hide all sus mounts for non-su processes in this stage just to prevent zygote from caching them in memory ####
+#### Hide all sus mounts for NON-SU processes in this stage just to prevent zygote from caching them in memory ####
 ## This should be mainly applied if you have ReZygisk enabled but without TreatWheel module ##
 ## Or it is up to you to keep it enabled since su process can still see the mounts ##
 [[ $config_hide_sus_mnts_for_non_su_procs == 1 ]] && ${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 1 || ${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 0

@@ -6,7 +6,7 @@ PERSISTENT_DIR=/data/adb/brene
 # Load config
 [ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
 
-#### Spoof the uname ####
+#### Spoof the uname, effective for all processes ####
 # you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
 # pass 'default' to tell susfs to use the default value by uname #
 # ${SUSFS_BIN} set_uname 'default' 'default'

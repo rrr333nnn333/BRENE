@@ -52,19 +52,25 @@ else
 fi
 
 
-#### Unhide all sus mounts from /proc/self/[mounts|mountinfo|mountstat] for non-su processes ####
-## It is suggested to unhide it in this stage, and let kernel or zygisk to umount them for user processes, but this is up to you ##
-# cat <<EOF >/dev/null
-# ksu_susfs hide_sus_mnts_for_non_su_procs 0
-# EOF
+# Remove Play Integrity Fix Props (EXPERIMENTAL)
+if [[ $config_pif_props == 1 ]]; then
+	resetprop | grep -E "pihook|pixelprops" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+fi
+
+# Remove Custom ROM Props (EXPERIMENTAL)
+if [[ $config_rom_props == 1 ]]; then
+	resetprop | grep -E "lineage|crdroid" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+fi
 
 
-#### Hide the mmapped real file from various maps in /proc/self/ ####
-## - Please note that it is better to do it in boot-completed starge
+#### Hide the mmapped real file from various maps in /proc/self/, effective only for processes that are marked umounted with uid >= 10000 ####
+## - *Please note that it is better to do it in boot-completed starge
 ##   Since some target path may be mounted by ksu, and make sure the
 ##   target path has the same dev number as the one in global mnt ns,
-##   otherwise the sus map flag won't be seen on the umounted process.
-## - To debug with this, users can do this in a root shell:
+##   otherwise the sus map flag won't be seen on the umounted proocess.
+## - *Besides, if the source files get umounted and stay only in like zygote's memory maps,
+##   then it will not work as well since sus_map checks for real file's inode.
+## - To debug the namespace issue, users can do this in a root shell:
 ##   1. Find the pid and uid of a opened umounted app by running
 ##      ps -enf | grep myapp
 ##   2. cat /proc/<pid_of_myapp>/maps | grep "<added/sus_map/path>"'
@@ -94,12 +100,37 @@ if [[ $config_hide_injections == 1 ]]; then
 	done
 fi
 
-#### For path that needs to be re-flagged as SUS_PATH on each non-root user app / isolated service starts via add_sus_path_loop ####
-## - Path added via add_sus_path_loop will be re-flagged as SUS_PATH on each non-root process / isolated service starts ##
-## - This can help ensure some path that keep its inode status reset for whatever reason to be flagged as SUS_PATH again ##
-## - Please also note that only paths NOT inside '/sdcard/' or '/storage/' can be added via add_sus_path_loop ##
-## - ONLY USE THIS WHEN NECCESSARY !!! ##
-# ${SUSFS_BIN} add_sus_path_loop /sys/block/loop0
+
+#### Hide some sus paths, effective only for processes that are marked umounted with uid >= 10000 ####
+## First we need to wait until files are accessible in /sdcard ##
+until [ -d "/sdcard/Android" ]; do sleep 1; done
+
+## For paths that are frequently modified, we can add them via 'add_sus_path_loop' ##
+${SUSFS_BIN} add_sus_path_loop /sdcard/TWRP
+${SUSFS_BIN} add_sus_path_loop /sdcard/MT2
+${SUSFS_BIN} add_sus_path_loop /sdcard/AppManager
+${SUSFS_BIN} add_sus_path_loop /sdcard/Android/data/io.github.muntashirakon.AppManager
+${SUSFS_BIN} add_sus_path_loop /sdcard/Android/media/io.github.muntashirakon.AppManager
+${SUSFS_BIN} add_sus_path_loop /data/local/tmp/main.jar
+
+if [[ $config_hide_rooted_app_folders == 1 ]]; then
+	[ -d /sdcard/MT2 ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/MT2
+	[ -d /sdcard/rlgg ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/rlgg
+	[ -d /sdcard/xinhao ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/xinhao
+	[ -d /sdcard/OhMyFont ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/OhMyFont
+	[ -d /sdcard/AppManager ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/AppManager
+	[ -d /sdcard/DataBackup ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/DataBackup
+	[ -d /sdcard/KernelFlasher ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/KernelFlasher
+	[ -d /sdcard/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/Android/fas-rs
+fi
+
+if [[ $config_hide_custom_recovery_folders == 1 ]]; then
+	[ -d /sdcard/Fox ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/Fox
+	[ -d /sdcard/PBRP ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/PBRP
+	[ -d /sdcard/TWRP ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/TWRP
+	[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path_loop /storage/emulated/TWRP
+fi
+
 if [[ $config_hide_data_local_tmp == 1 ]]; then
 	for i in $(ls /data/local/tmp); do
 		${SUSFS_BIN} add_sus_path_loop "/data/local/tmp/${i}"
@@ -107,10 +138,24 @@ if [[ $config_hide_data_local_tmp == 1 ]]; then
 fi
 
 
-## Please note that sometimes the path needs to be added twice or above to be effective ##
-## Besides, all user apps without root access cannot see the hidden path '/sdcard/<hidden_path>' unless you grant it root access ##
-## First we need to wait until files are accessible in /sdcard ##
-until [ -d /sdcard/Android ]; do sleep 1; done
+## For paths that are read-only all the time, add them via 'add_sus_path' ##
+# ${SUSFS_BIN} add_sus_path /sys/block/loop0
+${SUSFS_BIN} add_sus_path /system/addon.d
+${SUSFS_BIN} add_sus_path /vendor/bin/install-recovery.sh
+${SUSFS_BIN} add_sus_path /system/bin/install-recovery.sh
+
+if [[ $config_hide_sdcard_android_data == 1 ]]; then
+	while true; do
+		items=$(ls /sdcard/Android/data | wc -l)
+		sleep 10
+		[[ "${items}" -eq "$(ls /sdcard/Android/data | wc -l)" ]] && break
+	done
+
+	for i in $(pm list packages -3 | cut -d':' -f2); do
+		[ -d "/sdcard/Android/data/$i" ] && ${SUSFS_BIN} add_sus_path "/sdcard/Android/data/$i"
+	done
+fi
+
 
 # Load custom_sus_map.txt
 if [ -f "${PERSISTENT_DIR}/custom_sus_map.txt" ]; then
@@ -139,52 +184,6 @@ if [ -f "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]; then
 		[ -d "${i}" ] && ${SUSFS_BIN} add_sus_path_loop "${i}"
 		[ -f "${i}" ] && ${SUSFS_BIN} add_sus_path_loop "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path_loop.txt"
-fi
-
-#### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
-## Now we can add the path ##
-if [[ $config_hide_rooted_app_folders == 1 ]]; then
-	[ -d /sdcard/MT2 ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/MT2
-	[ -d /sdcard/rlgg ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/rlgg
-	[ -d /sdcard/xinhao ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/xinhao
-	[ -d /sdcard/OhMyFont ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/OhMyFont
-	[ -d /sdcard/AppManager ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/AppManager
-	[ -d /sdcard/DataBackup ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/DataBackup
-	[ -d /sdcard/KernelFlasher ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/KernelFlasher
-	[ -d /sdcard/Android/fas-rs ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/Android/fas-rs
-fi
-
-if [[ $config_hide_custom_recovery_folders == 1 ]]; then
-	[ -d /sdcard/Fox ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/Fox
-	[ -d /sdcard/PBRP ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/PBRP
-	[ -d /sdcard/TWRP ] && ${SUSFS_BIN} add_sus_path_loop /sdcard/TWRP
-	[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path_loop /storage/emulated/TWRP
-fi
-
-
-# Remove Play Integrity Fix Props (EXPERIMENTAL)
-if [[ $config_pif_props == 1 ]]; then
-	resetprop | grep -E "pihook|pixelprops" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
-fi
-
-# Remove Custom ROM Props (EXPERIMENTAL)
-if [[ $config_rom_props == 1 ]]; then
-	resetprop | grep -E "lineage|crdroid" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
-fi
-
-
-#### Hide the leaking app path like /sdcard/Android/data/<app_package_name> from syscall ####
-## Now we can add the path ##
-if [[ $config_hide_sdcard_android_data == 1 ]]; then
-	while true; do
-		items=$(ls /sdcard/Android/data | wc -l)
-		sleep 10
-		[[ "${items}" -eq "$(ls /sdcard/Android/data | wc -l)" ]] && break
-	done
-
-	for i in $(pm list packages -3 | cut -d':' -f2); do
-		[ -d "/sdcard/Android/data/$i" ] && ${SUSFS_BIN} add_sus_path "/sdcard/Android/data/$i"
-	done
 fi
 
 
