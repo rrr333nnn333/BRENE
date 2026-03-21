@@ -4,3 +4,4 @@ version=v0.0.40
 versionCode=1
 author=rrr333nnn333, simonpunk@gitlab.com & KOWX712
 description=[Module Status: ❓, SuSFS Patches: ❓] A SuSFS/KernelSU module for SuSFS patched kernels
+updateJson=https://raw.githubusercontent.com/rrr333nnn333/BRENE/main/update.json

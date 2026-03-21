@@ -1,0 +1,74 @@
+name: Sync module.prop and update.json on release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Get release info from event
+        id: release
+        run: |
+          set +x
+          if [ -n "${{ github.event.release.tag_name }}" ]; then
+            TAG_NAME="${{ github.event.release.tag_name }}"
+            CHANGELOG_URL="${{ github.event.release.html_url }}"
+            ZIP_URL=$(jq -r '.release.assets[] | select(.name | endswith(".zip")) | .browser_download_url' $GITHUB_EVENT_PATH 2>/dev/null | head -n1)
+          else
+            echo "No release event; run manually or trigger by publishing a release"
+            exit 1
+          fi
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "changelog=$CHANGELOG_URL" >> $GITHUB_OUTPUT
+          echo "zipUrl=${ZIP_URL:-}" >> $GITHUB_OUTPUT
+          echo "Release: $TAG_NAME"
+          echo "zipUrl=$ZIP_URL"
+          echo "changelog=$CHANGELOG_URL"
+
+      - name: Bump version and versionCode in module.prop
+        id: prop
+        run: |
+          set +x
+          CURRENT_CODE=$(grep '^versionCode=' module.prop | cut -d= -f2)
+          NEW_CODE=$((${CURRENT_CODE:-0} + 1))
+          TAG_NAME="${{ steps.release.outputs.tag_name }}"
+          sed -i "s/^version=.*/version=${TAG_NAME}/" module.prop
+          sed -i "s/^versionCode=.*/versionCode=${NEW_CODE}/" module.prop
+          echo "version=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "versionCode=$NEW_CODE" >> $GITHUB_OUTPUT
+          echo "Updated module.prop: version=$TAG_NAME versionCode=$NEW_CODE (was $CURRENT_CODE)"
+
+      - name: Write update.json
+        run: |
+          set +x
+          jq -n \
+            --arg version "${{ steps.prop.outputs.version }}" \
+            --argjson versionCode ${{ steps.prop.outputs.versionCode }} \
+            --arg zipUrl "${{ steps.release.outputs.zipUrl }}" \
+            --arg changelog "${{ steps.release.outputs.changelog }}" \
+            '{version: $version, versionCode: $versionCode, zipUrl: $zipUrl, changelog: $changelog}' > update.json
+          echo "Written update.json:"
+          cat update.json
+
+      - name: Commit and push
+        run: |
+          set +x
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add module.prop update.json
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore(ci): sync module.prop and update.json for release ${{ steps.release.outputs.tag_name }}"
+            git push
+          fi
