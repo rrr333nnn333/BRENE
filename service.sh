@@ -67,6 +67,7 @@ if_prop_value_exits_resetprop_n "ro.boot.warranty_bit" "0"
 fingerprint=$(resetprop ro.build.fingerprint)
 resetprop_n "ro.build.fingerprint" "${fingerprint//userdebug/user}"
 
+resetprop -c 2>/dev/null || true
 
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
