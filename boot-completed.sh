@@ -203,5 +203,7 @@ if [ -f "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]; then
 fi
 
 
+resetprop -c 2>/dev/null || true
+
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
