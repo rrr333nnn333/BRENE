@@ -5,7 +5,7 @@ PERSISTENT_DIR=/data/adb/brene
 # Load config
 [ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
 
-. ${MODDIR}/utils.sh
+source ${MODDIR}/utils.sh
 
 # Update Description
 description="A SuSFS/KernelSU module for SuSFS patched kernels"

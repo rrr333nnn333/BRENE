@@ -5,7 +5,7 @@ PERSISTENT_DIR=/data/adb/brene
 # Load config
 [ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
 
-. ${MODDIR}/utils.sh
+source ${MODDIR}/utils.sh
 
 ## Important Notes:
 ## - The following command can be run at other stages like service.sh, boot-completed.sh etc..,

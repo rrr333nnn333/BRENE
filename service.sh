@@ -4,7 +4,7 @@ PERSISTENT_DIR=/data/adb/brene
 # Load config
 [ -f ${PERSISTENT_DIR}/config.sh ] && . ${PERSISTENT_DIR}/config.sh
 
-. ${MODDIR}/utils.sh
+source ${MODDIR}/utils.sh
 
 ## Props ##
 resetprop -w sys.boot_completed 0
@@ -53,6 +53,12 @@ if_prop_value_exits_resetprop_n "ro.boot.warranty_bit" "0"
 
 fingerprint=$(resetprop ro.build.fingerprint)
 resetprop_n "ro.build.fingerprint" "${fingerprint//userdebug/user}"
+
+## Delete some prop names for newer pixel device ##
+resetprop --delete "ro.boot.verifiedbooterror"
+resetprop --delete "ro.boot.verifyerrorpart"
+resetprop --delete "crashrecovery.rescue_boot_count"
+
 
 echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
 # EOF
