@@ -24,7 +24,7 @@ export MODULE_HOT_INSTALL_REQUEST="true"
 # BetterKnownInstalled
 # "
 # for i in ${modules}; do
-# 	[ -d "/data/adb/modules/${i}" ] && touch "/data/adb/modules/${i}/remove"
+# 	[ -e "/data/adb/modules/${i}" ] && touch "/data/adb/modules/${i}/remove"
 # done
 
 if [ -z ${KSU} ]; then
@@ -59,8 +59,8 @@ else
 fi
 
 # Disable other SuSFS modules
-[ -d "/data/adb/modules/susfs4ksu" ] && touch "/data/adb/modules/susfs4ksu/disable" && echo '[✅] Disabling another SuSFS module'
-[ -d "/data/adb/modules/susfs_manager" ] && touch "/data/adb/modules/susfs_manager/disable" && echo '[✅] Disabling another SuSFS module'
+[ -e "/data/adb/modules/susfs4ksu" ] && touch "/data/adb/modules/susfs4ksu/disable" && echo '[✅] Disabling another SuSFS module'
+[ -e "/data/adb/modules/susfs_manager" ] && touch "/data/adb/modules/susfs_manager/disable" && echo '[✅] Disabling another SuSFS module'
 
 echo '[✅] Preparing brene persistent directory, the path is /data/adb/brene'
 mkdir -p "${PERSISTENT_DIR}"
