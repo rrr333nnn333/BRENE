@@ -8,23 +8,15 @@ const PERSISTENT_DIR = '/data/adb/brene'
 const SUSFS_BIN = '/data/adb/ksu/bin/susfs'
 const KSU_BIN = '/data/adb/ksu/bin/ksud'
 const configs = [
-	{id: 'enable_log'},
-	{id: 'enable_avc_log_spoofing'},
+	// { id: 'hide_modules_img' },
 	{
 		id: 'hide_sus_mnts_for_non_su_procs',
 		action: enabled => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_non_su_procs ${enabled ? 1 : 0}`)
 	},
-	{id: 'uname_spoofing'},
-	{id: 'hide_data_local_tmp'},
-	// { id: 'hide_modules_img' },
-	{id: 'hide_zygisk_modules'},
-	{id: 'hide_sdcard_android_data'},
 	{
 		id: 'kernel_umount',
 		action: enabled => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`)
 	},
-	{id: 'custom_uname_spoofing'},
-	{id: 'hide_injections'},
 	{
 		id: 'developer_options',
 		action: enabled => setFeature(`settings put global development_settings_enabled ${enabled ? 1 : 0}`)
@@ -41,6 +33,14 @@ const configs = [
 		id: 'selinux',
 		action: enabled => setFeature(`setenforce ${enabled ? 1 : 0}`)
 	},
+	{id: 'enable_log'},
+	{id: 'enable_avc_log_spoofing'},
+	{id: 'uname_spoofing'},
+	{id: 'hide_data_local_tmp'},
+	{id: 'hide_zygisk_modules'},
+	{id: 'hide_sdcard_android_data'},
+	{id: 'custom_uname_spoofing'},
+	{id: 'hide_injections'},
 	{id: 'proc_cmdline_bootconfig_spoofing'},
 	{id: 'pif_props'},
 	{id: 'rom_props'},
@@ -134,7 +134,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 			element.selected = parseInt(value) === 1
 		}
 
-		element.addEventListener('change', () => {
+		element.addEventListener('change', async () => {
 			const enabled = element.selected
 			const newConfigValue = +enabled
 			updateConfig(configId, newConfigValue)
@@ -144,7 +144,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 })
 
 // KSU Modules toggles
-;(() => {
+;(async () => {
 	const enableSwitch = document.getElementById('enable_ksu_modules')
 	const disableSwitch = document.getElementById('disable_ksu_modules')
 
@@ -163,7 +163,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 })()
 
 // Custom Uname buttons
-;(() => {
+;(async () => {
 	const unameRelease = document.getElementById('custom_uname_release')
 	const unameVersion = document.getElementById('custom_uname_version')
 	const updateUname = (release, version) => {
@@ -181,7 +181,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 })()
 
 // Verified Boot Hash
-;(() => {
+;(async () => {
 	const textField = document.getElementById('verified_boot_hash_text_field')
 	const button = document.getElementById('verified_boot_hash_button')
 
@@ -193,26 +193,26 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then(result => {
 
 // TEMP
 // Simplified Chinese WebUI
-;(() => {
-	const button = document.getElementById('simplified_chinese_webui')
-	const dialog = document.getElementById('confirmation-dialog')
+// ;(() => {
+// 	const button = document.getElementById('simplified_chinese_webui')
+// 	const dialog = document.getElementById('confirmation-dialog')
 
-	button?.addEventListener('click', () => {
-		dialog.show()
-	})
+// 	button?.addEventListener('click', () => {
+// 		dialog.show()
+// 	})
 
-	dialog?.addEventListener('closed', () => {
-		if (dialog.returnValue === 'confirm') {
-			exec(`cp -f ${MODDIR}/simplified_chinese_webui.html ${MODDIR}/webroot/index.html`).then(result => {
-				toast(result.errno === 0 ? 'Success' : result.stderr)
-			})
-		}
-	})
-})()
+// 	dialog?.addEventListener('closed', () => {
+// 		if (dialog.returnValue === 'confirm') {
+// 			exec(`cp -f ${MODDIR}/simplified_chinese_webui.html ${MODDIR}/webroot/index.html`).then(result => {
+// 				toast(result.errno === 0 ? 'Success' : result.stderr)
+// 			})
+// 		}
+// 	})
+// })()
 // TEMP
 
 // Custom sus map
-;(() => {
+;(async () => {
 	const mapField = document.getElementById('custom_sus_map_text_field')
 	const pathField = document.getElementById('custom_sus_path_text_field')
 	const loopField = document.getElementById('custom_sus_path_loop_text_field')
