@@ -50,7 +50,7 @@ fi
 
 # Remove Play Integrity Fix Props (EXPERIMENTAL)
 if [[ $config_pif_props == 1 ]]; then
-	resetprop | grep -E "pihook|pixelprops" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+	resetprop | grep -E "pihook|pixelprops|spoof" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
 fi
 
 # Remove Custom ROM Props (EXPERIMENTAL)
