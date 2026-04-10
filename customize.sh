@@ -48,6 +48,7 @@ fi
 
 cp -f ${MODPATH}/tools/susfs ${DEST_BIN_DIR}
 chmod 755 ${DEST_BIN_DIR}/susfs
+chmod +x "${MODPATH}/inotify.sh"
 chmod 644 ${MODPATH}/post-fs-data.sh ${MODPATH}/service.sh ${MODPATH}/uninstall.sh ${MODPATH}/boot-completed.sh
 ln -f -s ${DEST_BIN_DIR}/susfs ${DEST_BIN_DIR}/sus 2>/dev/null || true # For development
 ln -f -s ${DEST_BIN_DIR}/susfs ${DEST_BIN_DIR}/ksu_susfs 2>/dev/null || true # For compatibility

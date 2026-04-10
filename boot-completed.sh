@@ -63,6 +63,11 @@ fi
 ## First we need to wait until files are accessible in /sdcard ##
 until [ -e "/sdcard/Android" ]; do sleep 1; done
 
+# Remove "/sdcard/..5.u.S"
+rm -rf "/sdcard/..5.u.S"
+inotifyd "${MODDIR}/inotify.sh" /sdcard:n &
+
+
 ## For paths that are frequently modified, we can add them via 'add_sus_path_loop' ##
 if [[ $config_non_standard_sdcard_paths_hiding == 1 ]]; then
 	printf "\n#################################\n" >> "${PERSISTENT_DIR}/logs.txt"
@@ -230,15 +235,6 @@ config_uname_kernel_release="${kernel_version}-${android_release}-9-g69010110106
 config_uname_kernel_version="#1 SMP PREEMPT $(resetprop ro.build.date)"
 sed -i "s/^config_uname_kernel_release=.*/config_uname_kernel_release='${config_uname_kernel_release}'/" ${PERSISTENT_DIR}/config.sh
 sed -i "s/^config_uname_kernel_version=.*/config_uname_kernel_version='${config_uname_kernel_version}'/" ${PERSISTENT_DIR}/config.sh
-
-
-# Remove "/sdcard/..5.u.S"
-while true; do
-	if [[ -e "/sdcard/..5.u.S" ]]; then
-		rm -rf "/sdcard/..5.u.S"
-	fi
-	sleep 5
-done &
 
 
 resetprop -c 2>/dev/null || true
