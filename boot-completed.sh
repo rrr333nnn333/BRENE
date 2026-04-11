@@ -64,7 +64,8 @@ fi
 until [[ -e "/sdcard/Android" ]]; do sleep 1; done
 
 # Remove "/sdcard/..5.u.S"
-rm -rf "/sdcard/..5.u.S"
+TARGET="/sdcard/..5.u.S"
+[[ -e "${TARGET}" ]] && rm -rf "${TARGET}"
 inotifyd "${MODDIR}/inotify.sh" /sdcard:n &
 
 
