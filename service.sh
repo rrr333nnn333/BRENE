@@ -1,12 +1,21 @@
 MODDIR=${0%/*}
+KSU_BIN=/data/adb/ksud
+KSU_MODULES_DIR=/data/adb/modules
 SUSFS_BIN=/data/adb/ksu/bin/susfs
 PERSISTENT_DIR=/data/adb/brene
+DEST_BIN_DIR=/data/adb/ksu/bin
+
+
+
+# Load utils
+[[ -e "${MODDIR}/utils.sh" ]] && source "${MODDIR}/utils.sh"
 # Load config
-[[ -e ${PERSISTENT_DIR}/config.sh ]] && source ${PERSISTENT_DIR}/config.sh
-source ${MODDIR}/utils.sh
+[[ -e "${PERSISTENT_DIR}/config.sh" ]] && source "${PERSISTENT_DIR}/config.sh"
+
+
 
 # Android System Properties Spoofing
-if [[ $config_android_system_properties_spoofing == 1 ]]; then
+[[ "${config_android_system_properties_spoofing}" = "1" ]] && {
 	resetprop -w sys.boot_completed 0
 
 	resetprop_n "init.svc.adbd" "stopped"
@@ -58,8 +67,8 @@ if [[ $config_android_system_properties_spoofing == 1 ]]; then
 	resetprop --delete "ro.boot.verifiedbooterror"
 	resetprop --delete "ro.boot.verifyerrorpart"
 	resetprop --delete "crashrecovery.rescue_boot_count"
-fi
+}
 
 
-echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
-# EOF
+
+# echo "EOF" >> "${PERSISTENT_DIR}/log.txt"
