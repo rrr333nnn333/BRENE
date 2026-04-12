@@ -1,1 +1,5 @@
 BRENE.zip
+node_modules
+package.json
+pnpm-lock.yaml
+.prettierrc
