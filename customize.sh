@@ -36,7 +36,7 @@ chmod 755 "${DEST_BIN_DIR}/susfs"
 ln -f -s "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/sus" 2>/dev/null || true # For development
 ln -f -s "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/ksu_susfs" 2>/dev/null || true # For compatibility
 
-susfs_ver=$("${SUSFS_BIN}" show version 2>/dev/null)
+susfs_ver=$(${SUSFS_BIN} show version 2>/dev/null)
 if [[ -n "${susfs_ver}" ]]; then
 	echo "[✅] Detected SuSFS version: ${susfs_ver}"
 else
@@ -82,7 +82,7 @@ fi
 
 # Uname Spoofing
 kernel_version=$(uname -r | cut -d'-' -f1)
-android_release=$("${KSU_BIN}" boot-info current-kmi | cut -d'-' -f1)
+android_release=$(${KSU_BIN} boot-info current-kmi | cut -d'-' -f1)
 config_uname_kernel_release="${kernel_version}-${android_release}-9-g690101101069"
 config_uname_kernel_version="#1 SMP PREEMPT $(resetprop ro.build.date)"
 sed -i "s/^config_uname_kernel_release=.*/config_uname_kernel_release='${config_uname_kernel_release}'/" ${PERSISTENT_DIR}/config.sh

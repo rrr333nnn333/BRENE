@@ -1,13 +1,20 @@
 MODDIR=${0%/*}
-DEST_BIN_DIR=/data/adb/ksu/bin
+KSU_BIN=/data/adb/ksud
+KSU_MODULES_DIR=/data/adb/modules
 SUSFS_BIN=/data/adb/ksu/bin/susfs
 PERSISTENT_DIR=/data/adb/brene
-# Load config
-[[ -e ${PERSISTENT_DIR}/config.sh ]] && source ${PERSISTENT_DIR}/config.sh
-source ${MODDIR}/utils.sh
+DEST_BIN_DIR=/data/adb/ksu/bin
 
+
+
+# Load utils
+[[ -e "${MODDIR}/utils.sh" ]] && source "${MODDIR}/utils.sh"
+# Load config
+[[ -e "${PERSISTENT_DIR}/config.sh" ]] && source "${PERSISTENT_DIR}/config.sh"
 # Clear logs
-> ${PERSISTENT_DIR}/logs.txt
+> "${PERSISTENT_DIR}/logs.txt"
+
+
 
 ## Important Notes:
 ## - The following command can be run at other stages like service.sh, boot-completed.sh etc..,
@@ -80,25 +87,26 @@ source ${MODDIR}/utils.sh
 # ${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_PROC_CMDLINE_FILE}
 # EOF
 
-if [[ $config_proc_cmdline_bootconfig_spoofing == 1 ]]; then
+[[ "${config_proc_cmdline_bootconfig_spoofing}" = "1" ]] && {
 	susfs_variant=$(${SUSFS_BIN} show variant)
 
-	if [[ $susfs_variant == "GKI" ]]; then
-		FAKE_BOOTCONFIG=${PERSISTENT_DIR}/fake_bootconfig.txt
+	if [[ "${susfs_variant}" = "GKI" ]]; then
+		FAKE_BOOTCONFIG="${PERSISTENT_DIR}/fake_bootconfig"
 		
-		cat /proc/bootconfig > ${FAKE_BOOTCONFIG}
-		sed -i 's/androidboot.warranty_bit = "1"/androidboot.warranty_bit = "0"/' ${FAKE_BOOTCONFIG}
-		sed -i 's/androidboot.verifiedbootstate = "orange"/androidboot.verifiedbootstate = "green"/' ${FAKE_BOOTCONFIG}
-		${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_BOOTCONFIG}
+		cat /proc/bootconfig > "${FAKE_BOOTCONFIG}"
+		sed -i 's/androidboot.warranty_bit = "1"/androidboot.warranty_bit = "0"/' "${FAKE_BOOTCONFIG}"
+		sed -i 's/androidboot.verifiedbootstate = "orange"/androidboot.verifiedbootstate = "green"/' "${FAKE_BOOTCONFIG}"
+		${SUSFS_BIN} set_cmdline_or_bootconfig "${FAKE_BOOTCONFIG}"
 	else
-		FAKE_CMDLINE=${PERSISTENT_DIR}/fake_cmdline.txt
+		FAKE_CMDLINE="${PERSISTENT_DIR}/fake_cmdline"
 		
-		cat /proc/cmdline > ${FAKE_CMDLINE}
-		sed -i 's/androidboot.warranty_bit=1/androidboot.warranty_bit=0/' ${FAKE_CMDLINE}
-		sed -i 's/androidboot.verifiedbootstate=orange/androidboot.verifiedbootstate=green/' ${FAKE_CMDLINE}
-		${SUSFS_BIN} set_cmdline_or_bootconfig ${FAKE_CMDLINE}
+		cat /proc/cmdline > "${FAKE_CMDLINE}"
+		sed -i 's/androidboot.warranty_bit=1/androidboot.warranty_bit=0/' "${FAKE_CMDLINE}"
+		sed -i 's/androidboot.verifiedbootstate=orange/androidboot.verifiedbootstate=green/' "${FAKE_CMDLINE}"
+		${SUSFS_BIN} set_cmdline_or_bootconfig "${FAKE_CMDLINE}"
 	fi
-fi
+}
+
 
 
 #### Hiding the exposed /proc interface of ext4 loop and jdb2 when mounting ext4 img using sus_path ####
@@ -113,40 +121,44 @@ fi
 # fi
 
 
+
 #### Enable avc log spoofing to bypass 'su' domain detection via /proc/<pid> enumeration, effective for all processes ####
-[[ $config_enable_avc_log_spoofing == 1 ]] && ${SUSFS_BIN} enable_avc_log_spoofing 1 || ${SUSFS_BIN} enable_avc_log_spoofing 0
 ## disable it when users want to do some debugging with the permission issue or selinux issue ##
 #ksu_susfs enable_avc_log_spoofing 0
+[[ "${config_enable_avc_log_spoofing}" = "1" ]] && ${SUSFS_BIN} enable_avc_log_spoofing 1 || ${SUSFS_BIN} enable_avc_log_spoofing 0
+
 
 
 #### Hide all sus mounts for NON-SU processes in this stage just to prevent zygote from caching them in memory ####
 ## This should be mainly applied if you have ReZygisk enabled but without TreatWheel module ##
 ## Or it is up to you to keep it enabled since su process can still see the mounts ##
-[[ $config_hide_sus_mnts_for_non_su_procs == 1 ]] && ${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 1 || ${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 0
+[[ "${config_hide_sus_mnts_for_non_su_procs}" = "1" ]] && ${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 1 || ${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 0
+
 
 
 #### Spoof the uname, effective for all processes ####
 # you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
 # pass 'default' to tell susfs to use the default value by uname #
 # ${SUSFS_BIN} set_uname 'default' 'default'
-if [[ $config_custom_uname_spoofing == 1 ]]; then
-	printf "#####################\n" >> "${PERSISTENT_DIR}/logs.txt"
-	printf "Custom Uname Spoofing" >> "${PERSISTENT_DIR}/logs.txt"
-	printf "\n#####################\n" >> "${PERSISTENT_DIR}/logs.txt"
-
-	brene_set_uname "${config_custom_uname_kernel_release}" "${config_custom_uname_kernel_version}"
-elif [[ $config_uname_spoofing == 1 ]]; then
+if [[ "${config_uname_spoofing}" = "1" ]]; then
 	printf "##############\n" >> "${PERSISTENT_DIR}/logs.txt"
 	printf "Uname Spoofing" >> "${PERSISTENT_DIR}/logs.txt"
 	printf "\n##############\n" >> "${PERSISTENT_DIR}/logs.txt"
 
 	brene_set_uname "${config_uname_kernel_release}" "${config_uname_kernel_version}"
+elif [[ "${config_custom_uname_spoofing}" = "1" ]]; then
+	printf "#####################\n" >> "${PERSISTENT_DIR}/logs.txt"
+	printf "Custom Uname Spoofing" >> "${PERSISTENT_DIR}/logs.txt"
+	printf "\n#####################\n" >> "${PERSISTENT_DIR}/logs.txt"
+
+	brene_set_uname "${config_custom_uname_kernel_release}" "${config_custom_uname_kernel_version}"
 fi
 
 
-# # Disable susfs kernel log ##
-[[ $config_enable_log == 1 ]] && ${SUSFS_BIN} enable_log 1 || ${SUSFS_BIN} enable_log 0
+
+## Disable susfs kernel log ##
+[[ "${config_enable_log}" = "1" ]] && ${SUSFS_BIN} enable_log 1 || ${SUSFS_BIN} enable_log 0
 
 
-echo "EOF" > "${PERSISTENT_DIR}/log.txt"
-# EOF
+
+# echo "EOF" > "${PERSISTENT_DIR}/log.txt"
