@@ -245,24 +245,24 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 
 // TEMP
 // Chinese WebUI
-(async () => {
-  const button = document.getElementById("zh_index");
-  const dialog = document.getElementById("confirmation-dialog");
+// (async () => {
+//   const button = document.getElementById("zh_index");
+//   const dialog = document.getElementById("confirmation-dialog");
 
-  button?.addEventListener("click", () => {
-    dialog.show();
-  });
+//   button?.addEventListener("click", () => {
+//     dialog.show();
+//   });
 
-  dialog?.addEventListener("closed", () => {
-    if (dialog.returnValue === "confirm") {
-      exec(
-        `cp -f ${MODDIR}/webroot/zh_index.html ${MODDIR}/webroot/index.html`,
-      ).then((result) => {
-        toast(result.errno === 0 ? "Success" : result.stderr);
-      });
-    }
-  });
-})();
+//   dialog?.addEventListener("closed", () => {
+//     if (dialog.returnValue === "confirm") {
+//       exec(
+//         `cp -f ${MODDIR}/webroot/zh_index.html ${MODDIR}/webroot/index.html`,
+//       ).then((result) => {
+//         toast(result.errno === 0 ? "Success" : result.stderr);
+//       });
+//     }
+//   });
+// })();
 // TEMP
 
 // Custom sus map
