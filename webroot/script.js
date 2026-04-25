@@ -57,7 +57,6 @@ const configs = [
   { id: "uname_spoofing" },
   { id: "hide_injections" },
   { id: "hide_data_local_tmp" },
-  { id: "hide_zygisk_modules" },
   { id: "custom_uname_spoofing" },
   { id: "enable_avc_log_spoofing" },
   { id: "hide_sdcard_android_data" },

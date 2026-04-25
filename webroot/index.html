@@ -57,6 +57,43 @@
       <div class="settings-group">
         <div class="list-item">
           <label class="toggle-option">
+            Hide Suspicious Mounts For Non-su Processes
+            <md-switch icons id="hide_sus_mnts_for_non_su_procs"></md-switch>
+          </label>
+          <div class="toggle-option-content">
+            <div class="toggle-info">
+              Prevent zygote from caching the sus mounts in memory, and to keep
+              them hidden from /proc/self/[mounts|mountinfo|mountstat] for
+              non-su processes
+            </div>
+            <div class="toggle-info">e.g. the following detections</div>
+            <div class="toggle-info">Holmes: Futile Trace Hide</div>
+            <div class="toggle-info">Native Test: Futile Hide (08)</div>
+          </div>
+          <md-ripple></md-ripple>
+        </div>
+
+        <div class="list-item">
+          <label class="toggle-option">
+            Injections Hiding
+            <md-switch icons id="hide_injections"></md-switch>
+          </label>
+          <div class="toggle-option-content">
+            <div class="toggle-info">
+              Only effective for umounted process with uid >= 10.000
+            </div>
+            <div class="toggle-info">
+              Hide injections, /data/adb/modules/module_name/system/*/*.*
+            </div>
+            <div class="toggle-info">
+              Hide zygisk injections, /data/adb/modules/module_name/zygisk/*.so
+            </div>
+          </div>
+          <md-ripple></md-ripple>
+        </div>
+
+        <div class="list-item">
+          <label class="toggle-option">
             Non-standard /sdcard Paths Hiding
             <md-switch icons id="non_standard_sdcard_paths_hiding"></md-switch>
           </label>
@@ -109,56 +146,6 @@
           <div class="toggle-option-content">
             <div class="toggle-info">
               Only effective for umounted process with uid >= 10.000
-            </div>
-          </div>
-          <md-ripple></md-ripple>
-        </div>
-
-        <div class="list-item">
-          <label class="toggle-option">
-            Hide Suspicious Mounts For Non-su Processes
-            <md-switch icons id="hide_sus_mnts_for_non_su_procs"></md-switch>
-          </label>
-          <div class="toggle-option-content">
-            <div class="toggle-info">
-              Prevent zygote from caching the sus mounts in memory, and to keep
-              them hidden from /proc/self/[mounts|mountinfo|mountstat] for
-              non-su processes
-            </div>
-            <div class="toggle-info">e.g. the following detections</div>
-            <div class="toggle-info">Holmes: Futile Trace Hide</div>
-            <div class="toggle-info">Native Test: Futile Hide (08)</div>
-          </div>
-          <md-ripple></md-ripple>
-        </div>
-
-        <div class="list-item">
-          <label class="toggle-option">
-            Module Injections Hiding
-            <md-switch icons id="hide_injections"></md-switch>
-          </label>
-          <div class="toggle-option-content">
-            <div class="toggle-info">
-              Only effective for umounted process with uid >= 10.000
-            </div>
-            <div class="toggle-info">
-              Hide injections, /data/adb/modules/module_name/system/*/*.*
-            </div>
-          </div>
-          <md-ripple></md-ripple>
-        </div>
-
-        <div class="list-item">
-          <label class="toggle-option">
-            Zygisk Module Injections Hiding
-            <md-switch icons id="hide_zygisk_modules"></md-switch>
-          </label>
-          <div class="toggle-option-content">
-            <div class="toggle-info">
-              Only effective for umounted process with uid >= 10.000
-            </div>
-            <div class="toggle-info">
-              Hide zygisk injections, /data/adb/modules/module_name/zygisk/*.so
             </div>
           </div>
           <md-ripple></md-ripple>

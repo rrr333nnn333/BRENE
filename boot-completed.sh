@@ -224,23 +224,11 @@ fi
 ## Hide some zygisk modules ##
 # brene_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
 
-if [[ "${config_hide_zygisk_modules}" == "1" ]]; then
-  {
-    printf "\n###############################\n"
-    printf "Zygisk Module Injections Hiding"
-    printf "\n###############################\n"
-  } >> "${PERSISTENT_DIR}/logs.txt"
-
-  for i in $(find /data/adb/modules -name "*.so" | grep /zygisk/); do
-    brene_sus_map "${i}"
-  done
-fi
-
 if [[ "${config_hide_injections}" == "1" ]]; then
   {
-    printf "\n########################\n"
-    printf "Module Injections Hiding"
-    printf "\n########################\n"
+    printf "\n#################\n"
+    printf "Injections Hiding"
+    printf "\n#################\n"
   } >> "${PERSISTENT_DIR}/logs.txt"
 
   for i in /data/adb/modules/*; do
@@ -249,6 +237,10 @@ if [[ "${config_hide_injections}" == "1" ]]; then
         brene_sus_map "${x}"
       done
     fi
+  done
+
+  for i in $(find /data/adb/modules -name "*.so" | grep /zygisk/); do
+    brene_sus_map "${i}"
   done
 fi
 
