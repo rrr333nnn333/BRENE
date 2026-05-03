@@ -1,2 +1,0 @@
-# Example
-# /data/local/tmp/main.jar

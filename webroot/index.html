@@ -155,26 +155,74 @@
 				</div>
 
 				<p class="section-label">Custom SuSFS Entries</p>
-				<div class="card-group sus-card">
-					<md-tabs id="sus_tabs">
-						<md-primary-tab id="tab_sus_map" aria-controls="panel_sus_map">MAP</md-primary-tab>
-						<md-primary-tab id="tab_sus_path" aria-controls="panel_sus_path">PATH</md-primary-tab>
-						<md-primary-tab id="tab_sus_path_loop" aria-controls="panel_sus_path_loop">PATH LOOP</md-primary-tab>
-					</md-tabs>
+				<div class="card-group">
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Notes:</span>
+							<span class="card-row__sub">Only effective for umounted process with uid ≥ 10.000</span>
 
-					<div class="snap-container" id="horizontal_scroll_container">
-						<div class="snap-item">
-							<md-filled-text-field class="content" id="custom_sus_map_text_field" type="textarea" rows="9" label="Custom sus map"> ></md-filled-text-field>
+							<!-- SUS MAP -->
+							<span class="card-row__title">SUS MAP</span>
+							<span class="card-row__sub">Added real file path which gets mmapped will be hidden from /proc/self/[maps|smaps|smaps_rollup|map_files|mem|pagemap]</span>
+							<span class="card-row__sub">Important Notes:</span>
+							<span class="card-row__sub">- It does NOT support hiding for anon memory.</span>
+							<span class="card-row__sub">- It does NOT hide any inline hooks or plt hooks cause by the injected library itself</span>
+							<span class="card-row__sub">- It may not be able to evade detections by apps that implement a good injection detection</span>
+							<span class="card-row__sub">Example:</span>
+							<span class="card-row__sub">/system/fonts/Roboto-Regular.ttf</span>
+							<span class="card-row__sub">/data/adb/modules/my_module/zygisk/arm64-v8a.so</span>
+							<!-- SUS MAP -->
+
+							<!-- SUS PATH -->
+							<span class="card-row__title">SUS PATH</span>
+							<span class="card-row__sub">Added path and all its sub-paths will be hidden for umounted app process from several syscalls</span>
+							<span class="card-row__sub"
+								>Please be reminded that if the target path has upper mounts then make sure the proper layer is added, otherwise it may not be effective for the target
+								process</span
+							>
+							<span class="card-row__sub">For paths that are read-only all the time, add them via 'add_sus_path'</span>
+							<span class="card-row__sub">Example:</span>
+							<span class="card-row__sub">/system/addon.d</span>
+							<span class="card-row__sub">/system/bin/install-recovery.sh</span>
+							<!-- SUS PATH -->
+
+							<!-- SUS PATH LOOP -->
+							<span class="card-row__title">SUS PATH LOOP</span>
+							<span class="card-row__sub"
+								>The only difference to add_sus_path is that the added sus_path via this cli will be flagged as SUS_PATH again for the app process when it is being spawned by
+								zygote and marked umounted</span
+							>
+							<span class="card-row__sub">Also it does not check if the path is existed or not, instead it checks for empty string only, so be careful what to add</span>
+							<span class="card-row__sub">For paths that are frequently modified, we can add them via 'add_sus_path_loop'</span>
+							<span class="card-row__sub">Example:</span>
+							<span class="card-row__sub">/sdcard/TWRP</span>
+							<span class="card-row__sub">/data/local/tmp/main.jar</span>
+							<!-- SUS PATH LOOP -->
 						</div>
-						<div class="snap-item">
-							<md-filled-text-field class="content" id="custom_sus_path_text_field" type="textarea" rows="9" label="Custom sus path"></md-filled-text-field>
-						</div>
-						<div class="snap-item">
-							<md-filled-text-field class="content" id="custom_sus_path_loop_text_field" type="textarea" rows="9" label="Custom sus path loop"></md-filled-text-field>
-						</div>
+						<md-ripple></md-ripple>
 					</div>
-					<div class="sus-footer">
-						<md-filled-button id="unified_apply_button">APPLY</md-filled-button>
+
+					<div class="card-group sus-card">
+						<md-tabs id="sus_tabs">
+							<md-primary-tab id="tab_sus_map" aria-controls="panel_sus_map">MAP</md-primary-tab>
+							<md-primary-tab id="tab_sus_path" aria-controls="panel_sus_path">PATH</md-primary-tab>
+							<md-primary-tab id="tab_sus_path_loop" aria-controls="panel_sus_path_loop">PATH LOOP</md-primary-tab>
+						</md-tabs>
+
+						<div class="snap-container" id="horizontal_scroll_container">
+							<div class="snap-item">
+								<md-filled-text-field class="content" id="custom_sus_map_text_field" type="textarea" rows="12" label="SUS MAP"> ></md-filled-text-field>
+							</div>
+							<div class="snap-item">
+								<md-filled-text-field class="content" id="custom_sus_path_text_field" type="textarea" rows="12" label="SUS PATH"></md-filled-text-field>
+							</div>
+							<div class="snap-item">
+								<md-filled-text-field class="content" id="custom_sus_path_loop_text_field" type="textarea" rows="12" label="SUS PATH LOOP"></md-filled-text-field>
+							</div>
+						</div>
+						<div class="sus-footer">
+							<md-filled-button id="unified_apply_button">APPLY</md-filled-button>
+						</div>
 					</div>
 				</div>
 			</section>
