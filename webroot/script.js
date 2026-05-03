@@ -1,218 +1,218 @@
-import { exec, toast } from "./assets/kernelsu.js";
-import "./assets/mwc.js";
+import { exec, toast } from './assets/kernelsu.js'
+import './assets/mwc.js'
 
-document.querySelector("div.preload-hidden").classList.remove("preload-hidden");
+document.querySelector('div.preload-hidden').classList.remove('preload-hidden')
 
-const MODDIR = "/data/adb/modules/brene";
-const PERSISTENT_DIR = "/data/adb/brene";
-const SUSFS_BIN = "/data/adb/ksu/bin/susfs";
-const KSU_BIN = "/data/adb/ksud";
+const MODDIR = '/data/adb/modules/brene'
+const PERSISTENT_DIR = '/data/adb/brene'
+const SUSFS_BIN = '/data/adb/ksu/bin/susfs'
+const KSU_BIN = '/data/adb/ksud'
 const configs = [
-  // { id: 'hide_modules_img' },
-  {
-    id: "hide_sus_mnts_for_non_su_procs",
-    action: (enabled) => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_non_su_procs ${enabled ? 1 : 0}`),
-  },
-  {
-    id: "su_compat",
-    action: (enabled) => setFeature(`${KSU_BIN} feature set su_compat ${enabled ? 1 : 0} && ${KSU_BIN} feature save`),
-  },
-  {
-    id: "kernel_umount",
-    action: (enabled) => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`),
-  },
-  {
-    id: "developer_options",
-    action: (enabled) => setFeature(`settings put global development_settings_enabled ${enabled ? 1 : 0}`),
-  },
-  {
-    id: "usb_debugging",
-    action: (enabled) => setFeature(`settings put global adb_enabled ${enabled ? 1 : 0}`),
-  },
-  {
-    id: "wireless_debugging",
-    action: (enabled) => setFeature(`settings put global adb_wifi_enabled ${enabled ? 1 : 0}`),
-  },
-  {
-    id: "selinux",
-    action: (enabled) => setFeature(`setenforce ${enabled ? 1 : 0}`),
-  },
-  { id: "pif_props" },
-  { id: "rom_props" },
-  { id: "enable_log" },
-  { id: "uname_spoofing" },
-  { id: "hide_injections" },
-  { id: "hide_data_local_tmp" },
-  { id: "custom_uname_spoofing" },
-  { id: "enable_avc_log_spoofing" },
-  { id: "hide_sdcard_android_data" },
-  { id: "proc_cmdline_bootconfig_spoofing" },
-  { id: "non_standard_sdcard_paths_hiding" },
-  { id: "android_system_properties_spoofing" },
-];
+	// { id: 'hide_modules_img' },
+	{
+		id: 'hide_sus_mnts_for_non_su_procs',
+		action: (enabled) => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_non_su_procs ${enabled ? 1 : 0}`),
+	},
+	{
+		id: 'su_compat',
+		action: (enabled) => setFeature(`${KSU_BIN} feature set su_compat ${enabled ? 1 : 0} && ${KSU_BIN} feature save`),
+	},
+	{
+		id: 'kernel_umount',
+		action: (enabled) => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`),
+	},
+	{
+		id: 'developer_options',
+		action: (enabled) => setFeature(`settings put global development_settings_enabled ${enabled ? 1 : 0}`),
+	},
+	{
+		id: 'usb_debugging',
+		action: (enabled) => setFeature(`settings put global adb_enabled ${enabled ? 1 : 0}`),
+	},
+	{
+		id: 'wireless_debugging',
+		action: (enabled) => setFeature(`settings put global adb_wifi_enabled ${enabled ? 1 : 0}`),
+	},
+	{
+		id: 'selinux',
+		action: (enabled) => setFeature(`setenforce ${enabled ? 1 : 0}`),
+	},
+	{ id: 'pif_props' },
+	{ id: 'rom_props' },
+	{ id: 'enable_log' },
+	{ id: 'uname_spoofing' },
+	{ id: 'hide_injections' },
+	{ id: 'hide_data_local_tmp' },
+	{ id: 'custom_uname_spoofing' },
+	{ id: 'enable_avc_log_spoofing' },
+	{ id: 'hide_sdcard_android_data' },
+	{ id: 'proc_cmdline_bootconfig_spoofing' },
+	{ id: 'non_standard_sdcard_paths_hiding' },
+	{ id: 'android_system_properties_spoofing' },
+]
 
 // Load enabled features
-exec("susfs show enabled_features").then((result) => {
-  const container = document.getElementById("kernel-features-container");
+exec('susfs show enabled_features').then((result) => {
+	const container = document.getElementById('kernel-features-container')
 
-  if (result.errno !== 0) {
-    container.innerText = "Failed to load enabled features";
-    return;
-  }
-  container.innerText = result.stdout.replaceAll("CONFIG_KSU_SUSFS_", "");
-});
+	if (result.errno !== 0) {
+		container.innerText = 'Failed to load enabled features'
+		return
+	}
+	container.innerText = result.stdout.replaceAll('CONFIG_KSU_SUSFS_', '')
+})
 
 // Load logs
 exec(`cat ${PERSISTENT_DIR}/log.txt`).then((result) => {
-  const container = document.getElementById("logs");
+	const container = document.getElementById('logs')
 
-  if (result.errno !== 0) {
-    container.innerText = "Failed to load logs";
-    return;
-  }
-  container.innerText = result.stdout;
-});
+	if (result.errno !== 0) {
+		container.innerText = 'Failed to load logs'
+		return
+	}
+	container.innerText = result.stdout
+})
 exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((result) => {
-  const container = document.getElementById("logs");
+	const container = document.getElementById('logs')
 
-  if (result.errno !== 0) {
-    container.innerText = "Failed to load logs";
-    return;
-  }
-  container.innerText += result.stdout;
-});
+	if (result.errno !== 0) {
+		container.innerText = 'Failed to load logs'
+		return
+	}
+	container.innerText += result.stdout
+})
 
 // Load brene version
 exec(`grep "^version=" ${MODDIR}/module.prop | cut -d'=' -f2`).then((result) => {
-  const element = document.getElementById("brene-version");
-  element.innerText = result.errno === 0 ? result.stdout : "unknown";
-});
+	const element = document.getElementById('brene-version')
+	element.innerText = result.errno === 0 ? result.stdout : 'unknown'
+})
 
 // Load susfs version
-exec("susfs show version").then((result) => {
-  const element = document.getElementById("susfs-version");
-  element.innerText = result.errno === 0 ? `${result.stdout}+` : "unknown";
-});
+exec('susfs show version').then((result) => {
+	const element = document.getElementById('susfs-version')
+	element.innerText = result.errno === 0 ? `${result.stdout}+` : 'unknown'
+})
 
 // Helper function to update config
 function updateConfig(config, value) {
-  exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
-    if (result.errno !== 0) toast("Failed to update config");
-  });
+	exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
+		if (result.errno !== 0) toast('Failed to update config')
+	})
 }
 
 // TEMP
 // Helper function to update config
 function updateConfig2(config, value) {
-  exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
-    if (result.errno !== 0) toast("Failed to update config");
-  });
+	exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
+		if (result.errno !== 0) toast('Failed to update config')
+	})
 }
 
 // Helper function to set config immedialtely that no need to reboot
 function setFeature(cmd) {
-  exec(cmd).then((result) => {
-    toast(result.errno === 0 ? "No need to reboot" : result.stderr);
-  });
+	exec(cmd).then((result) => {
+		toast(result.errno === 0 ? 'No need to reboot' : result.stderr)
+	})
 }
 
 // Load config and add toggle event
 exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
-  if (result.errno !== 0) {
-    toast("Failed to load config");
-    return;
-  }
+	if (result.errno !== 0) {
+		toast('Failed to load config')
+		return
+	}
 
-  const configValues = Object.fromEntries(
-    result.stdout
-      .split("\n")
-      .filter((line) => line.includes("="))
-      .map((line) => {
-        const [key, ...val] = line.split("=");
-        return [
-          key.trim(),
-          val
-            .join("=")
-            .trim()
-            .replace(/^['"](.*)['"]$/, "$1"),
-        ];
-      }),
-  );
+	const configValues = Object.fromEntries(
+		result.stdout
+			.split('\n')
+			.filter((line) => line.includes('='))
+			.map((line) => {
+				const [key, ...val] = line.split('=')
+				return [
+					key.trim(),
+					val
+						.join('=')
+						.trim()
+						.replace(/^['"](.*)['"]$/, '$1'),
+				]
+			}),
+	)
 
-  // custom uname
-  document.getElementById("custom_uname_release").value = configValues["config_custom_uname_kernel_release"];
-  document.getElementById("custom_uname_version").value = configValues["config_custom_uname_kernel_version"];
+	// custom uname
+	document.getElementById('custom_uname_release').value = configValues['config_custom_uname_kernel_release']
+	document.getElementById('custom_uname_version').value = configValues['config_custom_uname_kernel_version']
 
-  // Verified Boot Hash
-  document.getElementById("verified_boot_hash_text_field").value = configValues["config_verified_boot_hash"];
+	// Verified Boot Hash
+	document.getElementById('verified_boot_hash_text_field').value = configValues['config_verified_boot_hash']
 
-  // toggle
-  configs.forEach((config) => {
-    const configId = `config_${config.id}`;
-    const element = document.getElementById(config.id);
-    if (!element) return;
+	// toggle
+	configs.forEach((config) => {
+		const configId = `config_${config.id}`
+		const element = document.getElementById(config.id)
+		if (!element) return
 
-    const value = configValues[configId];
-    if (value !== undefined) {
-      element.selected = parseInt(value) === 1;
-    }
+		const value = configValues[configId]
+		if (value !== undefined) {
+			element.selected = parseInt(value) === 1
+		}
 
-    element.addEventListener("change", async () => {
-      const enabled = element.selected;
-      const newConfigValue = +enabled;
-      updateConfig(configId, newConfigValue);
-      if (config.action) config.action(enabled);
-    });
-  });
-});
+		element.addEventListener('change', async () => {
+			const enabled = element.selected
+			const newConfigValue = +enabled
+			updateConfig(configId, newConfigValue)
+			if (config.action) config.action(enabled)
+		})
+	})
+})
 
 // KSU Modules toggles
-(async () => {
-  const enableSwitch = document.getElementById("enable_ksu_modules");
-  const disableSwitch = document.getElementById("disable_ksu_modules");
+;(async () => {
+	const enableSwitch = document.getElementById('enable_ksu_modules')
+	const disableSwitch = document.getElementById('disable_ksu_modules')
 
-  const toggleAllModules = (enable) => {
-    exec(`
+	const toggleAllModules = (enable) => {
+		exec(`
 			for i in /data/adb/modules/*; do
-				${enable ? "rm -f" : "touch"} "$i/disable"
+				${enable ? 'rm -f' : 'touch'} "$i/disable"
 			done
 		`).then((result) => {
-      toast(result.errno === 0 ? "Success" : result.stderr);
-    });
-  };
+			toast(result.errno === 0 ? 'Success' : result.stderr)
+		})
+	}
 
-  enableSwitch.addEventListener("click", () => toggleAllModules(true));
-  disableSwitch.addEventListener("click", () => toggleAllModules(false));
-})();
+	enableSwitch.addEventListener('click', () => toggleAllModules(true))
+	disableSwitch.addEventListener('click', () => toggleAllModules(false))
+})()
 
 // Custom Uname buttons
-(async () => {
-  const unameRelease = document.getElementById("custom_uname_release");
-  const unameVersion = document.getElementById("custom_uname_version");
-  const updateUname = (release, version) => {
-    updateConfig2("config_custom_uname_kernel_release", release);
-    updateConfig2("config_custom_uname_kernel_version", version.trim() === "" ? "default" : version);
-    setFeature(`${SUSFS_BIN} set_uname "${release}" "${version}"`);
-    unameRelease.value = release;
-    unameVersion.value = version.trim() === "" ? "default" : version;
-  };
+;(async () => {
+	const unameRelease = document.getElementById('custom_uname_release')
+	const unameVersion = document.getElementById('custom_uname_version')
+	const updateUname = (release, version) => {
+		updateConfig2('config_custom_uname_kernel_release', release)
+		updateConfig2('config_custom_uname_kernel_version', version.trim() === '' ? 'default' : version)
+		setFeature(`${SUSFS_BIN} set_uname "${release}" "${version}"`)
+		unameRelease.value = release
+		unameVersion.value = version.trim() === '' ? 'default' : version
+	}
 
-  document.getElementById(`button_custom_uname_reset`).onclick = () => updateUname("default", "default");
-  document.getElementById(`button_custom_uname_apply`).onclick = () => {
-    if (unameRelease.value !== "") updateUname(unameRelease.value, unameVersion.value);
-  };
-})();
+	document.getElementById(`button_custom_uname_reset`).onclick = () => updateUname('default', 'default')
+	document.getElementById(`button_custom_uname_apply`).onclick = () => {
+		if (unameRelease.value !== '') updateUname(unameRelease.value, unameVersion.value)
+	}
+})()
 
 // Verified Boot Hash
-(async () => {
-  const textField = document.getElementById("verified_boot_hash_text_field");
-  const button = document.getElementById("verified_boot_hash_button");
+;(async () => {
+	const textField = document.getElementById('verified_boot_hash_text_field')
+	const button = document.getElementById('verified_boot_hash_button')
 
-  button.addEventListener("click", () => {
-    updateConfig2("config_verified_boot_hash", textField.value);
-    toast("Success");
-  });
-})();
+	button.addEventListener('click', () => {
+		updateConfig2('config_verified_boot_hash', textField.value)
+		toast('Success')
+	})
+})()
 
 // TEMP
 // Chinese WebUI
@@ -237,146 +237,170 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 // TEMP
 
 // Custom sus map
-(async () => {
-  const mapField = document.getElementById("custom_sus_map_text_field");
-  const pathField = document.getElementById("custom_sus_path_text_field");
-  const loopField = document.getElementById("custom_sus_path_loop_text_field");
-  const applyButton = document.getElementById("unified_apply_button");
-  const tabs = document.getElementById("sus_tabs");
-  const scrollContainer = document.getElementById("horizontal_scroll_container");
+;(async () => {
+	const mapField = document.getElementById('custom_sus_map_text_field')
+	const pathField = document.getElementById('custom_sus_path_text_field')
+	const loopField = document.getElementById('custom_sus_path_loop_text_field')
+	const applyButton = document.getElementById('unified_apply_button')
+	const tabs = document.getElementById('sus_tabs')
+	const scrollContainer = document.getElementById('horizontal_scroll_container')
 
-  // Load all contents
-  exec(`cat ${PERSISTENT_DIR}/custom_sus_map.txt`).then((result) => {
-    mapField.value = result.errno === 0 ? `${result.stdout}\n` : "";
-  });
-  exec(`cat ${PERSISTENT_DIR}/custom_sus_path.txt`).then((result) => {
-    pathField.value = result.errno === 0 ? `${result.stdout}\n` : "";
-  });
-  exec(`cat ${PERSISTENT_DIR}/custom_sus_path_loop.txt`).then((result) => {
-    loopField.value = result.errno === 0 ? `${result.stdout}\n` : "";
-  });
+	// Load all contents
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_map.txt`).then((result) => {
+		mapField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_path.txt`).then((result) => {
+		pathField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_path_loop.txt`).then((result) => {
+		loopField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
 
-  // Tabs and Scroll Sync
-  tabs.addEventListener("change", () => {
-    const index = tabs.activeTabIndex;
-    const width = scrollContainer.getBoundingClientRect().width;
-    scrollContainer.scrollTo({
-      left: width * index,
-      behavior: "smooth",
-    });
-  });
+	// Tabs and Scroll Sync
+	tabs.addEventListener('change', () => {
+		const index = tabs.activeTabIndex
+		const width = scrollContainer.getBoundingClientRect().width
+		scrollContainer.scrollTo({
+			left: width * index,
+			behavior: 'smooth',
+		})
+	})
 
-  let scrollTimeout;
-  scrollContainer.addEventListener("scroll", () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      const width = scrollContainer.getBoundingClientRect().width;
-      const index = Math.round(scrollContainer.scrollLeft / width);
-      if (tabs.activeTabIndex !== index) {
-        tabs.activeTabIndex = index;
-      }
-    }, 50);
-  });
+	let scrollTimeout
+	scrollContainer.addEventListener('scroll', () => {
+		clearTimeout(scrollTimeout)
+		scrollTimeout = setTimeout(() => {
+			const width = scrollContainer.getBoundingClientRect().width
+			const index = Math.round(scrollContainer.scrollLeft / width)
+			if (tabs.activeTabIndex !== index) {
+				tabs.activeTabIndex = index
+			}
+		}, 50)
+	})
 
-  applyButton.onclick = () => {
-    const index = tabs.activeTabIndex;
-    let file = "";
-    let content = "";
+	applyButton.onclick = () => {
+		const index = tabs.activeTabIndex
+		let file = ''
+		let content = ''
 
-    switch (index) {
-      case 0:
-        file = "custom_sus_map.txt";
-        content = mapField.value;
-        break;
-      case 1:
-        file = "custom_sus_path.txt";
-        content = pathField.value;
-        break;
-      case 2:
-        file = "custom_sus_path_loop.txt";
-        content = loopField.value;
-        break;
-    }
+		switch (index) {
+			case 0:
+				file = 'custom_sus_map.txt'
+				content = mapField.value
+				break
+			case 1:
+				file = 'custom_sus_path.txt'
+				content = pathField.value
+				break
+			case 2:
+				file = 'custom_sus_path_loop.txt'
+				content = loopField.value
+				break
+		}
 
-    if (file) {
-      exec(`
+		if (file) {
+			exec(`
 cat <<'UNIQUE_EOF' > ${PERSISTENT_DIR}/${file}
 ${content}
 UNIQUE_EOF
 		`).then((result) => {
-        toast(result.errno === 0 ? "Success" : result.stderr);
-      });
-    }
-  };
-})();
+				toast(result.errno === 0 ? 'Success' : result.stderr)
+			})
+		}
+	}
+})()
 
 // tabs.js — tab switching
-(async () => {
-  var btns = document.querySelectorAll(".tab-btn");
-  var panels = document.querySelectorAll(".tab-panel");
+;(async () => {
+	var btns = document.querySelectorAll('.tab-btn')
+	var panels = document.querySelectorAll('.tab-panel')
 
-  function activate(id) {
-    btns.forEach(function (b) {
-      b.classList.toggle("active", b.dataset.tab === id);
-    });
-    panels.forEach(function (p) {
-      p.classList.toggle("active", p.dataset.panel === id);
-    });
-  }
+	function activate(id) {
+		btns.forEach(function (b) {
+			b.classList.toggle('active', b.dataset.tab === id)
+		})
+		panels.forEach(function (p) {
+			p.classList.toggle('active', p.dataset.panel === id)
+		})
+	}
 
-  btns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      activate(btn.dataset.tab);
-      try {
-        sessionStorage.setItem("brene_tab", btn.dataset.tab);
-      } catch (e) {}
-    });
-  });
+	btns.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			activate(btn.dataset.tab)
+			try {
+				sessionStorage.setItem('brene_tab', btn.dataset.tab)
+			} catch (e) {}
+		})
+	})
 
-  try {
-    var saved = sessionStorage.getItem("brene_tab");
-    if (saved) activate(saved);
-  } catch (e) {}
-})();
+	try {
+		var saved = sessionStorage.getItem('brene_tab')
+		if (saved) activate(saved)
+	} catch (e) {}
+})()
 
-(async () => {
-  const tabBar = document.getElementById("tab-bar");
-  const buttons = Array.from(tabBar.querySelectorAll(".tab-btn"));
-  const bodyContent = document.querySelector("div.body-content");
-  let currentIndex = 0;
+//
+;(async () => {
+	const tabBar = document.getElementById('tab-bar')
+	const bodyContent = document
+	const buttons = Array.from(tabBar.querySelectorAll('button.tab-btn'))
+	const SWIPE_THRESHOLD = 60
+	let currentIndex = buttons.findIndex((btn) => btn.classList.contains('active')) || 0
+	let touchStartX = 0
+	let touchStartY = 0
 
-  function changeTab(index) {
-    if (index < 0 || index >= buttons.length) return;
+	const updateUI = (index) => {
+		buttons[index].scrollIntoView({
+			behavior: 'smooth',
+			block: 'nearest',
+			inline: 'center',
+		})
 
-    currentIndex = index;
+		buttons[index].click()
+	}
 
-    buttons[currentIndex].click();
-  }
+	const changeTab = (index) => {
+		if (index >= 0 && index < buttons.length) {
+			currentIndex = index
+			updateUI(index)
+		}
+	}
 
-  let touchStartX = 0;
+	bodyContent.addEventListener(
+		'touchstart',
+		(e) => {
+			touchStartX = e.touches[0].clientX
+			touchStartY = e.touches[0].clientY
+		},
+		{ passive: true },
+	)
 
-  bodyContent.addEventListener(
-    "touchstart",
-    (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    },
-    { passive: true },
-  );
+	bodyContent.addEventListener(
+		'touchend',
+		(e) => {
+			if (e.target.closest('.tab-bar') === null && e.target.closest('.app-header') === null) {
+				const touchEndX = e.changedTouches[0].clientX
+				const touchEndY = e.changedTouches[0].clientY
 
-  bodyContent.addEventListener(
-    "touchend",
-    (e) => {
-      let touchEndX = e.changedTouches[0].screenX;
-      let diff = touchStartX - touchEndX;
+				const diffX = touchStartX - touchEndX
+				const diffY = touchStartY - touchEndY
 
-      if (Math.abs(diff) > 65) {
-        if (diff > 0) {
-          changeTab(currentIndex + 1);
-        } else {
-          changeTab(currentIndex - 1);
-        }
-      }
-    },
-    { passive: true },
-  );
-})();
+				if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(diffX) > Math.abs(diffY)) {
+					if (diffX > 0) {
+						changeTab(currentIndex + 1)
+					} else {
+						changeTab(currentIndex - 1)
+					}
+				}
+			}
+		},
+		{ passive: true },
+	)
+
+	tabBar.addEventListener('click', (e) => {
+		const btn = e.target.closest('.tab-btn')
+		if (btn) {
+			currentIndex = buttons.indexOf(btn)
+		}
+	})
+})()
