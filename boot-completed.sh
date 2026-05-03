@@ -232,6 +232,7 @@ fi
 ## Hide some zygisk modules ##
 # brene_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
 
+# Injections Hiding
 if [[ "${config_hide_injections}" == "1" ]]; then
 	{
 		printf "\n#################\n"
