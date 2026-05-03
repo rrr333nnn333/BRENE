@@ -1,14 +1,17 @@
 #!/bin/bash
+config_paths_hiding__non_standard_sdcard=1
+config_paths_hiding__non_standard_sdcard_android=1
+config_paths_hiding__data_local_tmp=1
+config_paths_hiding__sdcard_android_data_media_obb=0
+
 config_selinux=1
 config_su_compat=1
 config_kernel_umount=1
 config_uname_spoofing=1
 config_hide_injections=1
-config_hide_data_local_tmp=1
 config_enable_avc_log_spoofing=1
 config_hide_sus_mnts_for_non_su_procs=1
 config_proc_cmdline_bootconfig_spoofing=1
-config_non_standard_sdcard_paths_hiding=1
 config_android_system_properties_spoofing=1
 
 config_pif_props=0
@@ -19,7 +22,6 @@ config_hide_modules_img=0
 config_developer_options=0
 config_wireless_debugging=0
 config_custom_uname_spoofing=0
-config_hide_sdcard_android_data=0
 
 config_verified_boot_hash=''
 config_uname_kernel_release=''

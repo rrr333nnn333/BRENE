@@ -42,13 +42,15 @@ const configs = [
 	{ id: 'enable_log' },
 	{ id: 'uname_spoofing' },
 	{ id: 'hide_injections' },
-	{ id: 'hide_data_local_tmp' },
 	{ id: 'custom_uname_spoofing' },
 	{ id: 'enable_avc_log_spoofing' },
-	{ id: 'hide_sdcard_android_data' },
 	{ id: 'proc_cmdline_bootconfig_spoofing' },
-	{ id: 'non_standard_sdcard_paths_hiding' },
 	{ id: 'android_system_properties_spoofing' },
+
+	{ id: 'paths_hiding__non_standard_sdcard' },
+	{ id: 'paths_hiding__non_standard_sdcard_android' },
+	{ id: 'paths_hiding__data_local_tmp' },
+	{ id: 'paths_hiding__sdcard_android_data_media_obb' },
 ]
 
 // Load enabled features
