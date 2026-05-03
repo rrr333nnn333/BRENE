@@ -11,41 +11,27 @@ const configs = [
   // { id: 'hide_modules_img' },
   {
     id: "hide_sus_mnts_for_non_su_procs",
-    action: (enabled) =>
-      setFeature(
-        `${SUSFS_BIN} hide_sus_mnts_for_non_su_procs ${enabled ? 1 : 0}`,
-      ),
+    action: (enabled) => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_non_su_procs ${enabled ? 1 : 0}`),
   },
   {
     id: "su_compat",
-    action: (enabled) =>
-      setFeature(
-        `${KSU_BIN} feature set su_compat ${enabled ? 1 : 0} && ${KSU_BIN} feature save`,
-      ),
+    action: (enabled) => setFeature(`${KSU_BIN} feature set su_compat ${enabled ? 1 : 0} && ${KSU_BIN} feature save`),
   },
   {
     id: "kernel_umount",
-    action: (enabled) =>
-      setFeature(
-        `${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`,
-      ),
+    action: (enabled) => setFeature(`${KSU_BIN} feature set kernel_umount ${enabled ? 1 : 0} && ${KSU_BIN} feature save`),
   },
   {
     id: "developer_options",
-    action: (enabled) =>
-      setFeature(
-        `settings put global development_settings_enabled ${enabled ? 1 : 0}`,
-      ),
+    action: (enabled) => setFeature(`settings put global development_settings_enabled ${enabled ? 1 : 0}`),
   },
   {
     id: "usb_debugging",
-    action: (enabled) =>
-      setFeature(`settings put global adb_enabled ${enabled ? 1 : 0}`),
+    action: (enabled) => setFeature(`settings put global adb_enabled ${enabled ? 1 : 0}`),
   },
   {
     id: "wireless_debugging",
-    action: (enabled) =>
-      setFeature(`settings put global adb_wifi_enabled ${enabled ? 1 : 0}`),
+    action: (enabled) => setFeature(`settings put global adb_wifi_enabled ${enabled ? 1 : 0}`),
   },
   {
     id: "selinux",
@@ -97,12 +83,10 @@ exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((result) => {
 });
 
 // Load brene version
-exec(`grep "^version=" ${MODDIR}/module.prop | cut -d'=' -f2`).then(
-  (result) => {
-    const element = document.getElementById("brene-version");
-    element.innerText = result.errno === 0 ? result.stdout : "unknown";
-  },
-);
+exec(`grep "^version=" ${MODDIR}/module.prop | cut -d'=' -f2`).then((result) => {
+  const element = document.getElementById("brene-version");
+  element.innerText = result.errno === 0 ? result.stdout : "unknown";
+});
 
 // Load susfs version
 exec("susfs show version").then((result) => {
@@ -112,9 +96,7 @@ exec("susfs show version").then((result) => {
 
 // Helper function to update config
 function updateConfig(config, value) {
-  exec(
-    `sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`,
-  ).then((result) => {
+  exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
     if (result.errno !== 0) toast("Failed to update config");
   });
 }
@@ -122,9 +104,7 @@ function updateConfig(config, value) {
 // TEMP
 // Helper function to update config
 function updateConfig2(config, value) {
-  exec(
-    `sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`,
-  ).then((result) => {
+  exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
     if (result.errno !== 0) toast("Failed to update config");
   });
 }
@@ -160,14 +140,11 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
   );
 
   // custom uname
-  document.getElementById("custom_uname_release").value =
-    configValues["config_custom_uname_kernel_release"];
-  document.getElementById("custom_uname_version").value =
-    configValues["config_custom_uname_kernel_version"];
+  document.getElementById("custom_uname_release").value = configValues["config_custom_uname_kernel_release"];
+  document.getElementById("custom_uname_version").value = configValues["config_custom_uname_kernel_version"];
 
   // Verified Boot Hash
-  document.getElementById("verified_boot_hash_text_field").value =
-    configValues["config_verified_boot_hash"];
+  document.getElementById("verified_boot_hash_text_field").value = configValues["config_verified_boot_hash"];
 
   // toggle
   configs.forEach((config) => {
@@ -214,20 +191,15 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
   const unameVersion = document.getElementById("custom_uname_version");
   const updateUname = (release, version) => {
     updateConfig2("config_custom_uname_kernel_release", release);
-    updateConfig2(
-      "config_custom_uname_kernel_version",
-      version.trim() === "" ? "default" : version,
-    );
+    updateConfig2("config_custom_uname_kernel_version", version.trim() === "" ? "default" : version);
     setFeature(`${SUSFS_BIN} set_uname "${release}" "${version}"`);
     unameRelease.value = release;
     unameVersion.value = version.trim() === "" ? "default" : version;
   };
 
-  document.getElementById(`button_custom_uname_reset`).onclick = () =>
-    updateUname("default", "default");
+  document.getElementById(`button_custom_uname_reset`).onclick = () => updateUname("default", "default");
   document.getElementById(`button_custom_uname_apply`).onclick = () => {
-    if (unameRelease.value !== "")
-      updateUname(unameRelease.value, unameVersion.value);
+    if (unameRelease.value !== "") updateUname(unameRelease.value, unameVersion.value);
   };
 })();
 
@@ -271,9 +243,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
   const loopField = document.getElementById("custom_sus_path_loop_text_field");
   const applyButton = document.getElementById("unified_apply_button");
   const tabs = document.getElementById("sus_tabs");
-  const scrollContainer = document.getElementById(
-    "horizontal_scroll_container",
-  );
+  const scrollContainer = document.getElementById("horizontal_scroll_container");
 
   // Load all contents
   exec(`cat ${PERSISTENT_DIR}/custom_sus_map.txt`).then((result) => {
@@ -338,4 +308,75 @@ UNIQUE_EOF
       });
     }
   };
+})();
+
+// tabs.js — tab switching
+(async () => {
+  var btns = document.querySelectorAll(".tab-btn");
+  var panels = document.querySelectorAll(".tab-panel");
+
+  function activate(id) {
+    btns.forEach(function (b) {
+      b.classList.toggle("active", b.dataset.tab === id);
+    });
+    panels.forEach(function (p) {
+      p.classList.toggle("active", p.dataset.panel === id);
+    });
+  }
+
+  btns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      activate(btn.dataset.tab);
+      try {
+        sessionStorage.setItem("brene_tab", btn.dataset.tab);
+      } catch (e) {}
+    });
+  });
+
+  try {
+    var saved = sessionStorage.getItem("brene_tab");
+    if (saved) activate(saved);
+  } catch (e) {}
+})();
+
+(async () => {
+  const tabBar = document.getElementById("tab-bar");
+  const buttons = Array.from(tabBar.querySelectorAll(".tab-btn"));
+  const bodyContent = document.querySelector("div.body-content");
+  let currentIndex = 0;
+
+  function changeTab(index) {
+    if (index < 0 || index >= buttons.length) return;
+
+    currentIndex = index;
+
+    buttons[currentIndex].click();
+  }
+
+  let touchStartX = 0;
+
+  bodyContent.addEventListener(
+    "touchstart",
+    (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    },
+    { passive: true },
+  );
+
+  bodyContent.addEventListener(
+    "touchend",
+    (e) => {
+      let touchEndX = e.changedTouches[0].screenX;
+      let diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > 65) {
+        if (diff > 0) {
+          changeTab(currentIndex + 1);
+        } else {
+          changeTab(currentIndex - 1);
+        }
+      }
+    },
+    { passive: true },
+  );
 })();
