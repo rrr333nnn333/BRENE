@@ -102,7 +102,9 @@ inotifyd "${MODDIR}/inotify.sh" /sdcard:n &
 if [[ "${config_paths_hiding__non_standard_sdcard}" == "1" ]]; then
 	{
 		echo ""
+		echo "####################"
 		echo "Non-standard /sdcard"
+		echo "####################"
 	} >> "${PERSISTENT_DIR}/logs.txt"
 
 	standard_paths="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones"
@@ -125,7 +127,9 @@ fi
 if [[ "${config_paths_hiding__non_standard_sdcard_android}" == "1" ]]; then
 	{
 		echo ""
+		echo "############################"
 		echo "Non-standard /sdcard/Android"
+		echo "############################"
 	} >> "${PERSISTENT_DIR}/logs.txt"
 
 	standard_paths="data media obb"
@@ -148,7 +152,9 @@ fi
 if [[ "${config_paths_hiding__data_local_tmp}" == "1" ]]; then
 	{
 		echo ""
+		echo "###############"
 		echo "/data/local/tmp"
+		echo "###############"
 	} >> "${PERSISTENT_DIR}/logs.txt"
 
 	for i in /data/local/tmp/*; do
@@ -160,7 +166,9 @@ fi
 if [[ "${config_paths_hiding__sdcard_android_data_media_obb}" == "1" ]]; then
 	{
 		echo ""
+		echo "####################################"
 		echo "/sdcard/Android/[data | media | obb]"
+		echo "####################################"
 	} >> "${PERSISTENT_DIR}/logs.txt"
 
 	path1=/sdcard/Android/data
@@ -175,9 +183,10 @@ fi
 
 ## For paths that are read-only all the time, add them via 'add_sus_path' ##
 {
-	printf "\n##################\n"
-	printf "Other Paths Hiding"
-	printf "\n##################\n"
+	echo ""
+	echo "##################"
+	echo "Other Paths Hiding"
+	echo "##################"
 } >> "${PERSISTENT_DIR}/logs.txt"
 # brene_sus_path "/sys/block/loop0"
 brene_sus_path "/system/addon.d"
@@ -235,9 +244,10 @@ fi
 # Injections Hiding
 if [[ "${config_hide_injections}" == "1" ]]; then
 	{
-		printf "\n#################\n"
-		printf "Injections Hiding"
-		printf "\n#################\n"
+		echo ""
+		echo "#################"
+		echo "Injections Hiding"
+		echo "#################"
 	} >> "${PERSISTENT_DIR}/logs.txt"
 
 	for i in /data/adb/modules/*; do
@@ -263,4 +273,4 @@ sed -i "s/^config_uname_kernel_version=.*/config_uname_kernel_version='${config_
 
 resetprop -c 2> /dev/null || true
 
-printf "boot-completed.sh\n\n" >> "${PERSISTENT_DIR}/log.txt"
+echo "boot-completed.sh ✅" >> "${PERSISTENT_DIR}/log.txt"

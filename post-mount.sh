@@ -11,4 +11,4 @@
 # # Load config
 # [[ -e "${PERSISTENT_DIR}/config.sh" ]] && source "${PERSISTENT_DIR}/config.sh"
 
-# echo "post-mount.sh" >> "${PERSISTENT_DIR}/log.txt"
+# echo "post-mount.sh ✅" >> "${PERSISTENT_DIR}/log.txt"

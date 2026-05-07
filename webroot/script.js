@@ -69,19 +69,19 @@ exec(`cat ${PERSISTENT_DIR}/log.txt`).then((result) => {
 	const container = document.getElementById('logs')
 
 	if (result.errno !== 0) {
-		container.innerText = 'Failed to load logs'
+		container.textContent += 'Failed to load logs'
 		return
 	}
-	container.innerText = result.stdout
-})
-exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((result) => {
-	const container = document.getElementById('logs')
+	container.textContent += result.stdout
+	container.textContent += '\n'
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load logs'
-		return
-	}
-	container.innerText += result.stdout
+	exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((result) => {
+		if (result.errno !== 0) {
+			container.textContent += 'Failed to load logs'
+			return
+		}
+		container.textContent += result.stdout
+	})
 })
 
 // Load brene version
