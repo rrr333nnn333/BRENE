@@ -11,4 +11,6 @@
 # # Load config
 # [[ -e "${PERSISTENT_DIR}/config.sh" ]] && source "${PERSISTENT_DIR}/config.sh"
 
-# echo "post-mount.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
+# if [[ "${config_brene_logs}" == "1" ]]; then
+# 	echo "post-mount.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
+# fi

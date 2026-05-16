@@ -16,6 +16,7 @@ config_android_system_properties_spoofing=1
 
 config_pif_props=0
 config_rom_props=0
+config_brene_logs=0
 config_enable_log=0
 config_usb_debugging=0
 config_hide_modules_img=0

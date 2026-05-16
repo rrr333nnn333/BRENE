@@ -66,4 +66,6 @@ if [[ "${config_android_system_properties_spoofing}" == "1" ]]; then
 	resetprop --delete "crashrecovery.rescue_boot_count"
 fi
 
-echo "service.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
+if [[ "${config_brene_logs}" == "1" ]]; then
+	echo "service.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
+fi

@@ -23,25 +23,25 @@ DEST_BIN_DIR=/data/adb/ksu/bin
 # }
 
 susfs_list_full_file_access_for_third_party_apps() {
-  local TARGET_PERMISSION="android.permission.MANAGE_EXTERNAL_STORAGE"
-  pm list packages -3 | cut -d':' -f2 | while read -r PKGNAME; do
-    if pm dump-package "${PKGNAME}" | grep -Eq "${TARGET_PERMISSION}"; then
-      echo "susfs: package '${PKGNAME}' has '${TARGET_PERMISSION}' permission declared." | tee /dev/kmsg
-    fi
-  done
+	local TARGET_PERMISSION="android.permission.MANAGE_EXTERNAL_STORAGE"
+	pm list packages -3 | cut -d':' -f2 | while read -r PKGNAME; do
+		if pm dump-package "${PKGNAME}" | grep -Eq "${TARGET_PERMISSION}"; then
+			echo "susfs: package '${PKGNAME}' has '${TARGET_PERMISSION}' permission declared." | tee /dev/kmsg
+		fi
+	done
 }
 
 resetprop_n() {
-  resetprop -n "$1" "$2"
+	resetprop -n "$1" "$2"
 }
 
 if_prop_value_exits_resetprop_n() {
-  local PROP_NAME=$1
-  local EXPECTED_VALUE=$2
-  local CURRENT_VALUE
-  CURRENT_VALUE=$(resetprop "${PROP_NAME}")
+	local PROP_NAME=$1
+	local EXPECTED_VALUE=$2
+	local CURRENT_VALUE
+	CURRENT_VALUE=$(resetprop "${PROP_NAME}")
 
-  [[ -z "${CURRENT_VALUE}" ]] || [[ "${CURRENT_VALUE}" == "${EXPECTED_VALUE}" ]] || resetprop -n "${PROP_NAME}" "${EXPECTED_VALUE}"
+	[[ -z "${CURRENT_VALUE}" ]] || [[ "${CURRENT_VALUE}" == "${EXPECTED_VALUE}" ]] || resetprop -n "${PROP_NAME}" "${EXPECTED_VALUE}"
 }
 
 # if_contains_resetprop_n() {
@@ -53,14 +53,22 @@ if_prop_value_exits_resetprop_n() {
 # }
 
 brene_sus_path() {
-  ${SUSFS_BIN} add_sus_path "$1" && echo "[sus_path]: $1" >> "${PERSISTENT_DIR}/logs.txt"
+	if ${SUSFS_BIN} add_sus_path "$1" && [[ "${config_brene_logs}" == "1" ]]; then
+		echo "[sus_path]: $1" >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 }
 brene_sus_path_loop() {
-  ${SUSFS_BIN} add_sus_path_loop "$1" && echo "[sus_path_loop]: $1" >> "${PERSISTENT_DIR}/logs.txt"
+	if ${SUSFS_BIN} add_sus_path_loop "$1" && [[ "${config_brene_logs}" == "1" ]]; then
+		echo "[sus_path_loop]: $1" >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 }
 brene_sus_map() {
-  ${SUSFS_BIN} add_sus_map "$1" && echo "[sus_map]: $1" >> "${PERSISTENT_DIR}/logs.txt"
+	if ${SUSFS_BIN} add_sus_map "$1" && [[ "${config_brene_logs}" == "1" ]]; then
+		echo "[sus_map]: $1" >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 }
 brene_set_uname() {
-  ${SUSFS_BIN} set_uname "$1" "$2" && echo "[set_uname]: $1 $2" >> "${PERSISTENT_DIR}/logs.txt"
+	if ${SUSFS_BIN} set_uname "$1" "$2" && [[ "${config_brene_logs}" == "1" ]]; then
+		echo "[set_uname]: $1 $2" >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 }

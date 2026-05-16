@@ -39,6 +39,7 @@ const configs = [
 	},
 	{ id: 'pif_props' },
 	{ id: 'rom_props' },
+	{ id: 'brene_logs' },
 	{ id: 'enable_log' },
 	{ id: 'uname_spoofing' },
 	{ id: 'hide_injections' },

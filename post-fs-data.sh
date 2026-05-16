@@ -138,21 +138,25 @@ fi
 # pass 'default' to tell susfs to use the default value by uname #
 # ${SUSFS_BIN} set_uname 'default' 'default'
 if [[ "${config_custom_uname_spoofing}" == "1" ]]; then
-	{
-		echo ""
-		echo "#####################"
-		echo "Custom Uname Spoofing"
-		echo "#####################"
-	} >> "${PERSISTENT_DIR}/logs.txt"
+	if [[ "${config_brene_logs}" == "1" ]]; then
+		{
+			echo ""
+			echo "#####################"
+			echo "Custom Uname Spoofing"
+			echo "#####################"
+		} >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 
 	brene_set_uname "${config_custom_uname_kernel_release}" "${config_custom_uname_kernel_version}"
 elif [[ "${config_uname_spoofing}" == "1" ]]; then
-	{
-		echo ""
-		echo "##############"
-		echo "Uname Spoofing"
-		echo "##############"
-	} >> "${PERSISTENT_DIR}/logs.txt"
+	if [[ "${config_brene_logs}" == "1" ]]; then
+		{
+			echo ""
+			echo "##############"
+			echo "Uname Spoofing"
+			echo "##############"
+		} >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 
 	brene_set_uname "${config_uname_kernel_release}" "${config_uname_kernel_version}"
 fi
@@ -164,4 +168,6 @@ else
 	${SUSFS_BIN} enable_log 0
 fi
 
-echo "post-fs-data.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
+if [[ "${config_brene_logs}" == "1" ]]; then
+	echo "post-fs-data.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
+fi
