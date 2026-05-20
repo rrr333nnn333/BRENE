@@ -22,9 +22,9 @@ fi
 sed -i "s#^description=.*#description=${status}${description}#" "${MODDIR}/module.prop"
 
 # Kernel Umount
-${KSU_BIN} feature set kernel_umount "${config_kernel_umount}"
+[[ -n "${config_kernel_umount}" ]] && ${KSU_BIN} feature set kernel_umount "${config_kernel_umount}"
 # SU Compat
-${KSU_BIN} feature set su_compat "${config_su_compat}"
+[[ -n "${config_su_compat}" ]] && ${KSU_BIN} feature set su_compat "${config_su_compat}"
 ${KSU_BIN} feature save
 
 # Android Verified Boot Hash Spoofing
@@ -35,28 +35,28 @@ fi
 # Developer Options
 if [[ "${config_developer_options}" == "1" ]]; then
 	settings put global development_settings_enabled 1
-else
+elif [[ "${config_developer_options}" == "0" ]]; then
 	settings put global development_settings_enabled 0
 fi
 
 # USB Debugging
 if [[ "${config_usb_debugging}" == "1" ]]; then
 	settings put global adb_enabled 1
-else
+elif [[ "${config_usb_debugging}" == "0" ]]; then
 	settings put global adb_enabled 0
 fi
 
 # Wireless Debugging
 if [[ "${config_wireless_debugging}" == "1" ]]; then
 	settings put global adb_wifi_enabled 1
-else
+elif [[ "${config_wireless_debugging}" == "0" ]]; then
 	settings put global adb_wifi_enabled 0
 fi
 
 # SELinux
 if [[ "${config_selinux}" == "1" ]]; then
-	[[ "$(getenforce)" == "Permissive" ]] && setenforce 1
-else
+	[[ "$(getenforce)" != "Enforcing" ]] && setenforce 1
+elif [[ "${config_selinux}" == "0" ]]; then
 	[[ "$(getenforce)" == "Enforcing" ]] && setenforce 0
 fi
 
