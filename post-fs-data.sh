@@ -120,7 +120,7 @@ fi
 #ksu_susfs enable_avc_log_spoofing 0
 if [[ "${config_enable_avc_log_spoofing}" == "1" ]]; then
 	${SUSFS_BIN} enable_avc_log_spoofing 1
-else
+elif [[ "${config_enable_avc_log_spoofing}" == "0" ]]; then
 	${SUSFS_BIN} enable_avc_log_spoofing 0
 fi
 
@@ -129,7 +129,7 @@ fi
 ## Or it is up to you to keep it enabled since su process can still see the mounts ##
 if [[ "${config_hide_sus_mnts_for_non_su_procs}" == "1" ]]; then
 	${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 1
-else
+elif [[ "${config_hide_sus_mnts_for_non_su_procs}" == "0" ]]; then
 	${SUSFS_BIN} hide_sus_mnts_for_non_su_procs 0
 fi
 
@@ -164,7 +164,7 @@ fi
 ## Disable susfs kernel log ##
 if [[ "${config_enable_log}" == "1" ]]; then
 	${SUSFS_BIN} enable_log 1
-else
+elif [[ "${config_enable_log}" == "0" ]]; then
 	${SUSFS_BIN} enable_log 0
 fi
 
