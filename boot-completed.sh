@@ -208,7 +208,7 @@ if [[ -e "${PERSISTENT_DIR}/custom_sus_map.txt" ]]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
-		[[ -e "${i}" ]] && brene_sus_map "${i}"
+		brene_sus_map "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_map.txt"
 fi
 
@@ -217,7 +217,7 @@ if [[ -e "${PERSISTENT_DIR}/custom_sus_path.txt" ]]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
-		[[ -e "${i}" ]] && brene_sus_path "${i}"
+		brene_sus_path "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path.txt"
 fi
 
@@ -226,7 +226,7 @@ if [[ -e "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
-		[[ -e "${i}" ]] && brene_sus_path_loop "${i}"
+		brene_sus_path_loop "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path_loop.txt"
 fi
 
