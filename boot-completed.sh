@@ -202,10 +202,22 @@ if [[ "${config_paths_hiding__sdcard_android_data_media_obb}" == "1" ]]; then
 	path1=/sdcard/Android/data
 	path2=/sdcard/Android/media
 	path3=/sdcard/Android/obb
+	path4=/data/media/0/Android/data
+	path5=/data/media/0/Android/media
+	path6=/data/media/0/Android/obb
 	for i in $(pm list packages -3 | cut -d':' -f2); do
-		[[ -e "${path1}/${i}" ]] && brene_sus_path_loop "${path1}/${i}"
-		[[ -e "${path2}/${i}" ]] && brene_sus_path_loop "${path2}/${i}"
-		[[ -e "${path3}/${i}" ]] && brene_sus_path_loop "${path3}/${i}"
+		full_path1="${path1}/${i}"
+		full_path2="${path2}/${i}"
+		full_path3="${path3}/${i}"
+		full_path4="${path4}/${i}"
+		full_path5="${path5}/${i}"
+		full_path6="${path6}/${i}"
+		[[ -e "${full_path1}" ]] && brene_sus_path_loop "${full_path1}"
+		[[ -e "${full_path2}" ]] && brene_sus_path_loop "${full_path2}"
+		[[ -e "${full_path3}" ]] && brene_sus_path_loop "${full_path3}"
+		[[ -e "${full_path4}" ]] && brene_sus_path_loop "${full_path4}"
+		[[ -e "${full_path5}" ]] && brene_sus_path_loop "${full_path5}"
+		[[ -e "${full_path6}" ]] && brene_sus_path_loop "${full_path6}"
 	done
 fi
 
