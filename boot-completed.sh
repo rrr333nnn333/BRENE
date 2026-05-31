@@ -109,12 +109,13 @@ if [[ "${config_paths_hiding__non_standard_sdcard}" == "1" ]]; then
 			echo "####################"
 		} >> "${PERSISTENT_DIR}/logs.txt"
 	fi
-	
-    if [[ -n "$(resetprop ro.miui.ui.version.name)" ]]; then
-        standard_paths="Alarms Android Audiobooks DCIM Documents Download MIUI Movies Music Notifications Pictures Podcasts Recordings Ringtones"
-    else
-        standard_paths="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones"
-    fi
+
+	if [[ -z "$(resetprop ro.miui.ui.version.name)" ]]; then
+		standard_paths="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones"
+	else
+		standard_paths="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones MIUI"
+	fi
+
 	for i in /sdcard/*; do
 		pass=0
 		for x in ${standard_paths}; do
