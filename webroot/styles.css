@@ -122,10 +122,30 @@ md-tabs {
 	margin: 0 auto;
 	padding: 11px 16px;
 	display: flex;
-	align-items: stretch;
+	align-items: center;
 	gap: 6px;
 	flex-wrap: wrap;
 	box-sizing: border-box;
+}
+
+.language-picker {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-left: auto;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--md-sys-color-on-surface-variant);
+}
+
+.language-picker select {
+	min-height: 34px;
+	padding: 4px 28px 4px 10px;
+	border: 1px solid var(--md-sys-color-outline-variant);
+	border-radius: 8px;
+	background-color: var(--md-sys-color-surface-container);
+	color: var(--md-sys-color-on-surface);
+	font: inherit;
 }
 
 .tab-bar {
