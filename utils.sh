@@ -72,3 +72,31 @@ brene_set_uname() {
 		echo "[set_uname]: $1 $2" >> "${PERSISTENT_DIR}/logs.txt"
 	fi
 }
+
+## bootconfig: key = "value" | cmdline: key=value
+brene_spoof_field() {
+	local file="$1" fmt="$2" key="$3" val="$4" key_re
+	key_re=$(printf '%s' "${key}" | sed 's/\./\\./g')
+
+	if [[ "${fmt}" == "bootconfig" ]]; then
+		sed -i "s|^\([[:space:]]*\)${key_re}[[:space:]]*=.*|\1${key} = \"${val}\"|" "${file}"
+	else
+		sed -i "s|${key_re}=[^ ]*|${key}=${val}|g" "${file}"
+	fi
+
+	[[ "${config_brene_logs}" == "1" ]] && echo "[boot_spoof]: ${key} -> ${val}" >> "${PERSISTENT_DIR}/logs.txt"
+}
+
+brene_spoof_delete() {
+	local file="$1" fmt="$2" key="$3" key_re
+	key_re=$(printf '%s' "${key}" | sed 's/\./\\./g')
+
+	if [[ "${fmt}" == "bootconfig" ]]; then
+		sed -i "\|^[[:space:]]*${key_re}[[:space:]]*=|d" "${file}"
+	else
+		sed -i "s| *${key_re}=[^ ]*||g" "${file}"
+	fi
+
+	[[ "${config_brene_logs}" == "1" ]] && echo "[boot_spoof]: deleted ${key}" >> "${PERSISTENT_DIR}/logs.txt"
+}
+

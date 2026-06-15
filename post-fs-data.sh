@@ -88,20 +88,35 @@ if [[ "${config_proc_cmdline_bootconfig_spoofing}" == "1" ]]; then
 	susfs_variant=$(${SUSFS_BIN} show variant)
 
 	if [[ "${susfs_variant}" == "GKI" ]]; then
-		FAKE_BOOTCONFIG="${PERSISTENT_DIR}/fake_bootconfig"
-
-		cat /proc/bootconfig > "${FAKE_BOOTCONFIG}"
-		sed -i 's/androidboot.warranty_bit = "1"/androidboot.warranty_bit = "0"/' "${FAKE_BOOTCONFIG}"
-		sed -i 's/androidboot.verifiedbootstate = "orange"/androidboot.verifiedbootstate = "green"/' "${FAKE_BOOTCONFIG}"
-		${SUSFS_BIN} set_cmdline_or_bootconfig "${FAKE_BOOTCONFIG}"
+		spoof_fmt="bootconfig"
+		spoof_src="/proc/bootconfig"
+		FAKE_BOOT="${PERSISTENT_DIR}/fake_bootconfig"
 	else
-		FAKE_CMDLINE="${PERSISTENT_DIR}/fake_cmdline"
-
-		cat /proc/cmdline > "${FAKE_CMDLINE}"
-		sed -i 's/androidboot.warranty_bit=1/androidboot.warranty_bit=0/' "${FAKE_CMDLINE}"
-		sed -i 's/androidboot.verifiedbootstate=orange/androidboot.verifiedbootstate=green/' "${FAKE_CMDLINE}"
-		${SUSFS_BIN} set_cmdline_or_bootconfig "${FAKE_CMDLINE}"
+		spoof_fmt="cmdline"
+		spoof_src="/proc/cmdline"
+		FAKE_BOOT="${PERSISTENT_DIR}/fake_cmdline"
 	fi
+
+	if [[ "${config_brene_logs}" == "1" ]]; then
+		{
+			echo ""
+			echo "#########################"
+			echo "Bootloader State Spoofing (${spoof_fmt})"
+			echo "#########################"
+		} >> "${PERSISTENT_DIR}/logs.txt"
+	fi
+
+	cat "${spoof_src}" > "${FAKE_BOOT}"
+
+	brene_spoof_field "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.verifiedbootstate" "green"
+	brene_spoof_field "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.vbmeta.device_state" "locked"
+	brene_spoof_field "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.warranty_bit" "0"
+	brene_spoof_field "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.flash.locked" "1"
+	brene_spoof_field "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.vbmeta.invalidate_on_error" "yes"
+	brene_spoof_delete "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.verifiedbooterror"
+	brene_spoof_delete "${FAKE_BOOT}" "${spoof_fmt}" "androidboot.verifyerrorpart"
+
+	${SUSFS_BIN} set_cmdline_or_bootconfig "${FAKE_BOOT}"
 fi
 
 #### Hiding the exposed /proc interface of ext4 loop and jdb2 when mounting ext4 img using sus_path ####

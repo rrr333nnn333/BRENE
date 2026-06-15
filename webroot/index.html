@@ -25,59 +25,48 @@
 		</header>
 
 		<nav class="tab-bar" id="tab-bar">
-			<button class="tab-btn active" data-tab="status">Status</button>
-			<button class="tab-btn" data-tab="android">Android</button>
-			<button class="tab-btn" data-tab="hiding">Hiding</button>
-			<button class="tab-btn" data-tab="spoofing">Spoofing</button>
-			<button class="tab-btn" data-tab="ksu">KSU</button>
-			<button class="tab-btn" data-tab="rom">ROM</button>
-			<button class="tab-btn" data-tab="advanced">Advanced</button>
-			<button class="tab-btn" data-tab="info">Info</button>
+			<button class="tab-btn active" data-tab="status" data-i18n="tab_status">Status</button>
+			<button class="tab-btn" data-tab="android" data-i18n="tab_android">Android</button>
+			<button class="tab-btn" data-tab="hiding" data-i18n="tab_hiding">Hiding</button>
+			<button class="tab-btn" data-tab="spoofing" data-i18n="tab_spoofing">Spoofing</button>
+			<button class="tab-btn" data-tab="ksu" data-i18n="tab_ksu">KSU</button>
+			<button class="tab-btn" data-tab="rom" data-i18n="tab_rom">ROM</button>
+			<button class="tab-btn" data-tab="advanced" data-i18n="tab_advanced">Advanced</button>
+			<button class="tab-btn" data-tab="info" data-i18n="tab_info">Info</button>
 		</nav>
 
 		<div class="preload-hidden">
 			<section class="tab-panel active" data-panel="status">
-				<p class="section-label">General</p>
+				<p class="section-label" data-i18n="sec_general">General</p>
 				<div class="card-group">
 					<div class="card-row" id="kernel-version">
 						<div class="card-row__body">
-							<span class="card-row__title">Kernel Version</span>
-							<span class="card-row__sub">Loading...</span>
+							<span class="card-row__title" data-i18n="kernel_version">Kernel Version</span>
+							<span class="card-row__sub"></span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
 
 					<div class="card-row" id="sus-status">
 						<div class="card-row__body">
-							<span class="card-row__title">..5.u.S Status</span>
-							<span class="card-row__sub">Loading...</span>
-							<span class="card-row__sub">
-								SuSFS redirects the sus path to a supposed not-existing path named '..5.u.S', and this is the only way to settle the cross check of returned errno from various
-								syscalls, but one disadvantage is that if the path itself can be written/created by the app (MANAGE_EXTERNAL_STORAGE granted), then it is futile to hide it
-							</span>
+							<span class="card-row__title" data-i18n="sus_status">..5.u.S Status</span>
+							<span class="card-row__sub"></span>
+							<span class="card-row__sub" data-i18n="sus_desc">SuSFS redirects the sus path to a supposed not-existing path named '..5.u.S', and this is the only way to settle the cross check of returned errno from various syscalls, but one disadvantage is that if the path itself can be written/created by the app (MANAGE_EXTERNAL_STORAGE granted), then it is futile to hide it</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
-
-					<!-- <div class="card-row">
-						<div class="card-row__body">
-							<span class="card-row__title">SELinux Status</span>
-							<span class="card-row__sub"></span>
-						</div>
-						<md-ripple></md-ripple>
-					</div> -->
 				</div>
 
-				<p class="section-label">Recommended Modules</p>
+				<p class="section-label" data-i18n="sec_recommended">Recommended Modules</p>
 				<div class="card-group" id="recommended-modules">
 					<div class="card-row" data-module="rezygisk">
 						<div class="card-row__body">
 							<span class="card-row__title">
 								<a href="https://github.com/rrr333nnn333/BreZygisk">BreZygisk</a>
-								or
+								<span data-i18n="word_or">or</span>
 								<a href="https://github.com/PerformanC/ReZygisk">ReZygisk</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -86,10 +75,10 @@
 						<div class="card-row__body">
 							<span class="card-row__title">
 								<a href="https://github.com/rrr333nnn333/BreWheel">BreWheel</a>
-								or
+								<span data-i18n="word_or">or</span>
 								<a href="https://github.com/PerformanC/Treat-Wheel-Zygisk">Treat Wheel</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -98,10 +87,10 @@
 						<div class="card-row__body">
 							<span class="card-row__title">
 								<a href="https://github.com/frknkrc44/HMA-OSS/tree/zygisk">HMA-OSS Zygisk</a>
-								or
+								<span data-i18n="word_or">or</span>
 								<a href="https://github.com/frknkrc44/HMA-OSS">HMA-OSS</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -110,8 +99,10 @@
 						<div class="card-row__body">
 							<span class="card-row__title">
 								<a href="https://github.com/JingMatrix/Vector">Vector</a>
+								<span data-i18n="word_or">or</span>
+								<a href="https://github.com/LSPosed/LSPosed">LSPosed</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -121,7 +112,7 @@
 							<span class="card-row__title">
 								<a href="https://github.com/JingMatrix/TEESimulator">TEESimulator</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -131,7 +122,7 @@
 							<span class="card-row__title">
 								<a href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List">Tricky Addon</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -141,7 +132,7 @@
 							<span class="card-row__title">
 								<a href="https://github.com/KOWX712/PlayIntegrityFix">Play Integrity Fix</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -151,18 +142,18 @@
 							<span class="card-row__title">
 								<a href="https://github.com/Tools-cx-app/meta-magic_mount-rs">Magic Mount-rs</a>
 							</span>
-							<span class="card-row__sub status-text">Status: Not installed</span>
+							<span class="card-row__sub status-text" data-i18n="status_not_installed">Status: Not installed</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
 				</div>
 
-				<p class="section-label">Incompatible Modules</p>
+				<p class="section-label" data-i18n="sec_incompatible">Incompatible Modules</p>
 				<div class="card-group" id="incompatible-modules">
 					<div class="card-row" data-module="susfs4ksu">
 						<div class="card-row__body">
 							<span class="card-row__title">susfs4ksu-module</span>
-							<span class="card-row__sub status-text">Status: Not installed ✅</span>
+							<span class="card-row__sub status-text" data-i18n="status_incompatible_not">Status: Not installed ✅</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -170,7 +161,7 @@
 					<div class="card-row" data-module="susfs_manager">
 						<div class="card-row__body">
 							<span class="card-row__title">SuSFS Manager</span>
-							<span class="card-row__sub status-text">Status: Not installed ✅</span>
+							<span class="card-row__sub status-text" data-i18n="status_incompatible_not">Status: Not installed ✅</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -178,12 +169,12 @@
 			</section>
 
 			<section class="tab-panel" data-panel="android">
-				<p class="section-label">Android Settings</p>
+				<p class="section-label" data-i18n="sec_android">Android Settings</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Developer Options</span>
-							<span class="card-row__sub">Enable or disable developer options</span>
+							<span class="card-row__title" data-i18n="dev_options">Developer Options</span>
+							<span class="card-row__sub" data-i18n="dev_options_sub">Enable or disable developer options</span>
 						</div>
 						<md-switch icons id="developer_options"></md-switch>
 						<md-ripple></md-ripple>
@@ -191,8 +182,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">USB Debugging</span>
-							<span class="card-row__sub">Enable or disable USB debugging</span>
+							<span class="card-row__title" data-i18n="usb_debug">USB Debugging</span>
+							<span class="card-row__sub" data-i18n="usb_debug_sub">Enable or disable USB debugging</span>
 						</div>
 						<md-switch icons id="usb_debugging"></md-switch>
 						<md-ripple></md-ripple>
@@ -200,8 +191,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Wireless Debugging</span>
-							<span class="card-row__sub">Enable or disable wireless debugging</span>
+							<span class="card-row__title" data-i18n="wifi_debug">Wireless Debugging</span>
+							<span class="card-row__sub" data-i18n="wifi_debug_sub">Enable or disable wireless debugging</span>
 						</div>
 						<md-switch icons id="wireless_debugging"></md-switch>
 						<md-ripple></md-ripple>
@@ -210,24 +201,24 @@
 			</section>
 
 			<section class="tab-panel" data-panel="hiding">
-				<p class="section-label">Suspicious Paths Hiding</p>
+				<p class="section-label" data-i18n="sec_path_hiding">Suspicious Paths Hiding</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Important Notes:</span>
-							<span class="card-row__sub">Only effective for umounted process with uid ≥ 10.000</span>
+							<span class="card-row__title" data-i18n="path_note">Important Notes:</span>
+							<span class="card-row__sub" data-i18n="path_note_sub">Only effective for umounted process with uid ≥ 10.000</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Non-standard /sdcard</span>
-							<span class="card-row__sub">Standard Paths:</span>
+							<span class="card-row__title" data-i18n="path_nonstandard_sdcard">Non-standard /sdcard</span>
+							<span class="card-row__sub" data-i18n="path_standard">Standard Paths:</span>
 							<span class="card-row__sub">
 								Alarms, Android, Audiobooks, DCIM, Documents, Download, Movies, Music, Notifications, Pictures, Podcasts, Recordings, Ringtones (MIUI)
 							</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__tag--code" data-i18n="example_detections">Example of detections:</span>
 							<span class="card-row__tag--code">/sdcard/MT2</span>
 							<span class="card-row__tag--code">/sdcard/TWRP</span>
 							<span class="card-row__tag--code">/sdcard/AppManager</span>
@@ -238,10 +229,10 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Non-standard /sdcard/Android</span>
-							<span class="card-row__sub"> Standard Paths: </span>
+							<span class="card-row__title" data-i18n="path_nonstandard_android">Non-standard /sdcard/Android</span>
+							<span class="card-row__sub" data-i18n="path_standard">Standard Paths:</span>
 							<span class="card-row__sub">data, media, obb</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__tag--code" data-i18n="example_detections">Example of detections:</span>
 							<span class="card-row__tag--code">/sdcard/Android/fas-rs</span>
 						</div>
 						<md-switch icons id="paths_hiding__non_standard_sdcard_android"></md-switch>
@@ -251,7 +242,7 @@
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">/data/local/tmp</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__tag--code" data-i18n="example_detections">Example of detections:</span>
 							<span class="card-row__tag--code">/data/local/tmp/main.jar</span>
 							<span class="card-row__tag--code">/data/local/tmp/DebugAssistant.log</span>
 						</div>
@@ -261,8 +252,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">/sdcard/Android/[data | media | obb]</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__title">/sdcard/Android/[data | media | obb] <span class="chip-exp" data-i18n="chip_exp">EXPERIMENTAL</span></span>
+							<span class="card-row__tag--code" data-i18n="example_detections">Example of detections:</span>
 							<span class="card-row__tag--code">/sdcard/Android/data/ io.github.muntashirakon.AppManager</span>
 							<span class="card-row__tag--code">/sdcard/Android/media/ io.github.muntashirakon.AppManager</span>
 							<span class="card-row__tag--code">/sdcard/Android/obb/ io.github.muntashirakon.AppManager</span>
@@ -272,15 +263,13 @@
 					</div>
 				</div>
 
-				<p class="section-label">Other Hiding</p>
+				<p class="section-label" data-i18n="sec_other_hiding">Other Hiding</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Hide Suspicious Mounts For Non-su Processes</span>
-							<span class="card-row__sub"
-								>Prevent zygote from caching the sus mounts in memory, and to keep them hidden from /proc/self/[mounts|mountinfo|mountstat] for non-su processes</span
-							>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__title" data-i18n="hide_sus_mnts">Hide Suspicious Mounts For Non-su Processes</span>
+							<span class="card-row__sub" data-i18n="hide_sus_mnts_sub">Prevent zygote from caching the sus mounts in memory, and to keep them hidden from /proc/self/[mounts|mountinfo|mountstat] for non-su processes</span>
+							<span class="card-row__tag--code" data-i18n="what_detects">What detects without this:</span>
 							<span class="card-row__tag--code">Holmes:</span>
 							<span class="card-row__tag--code">- Futile Trace Hide</span>
 							<span class="card-row__tag--code">Native Test:</span>
@@ -292,8 +281,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Umount Suspicious Mounts (2B)</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__title" data-i18n="umount_sus">Umount Suspicious Mounts (2B)</span>
+							<span class="card-row__tag--code" data-i18n="what_detects">What detects without this:</span>
 							<span class="card-row__tag--code">Native Detector:</span>
 							<span class="card-row__tag--code">- Detected Suspicious Mount</span>
 							<span class="card-row__tag--code">- Detected Inconsistent Mount</span>
@@ -305,8 +294,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Umount Suspicious Mounts (500K, old SuSFS patches)</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__title" data-i18n="umount_sus_500k">Umount Suspicious Mounts (500K, old SuSFS patches)</span>
+							<span class="card-row__tag--code" data-i18n="what_detects">What detects without this:</span>
 							<span class="card-row__tag--code">Native Detector:</span>
 							<span class="card-row__tag--code">- Detected Suspicious Mount</span>
 							<span class="card-row__tag--code">- Detected Inconsistent Mount</span>
@@ -318,9 +307,9 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Injections Hiding</span>
-							<span class="card-row__sub">Only effective for umounted process with uid ≥ 10.000</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__title" data-i18n="hide_injections">Injections Hiding</span>
+							<span class="card-row__sub" data-i18n="path_note_sub">Only effective for umounted process with uid ≥ 10.000</span>
+							<span class="card-row__tag--code" data-i18n="what_detects">What detects without this:</span>
 							<span class="card-row__tag--code">Native Detector:</span>
 							<span class="card-row__tag--code">- Found Injection</span>
 							<span class="card-row__tag--code">Disclosure:</span>
@@ -331,50 +320,38 @@
 					</div>
 				</div>
 
-				<p class="section-label">Custom SuSFS Entries</p>
+				<p class="section-label" data-i18n="sec_custom_sus">Custom SuSFS Entries</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Important Notes:</span>
-							<span class="card-row__sub">Only effective for umounted process with uid ≥ 10.000</span>
+							<span class="card-row__title" data-i18n="path_note">Important Notes:</span>
+							<span class="card-row__sub" data-i18n="path_note_sub">Only effective for umounted process with uid ≥ 10.000</span>
 
-							<!-- SUS MAP -->
 							<span class="card-row__title">SUS MAP</span>
-							<span class="card-row__sub">Added real file path which gets mmapped will be hidden from /proc/self/[maps|smaps|smaps_rollup|map_files|mem|pagemap]</span>
-							<span class="card-row__sub">Important Notes:</span>
-							<span class="card-row__sub">- It does NOT support hiding for anon memory.</span>
-							<span class="card-row__sub">- It does NOT hide any inline hooks or plt hooks cause by the injected library itself</span>
-							<span class="card-row__sub">- It may not be able to evade detections by apps that implement a good injection detection</span>
-							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__sub" data-i18n="sus_map_note">Added real file path which gets mmapped will be hidden from /proc/self/[maps|smaps|smaps_rollup|map_files|mem|pagemap]</span>
+							<span class="card-row__sub" data-i18n="sus_map_note2">Important Notes:</span>
+							<span class="card-row__sub" data-i18n="sus_map_note3">- It does NOT support hiding for anon memory.</span>
+							<span class="card-row__sub" data-i18n="sus_map_note4">- It does NOT hide any inline hooks or plt hooks cause by the injected library itself</span>
+							<span class="card-row__sub" data-i18n="sus_map_note5">- It may not be able to evade detections by apps that implement a good injection detection</span>
+							<span class="card-row__tag--code" data-i18n="word_example">Example:</span>
 							<span class="card-row__tag--code">/system/fonts/Roboto-Regular.ttf</span>
 							<span class="card-row__tag--code">/data/adb/modules/my_module/zygisk/arm64-v8a.so</span>
-							<!-- SUS MAP -->
 
-							<!-- SUS PATH -->
 							<span class="card-row__title">SUS PATH</span>
-							<span class="card-row__sub">Added path and all its sub-paths will be hidden for umounted app process from several syscalls</span>
-							<span class="card-row__sub"
-								>Please be reminded that if the target path has upper mounts then make sure the proper layer is added, otherwise it may not be effective for the target
-								process</span
-							>
-							<span class="card-row__sub">For paths that are read-only all the time, add them via 'add_sus_path'</span>
-							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__sub" data-i18n="sus_path_sub">Added path and all its sub-paths will be hidden for umounted app process from several syscalls</span>
+							<span class="card-row__sub" data-i18n="sus_path_sub2">Please be reminded that if the target path has upper mounts then make sure the proper layer is added, otherwise it may not be effective for the target process</span>
+							<span class="card-row__sub" data-i18n="sus_path_sub3">For paths that are read-only all the time, add them via 'add_sus_path'</span>
+							<span class="card-row__tag--code" data-i18n="word_example">Example:</span>
 							<span class="card-row__tag--code">/system/addon.d</span>
 							<span class="card-row__tag--code">/system/bin/install-recovery.sh</span>
-							<!-- SUS PATH -->
 
-							<!-- SUS PATH LOOP -->
 							<span class="card-row__title">SUS PATH LOOP</span>
-							<span class="card-row__sub"
-								>The only difference to add_sus_path is that the added sus_path via this cli will be flagged as SUS_PATH again for the app process when it is being spawned by
-								zygote and marked umounted</span
-							>
-							<span class="card-row__sub">Also it does not check if the path is existed or not, instead it checks for empty string only, so be careful what to add</span>
-							<span class="card-row__sub">For paths that are frequently modified, we can add them via 'add_sus_path_loop'</span>
-							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__sub" data-i18n="sus_loop_sub">The only difference to add_sus_path is that the added sus_path via this cli will be flagged as SUS_PATH again for the app process when it is being spawned by zygote and marked umounted</span>
+							<span class="card-row__sub" data-i18n="sus_loop_sub2">Also it does not check if the path is existed or not, instead it checks for empty string only, so be careful what to add</span>
+							<span class="card-row__sub" data-i18n="sus_loop_sub3">For paths that are frequently modified, we can add them via 'add_sus_path_loop'</span>
+							<span class="card-row__tag--code" data-i18n="word_example">Example:</span>
 							<span class="card-row__tag--code">/sdcard/TWRP</span>
 							<span class="card-row__tag--code">/data/local/tmp/main.jar</span>
-							<!-- SUS PATH LOOP -->
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -388,7 +365,7 @@
 
 						<div class="snap-container" id="horizontal_scroll_container">
 							<div class="snap-item">
-								<md-filled-text-field class="content" id="custom_sus_map_text_field" type="textarea" rows="12" label="SUS MAP"> ></md-filled-text-field>
+								<md-filled-text-field class="content" id="custom_sus_map_text_field" type="textarea" rows="12" label="SUS MAP"></md-filled-text-field>
 							</div>
 							<div class="snap-item">
 								<md-filled-text-field class="content" id="custom_sus_path_text_field" type="textarea" rows="12" label="SUS PATH"></md-filled-text-field>
@@ -398,24 +375,21 @@
 							</div>
 						</div>
 						<div class="sus-footer">
-							<md-filled-button id="unified_apply_button">APPLY</md-filled-button>
+							<md-filled-button id="unified_apply_button" data-i18n="btn_apply">APPLY</md-filled-button>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			<section class="tab-panel" data-panel="spoofing">
-				<p class="section-label">Spoofing Features</p>
+				<p class="section-label" data-i18n="sec_spoofing">Spoofing Features</p>
 
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">AVC Log Spoofing</span>
-							<span class="card-row__sub">Spoof the sus tcontext 'su' with 'u:r:priv_app:s0:c512,c768' shown in avc log in kernel</span>
-							<span class="card-row__sub"
-								>Enabling this may sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issues, so users are advised to
-								disable this when doing so</span
-							>
+							<span class="card-row__title" data-i18n="avc_log">AVC Log Spoofing</span>
+							<span class="card-row__sub" data-i18n="avc_log_sub">Spoof the sus tcontext 'su' with 'u:r:priv_app:s0:c512,c768' shown in avc log in kernel</span>
+							<span class="card-row__sub" data-i18n="avc_log_sub2">Enabling this may sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issues, so users are advised to disable this when doing so</span>
 						</div>
 						<md-switch icons id="enable_avc_log_spoofing"></md-switch>
 						<md-ripple></md-ripple>
@@ -423,10 +397,10 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">/proc/cmdline or /proc/bootconfig Spoofing</span>
-							<span class="card-row__sub">Spoof the output of /proc/cmdline (non-gki) or /proc/bootconfig (gki) from a text file</span>
-							<span class="card-row__sub">No root process detects it for now, and this spoofing won't help much actually</span>
-							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__title" data-i18n="cmdline_spoof">/proc/cmdline or /proc/bootconfig Spoofing</span>
+							<span class="card-row__sub" data-i18n="cmdline_spoof_sub">Spoof the output of /proc/cmdline (non-gki) or /proc/bootconfig (gki) from a text file</span>
+							<span class="card-row__sub" data-i18n="cmdline_spoof_sub2">No root process detects it for now, and this spoofing won't help much actually</span>
+							<span class="card-row__tag--code" data-i18n="word_example">Example:</span>
 							<span class="card-row__tag--code">androidboot.warranty_bit = "0"</span>
 							<span class="card-row__tag--code">androidboot.verifiedbootstate = "green"</span>
 						</div>
@@ -436,9 +410,9 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Android System Properties Spoofing</span>
-							<span class="card-row__sub">Spoof some android system properties</span>
-							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__title" data-i18n="props_spoof">Android System Properties Spoofing</span>
+							<span class="card-row__sub" data-i18n="props_spoof_sub">Spoof some android system properties</span>
+							<span class="card-row__tag--code" data-i18n="word_example">Example:</span>
 							<span class="card-row__tag--code">[ro.build.type]: [user]</span>
 							<span class="card-row__tag--code">[ro.build.tags]: [release-keys]</span>
 						</div>
@@ -448,13 +422,13 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Uname Spoofing</span>
-							<span class="card-row__sub">Spoof uname for all processes</span>
-							<span class="card-row__sub">Only 'release' and 'version' are spoofed as others are no longer needed</span>
-							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__title" data-i18n="uname_spoof">Uname Spoofing</span>
+							<span class="card-row__sub" data-i18n="uname_spoof_sub">Spoof uname for all processes</span>
+							<span class="card-row__sub" data-i18n="uname_spoof_sub2">Only 'release' and 'version' are spoofed as others are no longer needed</span>
+							<span class="card-row__tag--code" data-i18n="word_example">Example:</span>
 							<span class="card-row__tag--code">Kernel Release: 5.10.123-android12-9-g690101101069</span>
 							<span class="card-row__tag--code">Kernel Version: #1 SMP PREEMPT Wed Jun 9 03:20:30 UTC 2069</span>
-							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__tag--code" data-i18n="what_detects">What detects without this:</span>
 							<span class="card-row__tag--code">Duck Detector:</span>
 							<span class="card-row__tag--code">- Build time drift</span>
 							<span class="card-row__tag--code">Holmes:</span>
@@ -470,8 +444,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Custom Uname Spoofing</span>
-							<span class="card-row__sub">Spoof uname for all processes, set string to 'default' to imply the function to use original string</span>
+							<span class="card-row__title" data-i18n="custom_uname">Custom Uname Spoofing</span>
+							<span class="card-row__sub" data-i18n="custom_uname_sub">Spoof uname for all processes, set string to 'default' to imply the function to use original string</span>
 						</div>
 						<md-switch icons id="custom_uname_spoofing"></md-switch>
 						<md-ripple></md-ripple>
@@ -481,14 +455,14 @@
 							<md-outlined-text-field label="Kernel Release" placeholder="e.g. 5.10.123-android12-9-g690101101069" id="custom_uname_release"></md-outlined-text-field>
 							<md-outlined-text-field label="Kernel Version" placeholder="e.g. #1 SMP PREEMPT Wed Jun 9 03:20:30 UTC 2069" id="custom_uname_version"></md-outlined-text-field>
 							<div class="btn-row">
-								<md-outlined-button id="button_custom_uname_reset">RESET</md-outlined-button>
-								<md-filled-button id="button_custom_uname_apply">APPLY</md-filled-button>
+								<md-outlined-button id="button_custom_uname_reset" data-i18n="btn_reset">RESET</md-outlined-button>
+								<md-filled-button id="button_custom_uname_apply" data-i18n="btn_apply">APPLY</md-filled-button>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<p class="section-label">Android Verified Boot Hash Spoofing</p>
+				<p class="section-label" data-i18n="sec_vbhash">Android Verified Boot Hash Spoofing</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="field-stack">
@@ -497,10 +471,10 @@
 								type="textarea"
 								label="Verified Boot Hash"
 								rows="3"
-								placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a (64 digits)"
+								placeholder="e.g. df2352c282aj56e1489a3e220305hb827e54ba65a1293ab7409f2d46a3666b5a (64 chars)"
 							></md-outlined-text-field>
 							<div class="btn-row">
-								<md-filled-button id="verified_boot_hash_button">APPLY</md-filled-button>
+								<md-filled-button id="verified_boot_hash_button" data-i18n="btn_apply">APPLY</md-filled-button>
 							</div>
 						</div>
 					</div>
@@ -508,12 +482,12 @@
 			</section>
 
 			<section class="tab-panel" data-panel="rom">
-				<p class="section-label">Custom ROM</p>
+				<p class="section-label" data-i18n="sec_rom">Custom ROM</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Remove Custom ROM Properties <span class="chip-exp">EXPERIMENTAL</span></span>
-							<span class="card-row__sub">Some LineageOS, CrDroid and Halcyon properties</span>
+							<span class="card-row__title" data-i18n="rom_props">Remove Custom ROM Properties <span class="chip-exp" data-i18n="chip_exp">EXPERIMENTAL</span></span>
+							<span class="card-row__sub" data-i18n="rom_props_sub">Some LineageOS, CrDroid and Halcyon properties</span>
 						</div>
 						<md-switch icons id="rom_props"></md-switch>
 						<md-ripple></md-ripple>
@@ -521,8 +495,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Remove Play Integrity Fix Properties <span class="chip-exp">EXPERIMENTAL</span></span>
-							<span class="card-row__sub">Some Play Integrity Fix properties</span>
+							<span class="card-row__title" data-i18n="pif_props">Remove Play Integrity Fix Properties <span class="chip-exp" data-i18n="chip_exp">EXPERIMENTAL</span></span>
+							<span class="card-row__sub" data-i18n="pif_props_sub">Some Play Integrity Fix properties</span>
 						</div>
 						<md-switch icons id="pif_props"></md-switch>
 						<md-ripple></md-ripple>
@@ -531,12 +505,12 @@
 			</section>
 
 			<section class="tab-panel" data-panel="advanced">
-				<p class="section-label">Advanced / Other Features</p>
+				<p class="section-label" data-i18n="sec_advanced">Advanced / Other Features</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">BRENE Logs</span>
-							<span class="card-row__sub">Enable or disable BRENE Logs</span>
+							<span class="card-row__title" data-i18n="brene_logs">BRENE Logs</span>
+							<span class="card-row__sub" data-i18n="brene_logs_sub">Enable or disable BRENE Logs</span>
 						</div>
 						<md-switch icons id="brene_logs"></md-switch>
 						<md-ripple></md-ripple>
@@ -544,8 +518,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">SuSFS Logs</span>
-							<span class="card-row__sub">Enable or disable SuSFS log in kernel</span>
+							<span class="card-row__title" data-i18n="susfs_logs">SuSFS Logs</span>
+							<span class="card-row__sub" data-i18n="susfs_logs_sub">Enable or disable SuSFS log in kernel</span>
 						</div>
 						<md-switch icons id="enable_log"></md-switch>
 						<md-ripple></md-ripple>
@@ -553,8 +527,8 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">SELinux Enforcing</span>
-							<span class="card-row__sub">Enable or disable SELinux enforcing mode</span>
+							<span class="card-row__title" data-i18n="selinux">SELinux Enforcing</span>
+							<span class="card-row__sub" data-i18n="selinux_sub">Enable or disable SELinux enforcing mode</span>
 						</div>
 						<md-switch icons id="selinux"></md-switch>
 						<md-ripple></md-ripple>
@@ -563,13 +537,13 @@
 			</section>
 
 			<section class="tab-panel" data-panel="ksu">
-				<p class="section-label">KernelSU Features</p>
+				<p class="section-label" data-i18n="sec_ksu">KernelSU Features</p>
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">SU Compat</span>
-							<span class="card-row__sub">SU Compatibility Mode - allows authorized apps to gain root via traditional 'su' command</span>
-							<span class="card-row__sub card-row__tag--danger">WARNING: Old SuSFS patches need this option enabled to work</span>
+							<span class="card-row__title" data-i18n="su_compat">SU Compat</span>
+							<span class="card-row__sub" data-i18n="su_compat_sub">SU Compatibility Mode - allows authorized apps to gain root via traditional 'su' command</span>
+							<span class="card-row__sub card-row__tag--danger" data-i18n="su_compat_warn">WARNING: Old SuSFS patches need this option enabled to work</span>
 						</div>
 						<md-switch icons id="su_compat"></md-switch>
 						<md-ripple></md-ripple>
@@ -577,35 +551,63 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Kernel Umount</span>
-							<span class="card-row__sub">Kernel Umount - controls whether kernel automatically unmounts modules when not needed</span>
-							<span class="card-row__sub card-row__tag--danger">WARNING:</span>
-							<span class="card-row__sub card-row__tag--danger">- Old SuSFS patches need this option enabled to work</span>
-							<span class="card-row__sub card-row__tag--danger">- Umount Suspicious Mounts need this option enabled to work</span>
+							<span class="card-row__title" data-i18n="kernel_umount">Kernel Umount</span>
+							<span class="card-row__sub" data-i18n="kernel_umount_sub">Controls whether kernel automatically unmounts modules when not needed</span>
+							<span class="card-row__sub card-row__tag--danger" data-i18n="kernel_umount_warn">WARNING:</span>
+							<span class="card-row__sub card-row__tag--danger" data-i18n="kernel_umount_warn2">- Old SuSFS patches need this option enabled to work</span>
+							<span class="card-row__sub card-row__tag--danger" data-i18n="kernel_umount_warn3">- Umount Suspicious Mounts need this option enabled to work</span>
 						</div>
 						<md-switch icons id="kernel_umount"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 				</div>
 
-				<p class="section-label">Module Control</p>
+				<p class="section-label" data-i18n="sec_module_ctrl">Module Control</p>
 				<div class="card-group">
 					<div class="field-stack">
 						<div class="btn-row">
-							<md-filled-button id="disable_ksu_modules">Disable Modules</md-filled-button>
-							<md-filled-button id="enable_ksu_modules">Enable Modules</md-filled-button>
+							<md-filled-button id="disable_ksu_modules" data-i18n="btn_disable_modules">Disable Modules</md-filled-button>
+							<md-filled-button id="enable_ksu_modules" data-i18n="btn_enable_modules">Enable Modules</md-filled-button>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			<section class="tab-panel" data-panel="info">
-				<p class="section-label">Enabled Features In Kernel</p>
+				<p class="section-label" data-i18n="info_language_label">Language</p>
+				<div class="card-group">
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title" data-i18n="info_language_title">Interface Language</span>
+							<span class="card-row__sub" data-i18n="info_language_sub">Select display language</span>
+						</div>
+						<select id="language-select" style="
+							background-color: var(--md-sys-color-surface-container-high);
+							color: var(--md-sys-color-on-surface);
+							border: 1px solid var(--md-sys-color-outline-variant);
+							border-radius: 8px;
+							padding: 8px 12px;
+							font-size: 1rem;
+							font-family: inherit;
+							cursor: pointer;
+							outline: none;
+							flex-shrink: 0;
+						">
+							<option value="en">🇬🇧 English</option>
+							<option value="ru">🇷🇺 Русский</option>
+							<option value="uk">🇺🇦 Українська</option>
+							<option value="pt-BR">🇧🇷 Português (Brasil)</option>
+							<option value="zh">🇨🇳 简体中文</option>
+						</select>
+					</div>
+				</div>
+
+				<p class="section-label" data-i18n="info_kernel_features">Enabled Features In Kernel</p>
 				<div class="card-group">
 					<div class="mono-block enabled-config" id="kernel-features-container"></div>
 				</div>
 
-				<p class="section-label">BRENE Logs</p>
+				<p class="section-label" data-i18n="info_logs">BRENE Logs</p>
 				<div class="card-group">
 					<div class="mono-block enabled-config" id="logs"></div>
 				</div>
