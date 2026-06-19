@@ -1,4 +1,5 @@
-#!/bin/bash
+# shellcheck disable=SC2034
+# shellcheck disable=SC2148
 config_paths_hiding__non_standard_sdcard=1
 config_paths_hiding__non_standard_sdcard_android=1
 config_paths_hiding__data_local_tmp=1
@@ -9,6 +10,7 @@ config_su_compat=1
 config_kernel_umount=1
 config_uname_spoofing=1
 config_hide_injections=1
+config_hide_suspicious_ptys=1
 config_enable_avc_log_spoofing=1
 config_umount_suspicious_mounts=1
 config_hide_sus_mnts_for_non_su_procs=1

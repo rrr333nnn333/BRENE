@@ -365,6 +365,22 @@ if [[ "${config_umount_suspicious_mounts_500k}" == "1" ]]; then
 	cat /proc/1/mountinfo | grep -E "^5[0-9]{5,} .*$|KSU" | awk '{print $5}' | while read -r LINE; do ${KSU_BIN} kernel umount add --flags 2 "${LINE}" 2> /dev/null; done
 fi
 
+# Hide Suspicious PTYs
+if [[ "${config_hide_suspicious_ptys}" == "1" ]]; then
+	if [[ "${config_brene_logs}" == "1" ]]; then
+		{
+			echo ""
+			echo "####################"
+			echo "Hide Suspicious PTYs"
+			echo "####################"
+		} >> "${PERSISTENT_DIR}/logs.txt"
+	fi
+
+	for i in $(seq 0 10); do
+		brene_sus_path_loop "/dev/pts/${i}"
+	done
+fi
+
 resetprop -c 2> /dev/null || true
 
 if [[ "${config_brene_logs}" == "1" ]]; then
