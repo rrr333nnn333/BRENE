@@ -91,6 +91,21 @@ config_uname_kernel_version="#1 SMP PREEMPT $(resetprop ro.build.date)"
 sed -i "s/^config_uname_kernel_release=.*/config_uname_kernel_release='${config_uname_kernel_release}'/" ${PERSISTENT_DIR}/config.sh
 sed -i "s/^config_uname_kernel_version=.*/config_uname_kernel_version='${config_uname_kernel_version}'/" ${PERSISTENT_DIR}/config.sh
 
+# Installation clean up
+clean_up(){
+	echo "- Cleaning up..."
+	# Description files
+	rm -f "${MODPATH}/CHANGELOG.md"
+	rm -f "${MODPATH}/LICENSE"
+	# unused config files
+	rm -f "${MODPATH}/custom_sus_map.txt"
+	rm -f "${MODPATH}/custom_sus_path.txt"
+	rm -f "${MODPATH}/custom_sus_path_loop.txt"
+	rm -f "${MODPATH}/config.sh"
+	# unused remote files
+	rm -f "${MODPATH}/update.json"
+}
+clean_up
 # Disable outdated modules
 # echo "[✅] Disabling outdated modules"
 # modules="
