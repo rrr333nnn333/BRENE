@@ -322,7 +322,7 @@ if [[ "${config_hide_injections}" == "1" ]]; then
 		fi
 	done
 
-	for i in $(find /data/adb/modules -name "*.so" | grep /zygisk/); do
+	for i in $(find /data/adb/modules -name "*.so"); do
 		brene_sus_map "${i}"
 	done
 fi
