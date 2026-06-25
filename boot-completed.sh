@@ -316,7 +316,7 @@ if [[ "${config_hide_injections}" == "1" ]]; then
 
 	for i in /data/adb/modules/*; do
 		if [[ -e "${i}/system" ]]; then
-			for x in $(find "${i}/system" -type f -name "*.*"); do
+			for x in $(find "${i}/system" -type f); do
 				brene_sus_map "${x}"
 			done
 		fi
