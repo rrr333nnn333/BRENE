@@ -22,17 +22,18 @@ DEST_BIN_DIR=/data/adb/ksu/bin
 # 	busybox chcon --reference="${FROM}" "${TO}"
 # }
 
-susfs_list_full_file_access_for_third_party_apps() {
-	local TARGET_PERMISSION="android.permission.MANAGE_EXTERNAL_STORAGE"
-	pm list packages -3 | cut -d':' -f2 | while read -r PKGNAME; do
-		if pm dump-package "${PKGNAME}" | grep -Eq "${TARGET_PERMISSION}"; then
-			echo "susfs: package '${PKGNAME}' has '${TARGET_PERMISSION}' permission declared." | tee /dev/kmsg
-		fi
-	done
-}
+# susfs_list_full_file_access_for_third_party_apps() {
+# 	local TARGET_PERMISSION="android.permission.MANAGE_EXTERNAL_STORAGE"
+# 	pm list packages -3 | cut -d':' -f2 | while read -r PKGNAME; do
+# 		if pm dump-package "${PKGNAME}" | grep -Eq "${TARGET_PERMISSION}"; then
+# 			echo "susfs: package '${PKGNAME}' has '${TARGET_PERMISSION}' permission declared." | tee /dev/kmsg
+# 		fi
+# 	done
+# }
 
 resetprop_n() {
 	resetprop -n "$1" "$2"
+	resetprop -c $(resetprop -Z "$1") 2> /dev/null || true
 }
 
 if_prop_value_exits_resetprop_n() {
@@ -42,6 +43,7 @@ if_prop_value_exits_resetprop_n() {
 	CURRENT_VALUE=$(resetprop "${PROP_NAME}")
 
 	[[ -z "${CURRENT_VALUE}" ]] || [[ "${CURRENT_VALUE}" == "${EXPECTED_VALUE}" ]] || resetprop -n "${PROP_NAME}" "${EXPECTED_VALUE}"
+	resetprop -c $(resetprop -Z "$1") 2> /dev/null || true
 }
 
 # if_contains_resetprop_n() {
@@ -50,6 +52,7 @@ if_prop_value_exits_resetprop_n() {
 #   local NEW_VALUE=$3
 
 #   [[ "$(resetprop ${PROP_NAME})" = *"${CONTAINS_VALUE}"* ]] && resetprop -n "${PROP_NAME}" "${NEW_VALUE}"
+# 	resetprop -c $(resetprop -Z "$1") 2> /dev/null || true
 # }
 
 brene_sus_path() {
