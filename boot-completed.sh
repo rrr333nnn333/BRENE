@@ -53,11 +53,9 @@ elif [[ "${config_wireless_debugging}" == "0" ]]; then
 	settings put global adb_wifi_enabled 0
 fi
 
-# SELinux
+# SELinux Enforcing
 if [[ "${config_selinux}" == "1" ]]; then
 	[[ "$(getenforce)" != "Enforcing" ]] && setenforce 1
-elif [[ "${config_selinux}" == "0" ]]; then
-	[[ "$(getenforce)" == "Enforcing" ]] && setenforce 0
 fi
 
 # Remove Custom ROM Properties
