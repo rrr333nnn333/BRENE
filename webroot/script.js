@@ -424,12 +424,12 @@ UNIQUE_EOF
 	} catch (e) {}
 })()
 
-//
+// Swipe
 ;(async () => {
 	const tabBar = document.getElementById('tab-bar')
 	const bodyContent = document
 	const buttons = Array.from(tabBar.querySelectorAll('button.tab-btn'))
-	const SWIPE_THRESHOLD = 60
+	const SWIPE_THRESHOLD = 10
 	let currentIndex = buttons.findIndex((btn) => btn.classList.contains('active')) || 0
 	let touchStartX = 0
 	let touchStartY = 0
