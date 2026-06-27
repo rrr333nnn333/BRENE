@@ -60,14 +60,20 @@ elif [[ "${config_selinux}" == "0" ]]; then
 	[[ "$(getenforce)" == "Enforcing" ]] && setenforce 0
 fi
 
-# Remove Play Integrity Fix Props (EXPERIMENTAL)
-if [[ "${config_pif_props}" == "1" ]]; then
-	resetprop | grep -E "pihook|pixelprops|spoof" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+# Remove Custom ROM Properties
+if [[ "${config_rom_props}" == "1" ]]; then
+	resetprop | grep -iE "lineage|infinity|evolution|crdroid|halcyon" | awk -F'[][]' '{print $2}' | while read -r prop; do
+		resetprop -d "${prop}"
+	done
+
+	resetprop -d "ro.modversion"
 fi
 
-# Remove Custom ROM Props (EXPERIMENTAL)
-if [[ "${config_rom_props}" == "1" ]]; then
-	resetprop | grep -E "lineage|crdroid|halcyon" | sed -E "s/^\[(.*)\]:.*/\1/" | while IFS= read -r prop; do resetprop -p -d "$prop"; done
+# Remove Play Integrity Fix Properties
+if [[ "${config_pif_props}" == "1" ]]; then
+	resetprop | grep -iE "pihook|pixelprops|spoof" | awk -F'[][]' '{print $2}' | while read -r prop; do
+		resetprop -d "${prop}"
+	done
 fi
 
 #### Hide some sus paths, effective only for processes that are marked umounted with uid >= 10000 ####
