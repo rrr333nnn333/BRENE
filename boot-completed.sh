@@ -60,7 +60,8 @@ fi
 
 # Remove Custom ROM Properties
 if [[ "${config_rom_props}" == "1" ]]; then
-	resetprop | grep -iE "lineage|infinity|evolution|crdroid|halcyon" | awk -F'[][]' '{print $2}' | while read -r prop; do
+	crom="lineage|infinity|evolution|crdroid|arrow|mistos|axion|pixelos|rising|lunaris|halcyon|havoc|alphadroid|avium|bliss|calyx|derpfest|graphene|lmodroid|lumine|matrixx|superior|clover|yaap"
+	resetprop | grep -iE "${crom}" | awk -F'[][]' '{print $2}' | while read -r prop; do
 		resetprop -d "${prop}"
 	done
 
