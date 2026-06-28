@@ -64,6 +64,9 @@ mkdir -p "${PERSISTENT_DIR}"
 [[ ! -f "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]] && {
 	cp "${MODPATH}/custom_sus_path_loop.txt" "${PERSISTENT_DIR}" && echo '[✅] Added custom_sus_path_loop.txt'
 }
+[[ ! -f "${PERSISTENT_DIR}/custom_hide_app.txt" ]] && {
+	cp "${MODPATH}/custom_hide_app.txt" "${PERSISTENT_DIR}" && echo '[✅] Added custom_hide_app.txt'
+}
 
 if [[ ! -f "${PERSISTENT_DIR}/config.sh" ]]; then
 	cp "${MODPATH}/config.sh" "${PERSISTENT_DIR}" && echo '[✅] Added config.sh'
