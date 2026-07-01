@@ -76,6 +76,17 @@ exec('uname -r').then((result) => {
 	container.innerText = result.stdout
 })
 
+// Load Custom ROM Status
+exec('[[ -n "$(find /system -iname "*lineage*")" ]] && echo "Yes" || echo "No"').then((result) => {
+	const container = document.querySelector('#custom-rom .card-row__sub')
+
+	if (result.errno !== 0) {
+		container.innerText = 'Failed to load'
+		return
+	}
+	container.innerText = result.stdout
+})
+
 // Load ..5.u.S Status
 exec('[[ -e /sdcard/..5.u.S ]] && echo "Found ❌" || echo "Normal ✅"').then((result) => {
 	const container = document.querySelector('#sus-status .card-row__sub')
