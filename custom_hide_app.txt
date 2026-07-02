@@ -1,0 +1,4 @@
+# add package names of apps you want to hide from the app list here, one per line
+io.github.muntashirakon.AppManager
+com.github.capntrips.kernelflasher
+com.machiav3lli.backup
