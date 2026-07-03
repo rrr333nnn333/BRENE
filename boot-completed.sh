@@ -356,7 +356,7 @@ if [[ "${config_hide_suspicious_ptys}" == "1" ]]; then
 	done
 fi
 
-resetprop -c 2> /dev/null || true
+resetprop -c --force
 
 if [[ "${config_brene_logs}" == "1" ]]; then
 	echo "boot-completed.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
