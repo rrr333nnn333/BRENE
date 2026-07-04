@@ -349,6 +349,13 @@ if [[ "${config_hide_suspicious_ptys}" == "1" ]]; then
 	done
 fi
 
+# Hide framework-res.apk
+if [[ "${config_hide_framework_res_apk}" == "1" ]]; then
+	find /system -iname "*framework-res.apk" | while read -r path; do
+		brene_sus_map "${path}"
+	done
+fi
+
 resetprop -c --force
 
 if [[ "${config_brene_logs}" == "1" ]]; then

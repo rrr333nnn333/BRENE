@@ -45,6 +45,7 @@ const configs = [
 	{ id: 'hide_injections' },
 	{ id: 'hide_suspicious_ptys' },
 	{ id: 'custom_uname_spoofing' },
+	{ id: 'hide_framework_res_apk' },
 	{ id: 'enable_avc_log_spoofing' },
 	{ id: 'umount_suspicious_mounts' },
 	{ id: 'proc_cmdline_bootconfig_spoofing' },
