@@ -1,6 +1,8 @@
 import { exec, toast } from './assets/kernelsu.js'
+import { initI18n, setText, t } from './i18n.js'
 import './assets/mwc.js'
 
+initI18n()
 document.querySelector('div.preload-hidden').classList.remove('preload-hidden')
 
 const MODDIR = '/data/adb/modules/brene'
@@ -70,7 +72,7 @@ exec('uname -r').then((result) => {
 	const container = document.querySelector('#kernel-version .card-row__sub')
 
 	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
+		setText(container, 'Failed to load')
 		return
 	}
 	container.innerText = result.stdout
@@ -92,10 +94,10 @@ exec('[[ -e /sdcard/..5.u.S ]] && echo "Found ❌" || echo "Normal ✅"').then((
 	const container = document.querySelector('#sus-status .card-row__sub')
 
 	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
+		setText(container, 'Failed to load')
 		return
 	}
-	container.innerText = result.stdout
+	setText(container, result.stdout)
 })
 
 // Recommended Modules
@@ -112,7 +114,7 @@ exec('ksud module list').then((result) => {
 		const statusSpan = row.querySelector('.status-text')
 
 		if (moduleIds.includes(moduleKey)) {
-			statusSpan.innerText = 'Status: Installed ✅'
+			setText(statusSpan, 'Status: Installed ✅')
 			statusSpan.style.color = '#4CAF50'
 		}
 	})
@@ -122,7 +124,7 @@ exec('ksud module list').then((result) => {
 
 		const card = document.querySelector('[data-module="tricky_addon"]')
 		const statusSpan = card.querySelector('.status-text')
-		statusSpan.innerText = 'Status: Installed ✅'
+		setText(statusSpan, 'Status: Installed ✅')
 		statusSpan.style.color = '#4CAF50'
 	})
 })
@@ -141,7 +143,7 @@ exec('ksud module list').then((result) => {
 		const statusSpan = row.querySelector('.status-text')
 
 		if (moduleIds.includes(moduleKey)) {
-			statusSpan.innerText = 'Status: Installed ❌'
+			setText(statusSpan, 'Status: Installed ❌')
 			statusSpan.style.color = '#ff0000be'
 		}
 	})
@@ -152,7 +154,7 @@ exec('susfs show enabled_features').then((result) => {
 	const container = document.getElementById('kernel-features-container')
 
 	if (result.errno !== 0) {
-		container.innerText = 'Failed to load enabled features'
+		setText(container, 'Failed to load enabled features')
 		return
 	}
 	container.innerText = result.stdout.replaceAll('CONFIG_KSU_SUSFS_', '')
@@ -163,7 +165,7 @@ exec(`cat ${PERSISTENT_DIR}/log.txt`).then((result) => {
 	const container = document.getElementById('logs')
 
 	if (result.errno !== 0) {
-		container.textContent += 'Failed to load logs'
+		container.textContent += t('Failed to load logs')
 		return
 	}
 	container.textContent += result.stdout
@@ -171,7 +173,7 @@ exec(`cat ${PERSISTENT_DIR}/log.txt`).then((result) => {
 
 	exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((result) => {
 		if (result.errno !== 0) {
-			container.textContent += 'Failed to load logs'
+			container.textContent += t('Failed to load logs')
 			return
 		}
 		container.textContent += result.stdout
@@ -181,19 +183,27 @@ exec(`cat ${PERSISTENT_DIR}/log.txt`).then((result) => {
 // Load brene version
 exec(`grep "^version=" ${MODDIR}/module.prop | cut -d'=' -f2`).then((result) => {
 	const element = document.getElementById('brene-version')
-	element.innerText = result.errno === 0 ? result.stdout : 'unknown'
+	if (result.errno === 0) {
+		element.innerText = result.stdout
+	} else {
+		setText(element, 'unknown')
+	}
 })
 
 // Load susfs version
 exec('susfs show version').then((result) => {
 	const element = document.getElementById('susfs-version')
-	element.innerText = result.errno === 0 ? `${result.stdout}+` : 'unknown'
+	if (result.errno === 0) {
+		element.innerText = `${result.stdout}+`
+	} else {
+		setText(element, 'unknown')
+	}
 })
 
 // Helper function to update config
 function updateConfig(config, value) {
 	exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
-		if (result.errno !== 0) toast('Failed to update config')
+		if (result.errno !== 0) toast(t('Failed to update config'))
 	})
 }
 
@@ -201,21 +211,21 @@ function updateConfig(config, value) {
 // Helper function to update config
 function updateConfig2(config, value) {
 	exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
-		if (result.errno !== 0) toast('Failed to update config')
+		if (result.errno !== 0) toast(t('Failed to update config'))
 	})
 }
 
 // Helper function to set config immedialtely that no need to reboot
 function setFeature(cmd) {
 	exec(cmd).then((result) => {
-		toast(result.errno === 0 ? 'No need to reboot' : result.stderr)
+		toast(result.errno === 0 ? t('No need to reboot') : result.stderr)
 	})
 }
 
 // Load config and add toggle event
 exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	if (result.errno !== 0) {
-		toast('Failed to load config')
+		toast(t('Failed to load config'))
 		return
 	}
 
@@ -273,7 +283,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 				${enable ? 'rm -f' : 'touch'} "$i/disable"
 			done
 		`).then((result) => {
-			toast(result.errno === 0 ? 'Success' : result.stderr)
+			toast(result.errno === 0 ? t('Success') : result.stderr)
 		})
 	}
 
@@ -306,7 +316,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 
 	button.addEventListener('click', () => {
 		updateConfig2('config_verified_boot_hash', textField.value)
-		toast('Success')
+		toast(t('Success'))
 	})
 })()
 
@@ -400,7 +410,7 @@ cat <<'UNIQUE_EOF' > ${PERSISTENT_DIR}/${file}
 ${content}
 UNIQUE_EOF
 		`).then((result) => {
-				toast(result.errno === 0 ? 'Success' : result.stderr)
+				toast(result.errno === 0 ? t('Success') : result.stderr)
 			})
 		}
 	}
