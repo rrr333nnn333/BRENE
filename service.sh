@@ -18,7 +18,6 @@ if [[ "${config_android_system_properties_spoofing}" == "1" ]]; then
 	resetprop_n "init.svc.adbd" "stopped"
 	resetprop_n "init.svc_debug_pid.adbd" ""
 	resetprop_n "persist.sys.usb.config" "mtp"
-	resetprop_n "sys.oem_unlock_allowed" "0"
 	resetprop_n "ro.adb.secure" "1"
 	resetprop_n "ro.crypto.state" "encrypted"
 	resetprop_n "ro.debuggable" "0"
@@ -61,9 +60,15 @@ if [[ "${config_android_system_properties_spoofing}" == "1" ]]; then
 	resetprop_n "ro.build.fingerprint" "${fingerprint//userdebug/user}"
 
 	## Delete some prop names for newer pixel device ##
-	resetprop --delete "ro.boot.verifiedbooterror"
-	resetprop --delete "ro.boot.verifyerrorpart"
-	resetprop --delete "crashrecovery.rescue_boot_count"
+	resetprop -d "ro.boot.verifiedbooterror"
+	resetprop -d "ro.boot.verifyerrorpart"
+	resetprop -d "crashrecovery.rescue_boot_count"
+
+	if [[ "$(resetprop ro.build.version.sdk)" -ge "36" ]]; then
+		resetprop -d sys.oem_unlock_allowed
+	else
+		resetprop_n "sys.oem_unlock_allowed" "0"
+	fi
 fi
 
 if [[ "${config_brene_logs}" == "1" ]]; then
