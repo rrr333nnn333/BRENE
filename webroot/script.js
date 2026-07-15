@@ -88,7 +88,7 @@ exec('[[ -n "$(find /system -iname "*lineage*")" ]] && echo "Yes" || echo "No"')
 })
 
 // Load ..5.u.S Status
-exec('[[ -e /sdcard/..5.u.S ]] && echo "Found ❌" || echo "Normal ✅"').then((result) => {
+exec('[[ -e /sdcard/..5.u.S ]] && echo "Abnormal" || echo "Normal"').then((result) => {
 	const container = document.querySelector('#sus-status .card-row__sub')
 
 	if (result.errno !== 0) {
@@ -112,7 +112,7 @@ exec('ksud module list').then((result) => {
 		const statusSpan = row.querySelector('.status-text')
 
 		if (moduleIds.includes(moduleKey)) {
-			statusSpan.innerText = 'Status: Installed ✅'
+			statusSpan.innerText = 'Status: Installed'
 			statusSpan.style.color = '#4CAF50'
 		}
 	})
@@ -122,7 +122,7 @@ exec('ksud module list').then((result) => {
 
 		const card = document.querySelector('[data-module="tricky_addon"]')
 		const statusSpan = card.querySelector('.status-text')
-		statusSpan.innerText = 'Status: Installed ✅'
+		statusSpan.innerText = 'Status: Installed'
 		statusSpan.style.color = '#4CAF50'
 	})
 })
