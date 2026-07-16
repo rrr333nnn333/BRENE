@@ -310,31 +310,10 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	})
 })()
 
-// TEMP
-// Chinese WebUI
-// (async () => {
-//   const button = document.getElementById("zh_index");
-//   const dialog = document.getElementById("confirmation-dialog");
-
-//   button?.addEventListener("click", () => {
-//     dialog.show();
-//   });
-
-//   dialog?.addEventListener("closed", () => {
-//     if (dialog.returnValue === "confirm") {
-//       exec(
-//         `cp -f ${MODDIR}/webroot/zh_index.html ${MODDIR}/webroot/index.html`,
-//       ).then((result) => {
-//         toast(result.errno === 0 ? "Success" : result.stderr);
-//       });
-//     }
-//   });
-// })();
-// TEMP
-
-// Custom sus map
+//
 ;(async () => {
 	const mapField = document.getElementById('custom_sus_map_text_field')
+	const mountField = document.getElementById('custom_sus_mount_text_field')
 	const pathField = document.getElementById('custom_sus_path_text_field')
 	const loopField = document.getElementById('custom_sus_path_loop_text_field')
 	const applyButton = document.getElementById('unified_apply_button')
@@ -344,6 +323,9 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	// Load all contents
 	exec(`cat ${PERSISTENT_DIR}/custom_sus_map.txt`).then((result) => {
 		mapField.value = result.errno === 0 ? `${result.stdout}\n` : ''
+	})
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_mount.txt`).then((result) => {
+		mountField.value = result.errno === 0 ? `${result.stdout}\n` : ''
 	})
 	exec(`cat ${PERSISTENT_DIR}/custom_sus_path.txt`).then((result) => {
 		pathField.value = result.errno === 0 ? `${result.stdout}\n` : ''
@@ -385,10 +367,14 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 				content = mapField.value
 				break
 			case 1:
+				file = 'custom_sus_mount.txt'
+				content = mountField.value
+				break
+			case 2:
 				file = 'custom_sus_path.txt'
 				content = pathField.value
 				break
-			case 2:
+			case 3:
 				file = 'custom_sus_path_loop.txt'
 				content = loopField.value
 				break

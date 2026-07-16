@@ -235,6 +235,7 @@ if [[ -e "${PERSISTENT_DIR}/custom_sus_map.txt" ]]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
+
 		brene_sus_map "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_map.txt"
 fi
@@ -244,6 +245,7 @@ if [[ -e "${PERSISTENT_DIR}/custom_sus_path.txt" ]]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
+
 		brene_sus_path "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path.txt"
 fi
@@ -253,8 +255,19 @@ if [[ -e "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
+
 		brene_sus_path_loop "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path_loop.txt"
+fi
+
+# Load custom_sus_mount.txt
+if [[ -e "${PERSISTENT_DIR}/custom_sus_mount.txt" ]]; then
+	while IFS= read -r i; do
+		# Skip empty lines or comments
+		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
+
+		brene_sus_mount "${i}"
+	done < "${PERSISTENT_DIR}/custom_sus_mount.txt"
 fi
 
 #### Hide the mmapped real file from various maps in /proc/self/, effective only for processes that are marked umounted with uid >= 10000 ####

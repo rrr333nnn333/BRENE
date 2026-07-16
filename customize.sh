@@ -55,15 +55,17 @@ fi
 echo '[✅] Preparing brene persistent directory (/data/adb/brene)'
 mkdir -p "${PERSISTENT_DIR}"
 
-[[ ! -f "${PERSISTENT_DIR}/custom_sus_map.txt" ]] && {
-	cp "${MODPATH}/custom_sus_map.txt" "${PERSISTENT_DIR}" && echo '[✅] Added custom_sus_map.txt'
-}
-[[ ! -f "${PERSISTENT_DIR}/custom_sus_path.txt" ]] && {
-	cp "${MODPATH}/custom_sus_path.txt" "${PERSISTENT_DIR}" && echo '[✅] Added custom_sus_path.txt'
-}
-[[ ! -f "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]] && {
-	cp "${MODPATH}/custom_sus_path_loop.txt" "${PERSISTENT_DIR}" && echo '[✅] Added custom_sus_path_loop.txt'
-}
+files="
+custom_sus_map.txt
+custom_sus_mount.txt
+custom_sus_path.txt
+custom_sus_path_loop.txt
+"
+for file in ${files}; do
+	if [[ ! -f "${PERSISTENT_DIR}/${file}" ]]; then
+		touch "${PERSISTENT_DIR}/${file}" && echo "[✅] Added ${file}"
+	fi
+done
 
 if [[ ! -f "${PERSISTENT_DIR}/config.sh" ]]; then
 	cp "${MODPATH}/config.sh" "${PERSISTENT_DIR}" && echo '[✅] Added config.sh'

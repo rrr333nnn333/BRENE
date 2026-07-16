@@ -72,3 +72,7 @@ brene_set_uname() {
 		echo "[set_uname]: $1 $2" >> "${PERSISTENT_DIR}/logs.txt"
 	fi
 }
+brene_sus_mount() {
+	${KSU_BIN} kernel notify-module-mounted
+	${KSU_BIN} kernel umount add -f 2 "$1" 2> /dev/null
+}
