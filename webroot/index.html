@@ -39,10 +39,18 @@
 			<section class="tab-panel active" data-panel="status">
 				<p class="section-label">General</p>
 				<div class="card-group">
+					<div class="card-row" id="android-version">
+						<div class="card-row__body">
+							<span class="card-row__title">Android Version</span>
+							<span class="card-row__sub">_</span>
+						</div>
+						<md-ripple></md-ripple>
+					</div>
+
 					<div class="card-row" id="kernel-version">
 						<div class="card-row__body">
 							<span class="card-row__title">Kernel Version</span>
-							<span class="card-row__sub">Loading...</span>
+							<span class="card-row__sub">_</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -50,7 +58,15 @@
 					<div class="card-row" id="custom-rom">
 						<div class="card-row__body">
 							<span class="card-row__title">Custom ROM</span>
-							<span class="card-row__sub">Loading...</span>
+							<span class="card-row__sub">_</span>
+						</div>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row" id="susfs-variant">
+						<div class="card-row__body">
+							<span class="card-row__title">SuSFS Variant</span>
+							<span class="card-row__sub">_</span>
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -58,7 +74,7 @@
 					<div class="card-row" id="sus-status">
 						<div class="card-row__body">
 							<span class="card-row__title">..5.u.S Status</span>
-							<span class="card-row__sub">Loading...</span>
+							<span class="card-row__sub">_</span>
 							<span class="card-row__tag--code">
 								SuSFS redirects the sus path to a supposed not-existing path named '..5.u.S', and this is the only way to settle the cross check of returned errno from various
 								syscalls, but one disadvantage is that if the path itself can be written/created by the app (MANAGE_EXTERNAL_STORAGE granted), then it is futile to hide it
