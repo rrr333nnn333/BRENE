@@ -33,16 +33,16 @@ chmod 755 "${DEST_BIN_DIR}/susfs"
 ln -f -s "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/sus" 2> /dev/null || true       # For development
 ln -f -s "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/ksu_susfs" 2> /dev/null || true # For compatibility
 
-susfs_ver=$(${SUSFS_BIN} show version 2> /dev/null)
-if [[ -n "${susfs_ver}" ]]; then
-	if [[ "${susfs_ver}" == "v2.0.0" || "${susfs_ver}" == "v2.1.0" ]]; then
-		abort "[❌] Not supported SuSFS version ${susfs_ver}!"
-	else
-		echo "[✅] Detected SuSFS version: ${susfs_ver}"
-	fi
-else
-	abort "[❌] Not detected SuSFS version!"
-fi
+# susfs_ver=$(${SUSFS_BIN} show version 2> /dev/null)
+# if [[ -n "${susfs_ver}" ]]; then
+# 	if [[ "${susfs_ver}" == "v2.0.0" || "${susfs_ver}" == "v2.1.0" ]]; then
+# 		abort "[❌] Not supported SuSFS version ${susfs_ver}!"
+# 	else
+# 		echo "[✅] Detected SuSFS version: ${susfs_ver}"
+# 	fi
+# else
+# 	abort "[❌] Not detected SuSFS version!"
+# fi
 
 # Disable other SuSFS modules
 [[ -e "${KSU_MODULES_DIR}/susfs4ksu" ]] && {
