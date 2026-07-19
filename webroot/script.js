@@ -20,6 +20,10 @@ const configs = [
 		action: (enabled) => setFeature(`ksud feature set kernel_umount ${enabled ? 1 : 0} && ksud feature save`),
 	},
 	{
+		id: 'selinux_hide',
+		action: (enabled) => setFeature(`ksud feature set selinux_hide ${enabled ? 1 : 0} && ksud feature save`),
+	},
+	{
 		id: 'developer_options',
 		action: (enabled) => setFeature(`settings put global development_settings_enabled ${enabled ? 1 : 0}`),
 	},

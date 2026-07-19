@@ -21,10 +21,21 @@ else
 fi
 sed -i "s#^description=.*#description=${status}${description}#" "${MODDIR}/module.prop"
 
-# Kernel Umount
-[[ -n "${config_kernel_umount}" ]] && ${KSU_BIN} feature set kernel_umount "${config_kernel_umount}"
 # SU Compat
-[[ -n "${config_su_compat}" ]] && ${KSU_BIN} feature set su_compat "${config_su_compat}"
+if [[ "${config_su_compat}" == "1" ]]; then
+	${KSU_BIN} feature set su_compat 1
+fi
+
+# Kernel Umount
+if [[ "${config_kernel_umount}" == "1" ]]; then
+	${KSU_BIN} feature set kernel_umount 1
+fi
+
+# Hide SELinux modification
+if [[ "${config_selinux_hide}" == "1" ]]; then
+	${KSU_BIN} feature set selinux_hide 1
+fi
+
 ${KSU_BIN} feature save
 
 # Android Verified Boot Hash Spoofing
