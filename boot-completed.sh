@@ -237,7 +237,6 @@ if [[ "${config_brene_logs}" == "1" ]]; then
 	} >> "${PERSISTENT_DIR}/logs.txt"
 fi
 # brene_sus_path "/sys/block/loop0"
-brene_sus_path "/system/addon.d"
 brene_sus_path "/vendor/bin/install-recovery.sh"
 brene_sus_path "/system/bin/install-recovery.sh"
 
@@ -444,6 +443,11 @@ if [[ "${config_lineage_paths_hiding}" == "1" ]]; then
 		brene_sus_map "${path}"
 		brene_sus_path_loop "${path}"
 	done
+fi
+
+# Hide /system/addon.d Path
+if [[ "${config_hide_addon_d}" == "1" ]]; then
+	brene_sus_path "/system/addon.d"
 fi
 
 resetprop -c --force

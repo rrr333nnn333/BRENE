@@ -579,6 +579,28 @@
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
+							<span class="card-row__title">LineageOS Paths Hiding</span>
+							<span class="card-row__sub">Important Notes:</span>
+							<span class="card-row__sub">Disable umount for your app if it does not work</span>
+							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__tag--code">/system/framework/org.lineageos.platform-res.apk</span>
+						</div>
+						<md-switch icons id="lineage_paths_hiding"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Hide /system/addon.d Path</span>
+							<span class="card-row__tag--code">Example of detections:</span>
+							<span class="card-row__tag--code">/system/addon.d/50-lineage.sh</span>
+						</div>
+						<md-switch icons id="hide_addon_d"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
 							<span class="card-row__title">Remove Custom ROM Properties</span>
 							<span class="card-row__sub">Some Custom ROM properties</span>
 						</div>
@@ -601,18 +623,6 @@
 							<span class="card-row__sub">It uses SUS MAP to hide it</span>
 						</div>
 						<md-switch icons id="hide_framework_res_apk"></md-switch>
-						<md-ripple></md-ripple>
-					</div>
-
-					<div class="card-row">
-						<div class="card-row__body">
-							<span class="card-row__title">LineageOS Paths Hiding</span>
-							<span class="card-row__sub">Important Notes:</span>
-							<span class="card-row__sub">Disable umount for your app if it does not work</span>
-							<span class="card-row__tag--code">Example of detections:</span>
-							<span class="card-row__tag--code">/system/framework/org.lineageos.platform-res.apk</span>
-						</div>
-						<md-switch icons id="lineage_paths_hiding"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 				</div>

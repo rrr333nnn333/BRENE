@@ -43,6 +43,7 @@ const configs = [
 	{ id: 'rom_props' },
 	{ id: 'brene_logs' },
 	{ id: 'enable_log' },
+	{ id: 'hide_addon_d' },
 	{ id: 'uname_spoofing' },
 	{ id: 'hide_injections' },
 	{ id: 'lineage_paths_hiding' },
