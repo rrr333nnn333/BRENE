@@ -45,6 +45,7 @@ const configs = [
 	{ id: 'enable_log' },
 	{ id: 'uname_spoofing' },
 	{ id: 'hide_injections' },
+	{ id: 'lineage_paths_hiding' },
 	{ id: 'hide_suspicious_ptys' },
 	{ id: 'custom_uname_spoofing' },
 	{ id: 'hide_framework_res_apk' },

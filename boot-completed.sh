@@ -438,6 +438,14 @@ if [[ "${config_android_system_properties_spoofing}" == "1" ]]; then
 	fi
 fi
 
+# LineageOS Paths Hiding
+if [[ "${config_lineage_paths_hiding}" == "1" ]]; then
+	find /system /system_ext /vendor /product -iname "*lineage*" | while read -r path; do
+		brene_sus_map "${path}"
+		brene_sus_path_loop "${path}"
+	done
+fi
+
 resetprop -c --force
 
 if [[ "${config_brene_logs}" == "1" ]]; then
