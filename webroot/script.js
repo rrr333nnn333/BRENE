@@ -329,16 +329,16 @@ UNIQUE_EOF
 
 		listContainer.innerHTML = ''
 
-		const title = document.createElement('div')
-		title.className = 'card-row__body'
-		title.innerHTML = '<span class="card-row__title">Modules</span>'
-		listContainer.appendChild(title)
-
 		if (modules.length === 0) {
-			const empty = document.createElement('span')
-			empty.className = 'card-row__sub'
-			empty.innerText = 'No modules found'
-			title.appendChild(empty)
+			const row = document.createElement('div')
+			row.className = 'card-row'
+
+			const body = document.createElement('div')
+			body.className = 'card-row__body'
+			body.innerHTML = '<span class="card-row__sub">No modules found</span>'
+
+			row.appendChild(body)
+			listContainer.appendChild(row)
 			return
 		}
 
