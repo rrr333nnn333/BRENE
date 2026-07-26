@@ -239,6 +239,16 @@ if [[ "${config_paths_hiding__data_adb_auto}" == "1" && "${config_paths_hiding__
 
 	for i in /data/adb/modules/*; do
 		brene_sus_path_loop "${i}"
+
+		if [[ -e "${i}/system" ]]; then
+			for x in $(find "${i}/system" -type f); do
+				brene_sus_map "${x}"
+			done
+		fi
+
+		for x in $(find "${i}" -name "*.so"); do
+			brene_sus_map "${x}"
+		done
 	done
 fi
 
@@ -260,7 +270,19 @@ if [[ "${config_paths_hiding__data_adb_manual}" == "1" && "${config_paths_hiding
 			# Skip empty lines or comments
 			[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
 
-			[[ -e "/data/adb/modules/${i}" ]] && brene_sus_path_loop "/data/adb/modules/${i}"
+			if [[ -e "/data/adb/modules/${i}" ]]; then
+				brene_sus_path_loop "/data/adb/modules/${i}"
+
+				if [[ -e "/data/adb/modules/${i}/system" ]]; then
+					for x in $(find "/data/adb/modules/${i}/system" -type f); do
+						brene_sus_map "${x}"
+					done
+				fi
+
+				for x in $(find "/data/adb/modules/${i}" -name "*.so"); do
+					brene_sus_map "${x}"
+				done
+			fi
 		done < "${PERSISTENT_DIR}/manual_hidden_modules.txt"
 	fi
 fi
