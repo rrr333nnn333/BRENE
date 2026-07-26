@@ -59,6 +59,8 @@ const configs = [
 	{ id: 'paths_hiding__non_standard_sdcard_android' },
 	{ id: 'paths_hiding__data_local_tmp' },
 	{ id: 'paths_hiding__sdcard_android_data_media_obb' },
+	{ id: 'paths_hiding__data_adb_auto' },
+	{ id: 'paths_hiding__data_adb_manual' },
 ]
 
 // Open URLs
@@ -287,6 +289,117 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 		})
 	})
 })
+
+// Auto/Manual Modules Hide mutual exclusivity and manual per-module list
+;(async () => {
+	const autoSwitch = document.getElementById('paths_hiding__data_adb_auto')
+	const manualSwitch = document.getElementById('paths_hiding__data_adb_manual')
+	const listContainer = document.getElementById('manual_modules_hide_list')
+
+	// Helper function to read the manual hidden modules list
+	function readManualHiddenModules() {
+		return exec(`cat ${PERSISTENT_DIR}/manual_hidden_modules.txt`).then((result) => {
+			if (result.errno !== 0) return []
+			return result.stdout
+				.split('\n')
+				.map((line) => line.trim())
+				.filter((line) => line !== '' && !line.startsWith('#'))
+		})
+	}
+
+	// Helper function to write the manual hidden modules list
+	function writeManualHiddenModules(ids) {
+		const content = ids.join('\n')
+		return exec(`
+cat <<'UNIQUE_EOF' > ${PERSISTENT_DIR}/manual_hidden_modules.txt
+${content}
+UNIQUE_EOF
+		`).then((result) => {
+			if (result.errno !== 0) toast('Failed to update manual hidden modules')
+		})
+	}
+
+	// Render the module list with a checkbox per module
+	async function renderManualModulesList(manualEnabled) {
+		const moduleResult = await exec('ksud module list')
+		if (moduleResult.errno !== 0) return
+
+		const modules = JSON.parse(moduleResult.stdout)
+		const hiddenIds = await readManualHiddenModules()
+
+		listContainer.innerHTML = ''
+
+		const title = document.createElement('div')
+		title.className = 'card-row__body'
+		title.innerHTML = '<span class="card-row__title">Modules</span>'
+		listContainer.appendChild(title)
+
+		if (modules.length === 0) {
+			const empty = document.createElement('span')
+			empty.className = 'card-row__sub'
+			empty.innerText = 'No modules found'
+			title.appendChild(empty)
+			return
+		}
+
+		modules.forEach((mod) => {
+			const row = document.createElement('div')
+			row.className = 'card-row'
+
+			const body = document.createElement('div')
+			body.className = 'card-row__body'
+			body.innerHTML = `<span class="card-row__title">${mod.name || mod.id}</span><span class="card-row__sub">${mod.id}</span>`
+
+			const toggle = document.createElement('md-switch')
+			toggle.setAttribute('icons', '')
+			toggle.selected = hiddenIds.includes(mod.id)
+			toggle.disabled = manualEnabled !== true
+
+			toggle.addEventListener('change', async () => {
+				const currentIds = await readManualHiddenModules()
+				const newIds = toggle.selected ? Array.from(new Set([...currentIds, mod.id])) : currentIds.filter((id) => id !== mod.id)
+				writeManualHiddenModules(newIds)
+			})
+
+			row.appendChild(body)
+			row.appendChild(toggle)
+			listContainer.appendChild(row)
+		})
+	}
+
+	function setManualModulesListEnabled(enabled) {
+		listContainer.querySelectorAll('md-switch').forEach((toggle) => {
+			toggle.disabled = !enabled
+		})
+	}
+
+	autoSwitch.addEventListener('change', () => {
+		if (autoSwitch.selected && manualSwitch.selected) {
+			manualSwitch.selected = false
+			manualSwitch.dispatchEvent(new Event('change'))
+		}
+	})
+
+	manualSwitch.addEventListener('change', () => {
+		if (manualSwitch.selected && autoSwitch.selected) {
+			autoSwitch.selected = false
+			autoSwitch.dispatchEvent(new Event('change'))
+		}
+		setManualModulesListEnabled(manualSwitch.selected)
+	})
+
+	// Read config.sh directly so the initial state does not depend on the other config-loading block's timing
+	const configResult = await exec(`cat ${PERSISTENT_DIR}/config.sh`)
+	let manualEnabled = false
+	if (configResult.errno === 0) {
+		const manualLine = configResult.stdout.split('\n').find((line) => line.trim().startsWith('config_paths_hiding__data_adb_manual='))
+		const manualValue = manualLine ? manualLine.split('=')[1].trim() : '0'
+		manualEnabled = parseInt(manualValue) === 1
+	}
+
+	await renderManualModulesList(manualEnabled)
+	setManualModulesListEnabled(manualEnabled)
+})()
 
 // KSU Modules toggles
 ;(async () => {

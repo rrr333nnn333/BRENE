@@ -222,6 +222,49 @@ if [[ "${config_paths_hiding__sdcard_android_data_media_obb}" == "1" ]]; then
 	# done
 fi
 
+# /data/adb and /data/adb/modules (Auto)
+# Auto Hide All Modules paths: hides /data/adb itself and every path under /data/adb/modules automatically
+# This is mutually exclusive with Manual Modules Hide, Auto is skipped if Manual is enabled
+if [[ "${config_paths_hiding__data_adb_auto}" == "1" && "${config_paths_hiding__data_adb_manual}" != "1" ]]; then
+	if [[ "${config_brene_logs}" == "1" ]]; then
+		{
+			echo ""
+			echo "############################"
+			echo "/data/adb (Auto)"
+			echo "############################"
+		} >> "${PERSISTENT_DIR}/logs.txt"
+	fi
+
+	brene_sus_path_loop "/data/adb"
+
+	for i in /data/adb/modules/*; do
+		brene_sus_path_loop "${i}"
+	done
+fi
+
+# /data/adb/modules (Manual)
+# Manual Modules Hide: hides only the modules selected by the user in "manual_hidden_modules.txt"
+# This is mutually exclusive with Auto Hide All Modules paths, Manual is skipped if Auto is enabled
+if [[ "${config_paths_hiding__data_adb_manual}" == "1" && "${config_paths_hiding__data_adb_auto}" != "1" ]]; then
+	if [[ "${config_brene_logs}" == "1" ]]; then
+		{
+			echo ""
+			echo "############################"
+			echo "/data/adb/modules (Manual)"
+			echo "############################"
+		} >> "${PERSISTENT_DIR}/logs.txt"
+	fi
+
+	if [[ -e "${PERSISTENT_DIR}/manual_hidden_modules.txt" ]]; then
+		while IFS= read -r i; do
+			# Skip empty lines or comments
+			[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
+
+			[[ -e "/data/adb/modules/${i}" ]] && brene_sus_path_loop "/data/adb/modules/${i}"
+		done < "${PERSISTENT_DIR}/manual_hidden_modules.txt"
+	fi
+fi
+
 ## For paths that are read-only all the time, add them via 'add_sus_path' ##
 if [[ "${config_brene_logs}" == "1" ]]; then
 	{

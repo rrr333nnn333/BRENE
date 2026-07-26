@@ -60,6 +60,7 @@ custom_sus_map.txt
 custom_sus_mount.txt
 custom_sus_path.txt
 custom_sus_path_loop.txt
+manual_hidden_modules.txt
 "
 for file in ${files}; do
 	if [[ ! -f "${PERSISTENT_DIR}/${file}" ]]; then

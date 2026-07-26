@@ -300,6 +300,35 @@
 						<md-switch icons id="paths_hiding__sdcard_android_data_media_obb"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Auto Hide All Modules paths</span>
+							<span class="card-row__sub">Automatically hides /data/adb and every path under /data/adb/modules</span>
+							<span class="card-row__sub card-row__tag--danger">WARNING:</span>
+							<span class="card-row__sub card-row__tag--danger">- Cannot be used together with Manual Modules Hide, enabling this disables it</span>
+						</div>
+						<md-switch icons id="paths_hiding__data_adb_auto"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Manual Modules Hide</span>
+							<span class="card-row__sub">Hide only the modules you select below, path by path, instead of all of /data/adb/modules</span>
+							<span class="card-row__sub card-row__tag--danger">WARNING:</span>
+							<span class="card-row__sub card-row__tag--danger">- Cannot be used together with Auto Hide All Modules paths, enabling this disables it</span>
+						</div>
+						<md-switch icons id="paths_hiding__data_adb_manual"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row" id="manual_modules_hide_list">
+						<div class="card-row__body">
+							<span class="card-row__title">Modules</span>
+							<span class="card-row__sub">Enable Manual Modules Hide above, then pick which modules to hide</span>
+						</div>
+					</div>
 				</div>
 
 				<p class="section-label">Mounts Hiding</p>
