@@ -1,6 +1,8 @@
 import { exec, toast } from './assets/kernelsu.js'
+import { applyTranslations, bindDynamicText, initI18n, t } from './i18n/index.js'
 import './assets/mwc.js'
 
+initI18n(document.getElementById('lang-switch'))
 document.querySelector('div.preload-hidden').classList.remove('preload-hidden')
 
 const MODDIR = '/data/adb/modules/brene'
@@ -84,36 +86,25 @@ document.querySelectorAll('a[href]').forEach((element) => {
 // Load Android Version
 exec('resetprop ro.build.version.release && resetprop ro.build.version.sdk').then((result) => {
 	const container = document.querySelector('#android-version .card-row__sub')
+	const splits = result.errno === 0 ? result.stdout.replaceAll('\n', ' ').split(' ') : null
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
-		return
-	}
-	const results = result.stdout.replaceAll('\n', ' ')
-	const splits = results.split(' ')
-	container.innerText = `${splits[0]} (API ${splits[1]}) | SDK ${splits[1]}`
+	bindDynamicText(container, () => (splits ? `${splits[0]} (API ${splits[1]}) | SDK ${splits[1]}` : t('common.failedToLoad')))
 })
 
 // Load SuSFS Variant
 exec('susfs show variant').then((result) => {
 	const container = document.querySelector('#susfs-variant .card-row__sub')
+	const variant = result.errno === 0 ? result.stdout : null
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
-		return
-	}
-	container.innerText = result.stdout
+	bindDynamicText(container, () => variant ?? t('common.failedToLoad'))
 })
 
 // Load Kernel Version
 exec("cat /proc/version | awk '{print $3}' && uname -r").then((result) => {
 	const container = document.querySelector('#kernel-version .card-row__sub')
+	const [original, spoofed] = result.errno === 0 ? result.stdout.split('\n') : []
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
-		return
-	}
-	container.innerText = `Default: ${result.stdout.replace('\n', '\nSpoofed: ')}`
+	bindDynamicText(container, () => (original ? t('status.kernelVersionValue', { original, spoofed }) : t('common.failedToLoad')))
 })
 
 // Load Device Model Status
@@ -121,7 +112,7 @@ exec('resetprop ro.product.manufacturer && resetprop ro.product.model && resetpr
 	const container = document.querySelector('#device-model .card-row__sub')
 
 	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
+		bindDynamicText(container, () => t('common.failedToLoad'))
 		return
 	}
 
@@ -142,23 +133,17 @@ exec('resetprop ro.product.manufacturer && resetprop ro.product.model && resetpr
 // Load Custom ROM Status
 exec('[[ -n "$(find /system -iname "*lineage*")" ]] && echo "Yes" || echo "No"').then((result) => {
 	const container = document.querySelector('#custom-rom .card-row__sub')
+	const detected = result.errno === 0 ? result.stdout.trim() === 'Yes' : null
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
-		return
-	}
-	container.innerText = result.stdout
+	bindDynamicText(container, () => (detected === null ? t('common.failedToLoad') : t(detected ? 'status.customRomYes' : 'status.customRomNo')))
 })
 
 // Load ..5.u.S Status
 exec('[[ -e /sdcard/..5.u.S ]] && echo "Abnormal" || echo "Normal"').then((result) => {
 	const container = document.querySelector('#sus-status .card-row__sub')
+	const abnormal = result.errno === 0 ? result.stdout.trim() === 'Abnormal' : null
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load'
-		return
-	}
-	container.innerText = result.stdout
+	bindDynamicText(container, () => (abnormal === null ? t('common.failedToLoad') : t(abnormal ? 'status.susPathAbnormal' : 'status.susPathNormal')))
 })
 
 // Recommended Modules
@@ -175,7 +160,8 @@ exec('ksud module list').then((result) => {
 		const statusSpan = row.querySelector('.status-text')
 
 		if (moduleIds.includes(moduleKey)) {
-			statusSpan.innerText = 'Status: Installed'
+			statusSpan.dataset.i18n = 'status.moduleInstalled'
+			applyTranslations(statusSpan)
 			statusSpan.style.color = '#4CAF50'
 		}
 	})
@@ -185,7 +171,8 @@ exec('ksud module list').then((result) => {
 
 		const card = document.querySelector('[data-module="tricky_addon"]')
 		const statusSpan = card.querySelector('.status-text')
-		statusSpan.innerText = 'Status: Installed'
+		statusSpan.dataset.i18n = 'status.moduleInstalled'
+		applyTranslations(statusSpan)
 		statusSpan.style.color = '#4CAF50'
 	})
 })
@@ -204,7 +191,8 @@ exec('ksud module list').then((result) => {
 		const statusSpan = row.querySelector('.status-text')
 
 		if (moduleIds.includes(moduleKey)) {
-			statusSpan.innerText = 'Status: Installed'
+			statusSpan.dataset.i18n = 'status.moduleInstalled'
+			applyTranslations(statusSpan)
 			statusSpan.style.color = '#ff0000be'
 		}
 	})
@@ -213,12 +201,9 @@ exec('ksud module list').then((result) => {
 // Load enabled features
 exec('susfs show enabled_features').then((result) => {
 	const container = document.getElementById('kernel-features-container')
+	const features = result.errno === 0 ? result.stdout.replaceAll('CONFIG_KSU_SUSFS_', '') : null
 
-	if (result.errno !== 0) {
-		container.innerText = 'Failed to load enabled features'
-		return
-	}
-	container.innerText = result.stdout.replaceAll('CONFIG_KSU_SUSFS_', '')
+	bindDynamicText(container, () => features ?? t('info.failedToLoadFeatures'))
 })
 
 // Load logs
@@ -226,37 +211,36 @@ exec(`cat ${PERSISTENT_DIR}/log.txt`).then((result) => {
 	const container = document.getElementById('logs')
 
 	if (result.errno !== 0) {
-		container.textContent += 'Failed to load logs'
+		bindDynamicText(container, () => t('info.failedToLoadLogs'))
 		return
 	}
-	container.textContent += result.stdout
-	container.textContent += '\n'
 
-	exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((result) => {
-		if (result.errno !== 0) {
-			container.textContent += 'Failed to load logs'
-			return
-		}
-		container.textContent += result.stdout
+	exec(`cat ${PERSISTENT_DIR}/logs.txt`).then((details) => {
+		const detailedLogs = details.errno === 0 ? details.stdout : null
+		bindDynamicText(container, () => `${result.stdout}\n${detailedLogs ?? t('info.failedToLoadLogs')}`)
 	})
 })
 
 // Load brene version
 exec(`grep "^version=" ${MODDIR}/module.prop | cut -d'=' -f2`).then((result) => {
 	const element = document.getElementById('brene-version')
-	element.innerText = result.errno === 0 ? result.stdout : 'unknown'
+	const version = result.errno === 0 ? result.stdout : null
+
+	bindDynamicText(element, () => version ?? t('common.unknown'))
 })
 
 // Load susfs version
 exec('susfs show version').then((result) => {
 	const element = document.getElementById('susfs-version')
-	element.innerText = result.errno === 0 ? `${result.stdout}+` : 'unknown'
+	const version = result.errno === 0 ? `${result.stdout}+` : null
+
+	bindDynamicText(element, () => version ?? t('common.unknown'))
 })
 
 // Helper function to update config
 function updateConfig(config, value) {
 	exec(`sed -i "s/^${config}=.*/${config}=${value}/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
-		if (result.errno !== 0) toast('Failed to update config')
+		if (result.errno !== 0) toast(t('toast.failedToUpdateConfig'))
 	})
 }
 
@@ -264,21 +248,21 @@ function updateConfig(config, value) {
 // Helper function to update config
 function updateConfig2(config, value) {
 	exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
-		if (result.errno !== 0) toast('Failed to update config')
+		if (result.errno !== 0) toast(t('toast.failedToUpdateConfig'))
 	})
 }
 
 // Helper function to set config immedialtely that no need to reboot
 function setFeature(cmd) {
 	exec(cmd).then((result) => {
-		toast(result.errno === 0 ? 'No need to reboot' : result.stderr)
+		toast(result.errno === 0 ? t('toast.noRebootNeeded') : result.stderr)
 	})
 }
 
 // Load config and add toggle event
 exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	if (result.errno !== 0) {
-		toast('Failed to load config')
+		toast(t('toast.failedToLoadConfig'))
 		return
 	}
 
@@ -333,7 +317,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 				${enable ? 'rm -f' : 'touch'} "$i/disable"
 			done
 		`).then((result) => {
-			toast(result.errno === 0 ? 'Success' : result.stderr)
+			toast(result.errno === 0 ? t('toast.success') : result.stderr)
 		})
 	}
 
@@ -437,7 +421,7 @@ cat <<'UNIQUE_EOF' > ${PERSISTENT_DIR}/${file}
 ${content}
 UNIQUE_EOF
 		`).then((result) => {
-				toast(result.errno === 0 ? 'Success' : result.stderr)
+				toast(result.errno === 0 ? t('toast.success') : result.stderr)
 			})
 		}
 	}

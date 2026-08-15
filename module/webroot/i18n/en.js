@@ -1,0 +1,180 @@
+/**
+ * English strings, also used as the fallback whenever another locale misses a key
+ * Every locale file must expose the same key paths, see ./index.js for the runtime
+ */
+export const en = {
+	header: {
+		language: 'Language',
+	},
+
+	tabs: {
+		status: 'Status',
+		android: 'Android',
+		hiding: 'Hiding',
+		spoofing: 'Spoofing',
+		ksu: 'KSU',
+		rom: 'ROM',
+		advanced: 'Advanced',
+		info: 'Info',
+	},
+
+	common: {
+		importantNotes: 'Important Notes:',
+		umountedOnly: 'Only effective for umounted process with uid ≥ 10.000',
+		detectionExample: 'Example of detections:',
+		example: 'Example:',
+		standardPaths: 'Standard Paths:',
+		warning: 'WARNING:',
+		experimental: 'EXPERIMENTAL',
+		apply: 'APPLY',
+		reset: 'RESET',
+		failedToLoad: 'Failed to load',
+		unknown: 'unknown',
+	},
+
+	status: {
+		general: 'General',
+		deviceModel: 'Device Model',
+		androidVersion: 'Android Version',
+		kernelVersion: 'Kernel Version',
+		kernelVersionValue: 'Default: {original}\nSpoofed: {spoofed}',
+		customRom: 'Custom ROM',
+		customRomYes: 'Yes',
+		customRomNo: 'No',
+		susfsVariant: 'SuSFS Variant',
+		susPath: '..5.u.S Status',
+		susPathNormal: 'Normal',
+		susPathAbnormal: 'Abnormal',
+		susPathNote:
+			"SuSFS redirects the sus path to a supposed not-existing path named '..5.u.S', and this is the only way to settle the cross check of returned errno from various syscalls, but one disadvantage is that if the path itself can be written/created by the app (MANAGE_EXTERNAL_STORAGE granted), then it is futile to hide it",
+		recommendations: 'Recommendations',
+		recommendationUmount: '- Global Umount modules enabled',
+		recommendationFileManager: '- Use a file manager with root access or not umounted',
+		recommendedModules: 'Recommended Modules',
+		incompatibleModules: 'Incompatible Modules',
+		moduleInstalled: 'Status: Installed',
+		moduleNotInstalled: 'Status: Not installed',
+	},
+
+	android: {
+		settings: 'Android Settings',
+		developerOptions: 'Developer Options',
+		developerOptionsSub: 'Enable or disable developer options',
+		usbDebugging: 'USB Debugging',
+		usbDebuggingSub: 'Enable or disable USB debugging',
+		wirelessDebugging: 'Wireless Debugging',
+		wirelessDebuggingSub: 'Enable or disable wireless debugging',
+		maxSaturation: 'Max Saturation',
+		maxSaturationSub: 'Enable or disable max saturation',
+		showRefreshRate: 'Show Refresh Rate',
+		showRefreshRateSub: 'Show the current display refresh rate',
+	},
+
+	hiding: {
+		pathsHiding: 'Paths Hiding',
+		hideCustomRecovery: 'Hide Custom Recovery Paths',
+		nonStandardSdcard: 'Non-standard /sdcard Paths',
+		nonStandardSdcardAndroid: 'Non-standard /sdcard/Android Paths',
+		dataLocalTmp: '/data/local/tmp Paths',
+		sdcardAndroidDataMediaObb: '/sdcard/Android/[data | media | obb] Paths',
+
+		mountsHiding: 'Mounts Hiding',
+		hideSusMounts: 'Hide Suspicious Mounts For Non-su Processes',
+		hideSusMountsSub: 'Prevent zygote from caching the sus mounts in memory, and to keep them hidden from /proc/self/[mounts|mountinfo|mountstat] for non-su processes',
+		umountSusMounts: 'Umount Suspicious Mounts',
+
+		additionalHiding: 'Additional Hiding',
+		hideSusPty: 'Hide Suspicious PTYs',
+		hideInjections: 'Hide Suspicious Injections',
+		selinuxEnforcing: 'SELinux Enforcing',
+		selinuxEnforcingSub: 'Always use the SELinux enforcing mode',
+
+		manualMode: 'Manual Mode',
+		susMapSub: 'Added real file path which gets mmapped will be hidden from /proc/self/[maps|smaps|smaps_rollup|map_files|mem|pagemap]',
+		susMapNoteAnon: '- It does NOT support hiding for anon memory.',
+		susMapNoteHooks: '- It does NOT hide any inline hooks or plt hooks cause by the injected library itself',
+		susMapNoteDetection: '- It may not be able to evade detections by apps that implement a good injection detection',
+		susMountSub: 'Adding sus mounts to umount list via built-in KernelSU kernel umount',
+		susPathSub: 'Added path and all its sub-paths will be hidden for umounted app process from several syscalls',
+		susPathLayerNote: 'Please be reminded that if the target path has upper mounts then make sure the proper layer is added, otherwise it may not be effective for the target process',
+		susPathReadOnlyNote: "For paths that are read-only all the time, add them via 'add_sus_path'",
+		susPathLoopSub:
+			'The only difference to add_sus_path is that the added sus_path via this cli will be flagged as SUS_PATH again for the app process when it is being spawned by zygote and marked umounted',
+		susPathLoopEmptyNote: 'Also it does not check if the path is existed or not, instead it checks for empty string only, so be careful what to add',
+		susPathLoopFrequentNote: "For paths that are frequently modified, we can add them via 'add_sus_path_loop'",
+	},
+
+	spoofing: {
+		features: 'Spoofing Features',
+		systemProperties: 'Spoof Android System Properties',
+		systemPropertiesSub: 'Spoof some android system properties',
+		systemPropertiesRepeat: 'Spoof Android System Properties Every Minute',
+		cmdlineOrBootconfig: 'Spoof /proc/cmdline or /proc/bootconfig',
+		cmdlineOrBootconfigSub: 'Spoof the output of /proc/cmdline (non-gki) or /proc/bootconfig (gki) from a text file',
+		cmdlineOrBootconfigNote: "No root process detects it for now, and this spoofing won't help much actually",
+		avcLog: 'AVC Log Spoofing',
+		avcLogSub: "Spoof the sus tcontext 'su' with 'u:r:priv_app:s0:c512,c768' shown in avc log in kernel",
+		avcLogNote:
+			'Enabling this may sometimes make developers hard to identify the cause when they are debugging with some permission or selinux issues, so users are advised to disable this when doing so',
+		uname: 'Spoof Uname',
+		unameSub: 'Spoof uname for all processes',
+		unameNote: "Only 'release' and 'version' are spoofed as others are no longer needed",
+		customUname: 'Custom Spoof Uname',
+		customUnameSub: "Spoof uname for all processes, set string to 'default' to imply the function to use original string",
+		kernelRelease: 'Kernel Release',
+		kernelReleaseHint: 'e.g. 5.10.123-android12',
+	},
+
+	rom: {
+		customRom: 'Custom ROM',
+		hidePaths: 'Hide Custom ROM Paths',
+		hidePathsNote: 'Disable umount for your app if it does not work',
+		hidePathsExample: 'Example: Web Browsers',
+		hideAddonD: 'Hide /system/addon.d Path',
+		hideLineageStrings: 'Hide LineageOS Strings',
+		spoofLibstagefright: 'Spoof /system/lib64/libstagefright.so',
+		spoofLibstagefrightSub: 'Custom ROMs use a custom libstagefright.so',
+		removeRomProps: 'Remove Custom ROM Properties',
+		removeRomPropsSub: 'Some Custom ROM properties',
+		removePifProps: 'Remove Play Integrity Fix Properties',
+		removePifPropsSub: 'Some Play Integrity Fix properties',
+		hideFrameworkRes: 'Hide framework-res.apk',
+		hideFrameworkResSub: 'It uses SUS MAP to hide it',
+	},
+
+	ksu: {
+		features: 'KernelSU Features',
+		suCompat: 'SU Compat',
+		suCompatSub: "SU Compatibility Mode - allows authorized apps to gain root via traditional 'su' command",
+		kernelUmount: 'Kernel Umount',
+		kernelUmountSub: 'Kernel Umount - controls whether kernel automatically unmounts modules when not needed',
+		kernelUmountWarning: '- Umount Suspicious Mounts need this option enabled to work',
+		selinuxHide: 'Hide SELinux modification',
+		selinuxHideSub: 'SELinux Hide - sanitize /sys/fs/selinux access results for app UIDs',
+		moduleControl: 'Module Control',
+		disableModules: 'Disable Modules',
+		enableModules: 'Enable Modules',
+	},
+
+	advanced: {
+		advanced: 'Advanced',
+		breneLogs: 'BRENE Logs',
+		breneLogsSub: 'Enable or disable BRENE Logs',
+		susfsLogs: 'SuSFS Logs',
+		susfsLogsSub: 'Enable or disable SuSFS Logs in kernel',
+	},
+
+	info: {
+		kernelFeatures: 'Enabled Features In Kernel',
+		breneLogs: 'BRENE Logs',
+		failedToLoadFeatures: 'Failed to load enabled features',
+		failedToLoadLogs: 'Failed to load logs',
+	},
+
+	toast: {
+		success: 'Success',
+		noRebootNeeded: 'No need to reboot',
+		failedToLoadConfig: 'Failed to load config',
+		failedToUpdateConfig: 'Failed to update config',
+	},
+}

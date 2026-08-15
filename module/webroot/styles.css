@@ -128,6 +128,13 @@ md-tabs {
 	box-sizing: border-box;
 }
 
+.lang-switch {
+	align-self: center;
+	margin-left: auto;
+	width: 132px;
+	min-width: 0;
+}
+
 .tab-bar {
 	display: flex;
 	overflow-x: auto;
