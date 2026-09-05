@@ -128,10 +128,7 @@ MODDIR="/data/adb/modules/brene"
 MODULES_PATH="/data/adb/modules"
 
 rm -rf "${MODDIR}"
-mv "${MODPATH}" "${MODULES_PATH}"
-
-mkdir -p "${MODPATH}"
-cp "${MODDIR}/module.prop" "${MODPATH}"
+cp -rp "${MODPATH}" "${MODULES_PATH}"
 
 (
 	sleep 3
