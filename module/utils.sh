@@ -81,7 +81,7 @@ spoof_system_properties() {
 	if_prop_exits_resetprop_n "ro.vendor.warranty_bit" "0"
 	if_prop_exits_resetprop_n "init.svc.adbd" "stopped"
 	if_prop_exits_resetprop_n "init.svc_debug_pid.adbd" ""
-	# if_prop_exits_resetprop_n "ro.oem_unlock_supported" "0"
+	if_prop_exits_resetprop_n "ro.oem_unlock_supported" "0"
 
 	# Realme
 	if_prop_exits_resetprop_n "ro.boot.realme.lockstate" "1"
