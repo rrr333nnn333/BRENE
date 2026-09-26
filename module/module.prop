@@ -1,7 +1,7 @@
 id=brene
 name=.BRENE - SuSFS
-version=v0.0.68
-versionCode=68
+version=v0.0.69
+versionCode=69
 author=rrr333nnn333, simonpunk, KOWX712
 description=A SuSFS/KernelSU module for SuSFS patched kernels
 updateJson=https://raw.githubusercontent.com/rrr333nnn333/BRENE/refs/heads/main/update.json

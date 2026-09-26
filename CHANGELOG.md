@@ -2,14 +2,9 @@
 
 # Supports SuSFS 2.2.0 and 2.3.0+
 
-- drop: service.sh and post-mount.sh
-- improve: run spoof props after /storage/emulated/0/Android is accessible
-- drop: dead feature "hide_modules_img"
-- drop: Umount Suspicious Mounts, not needed with SUS_MOUNT
-- drop: Hide Suspicious Injections, better use NoMount metamodule
-- add: Kernel Version to module description
-- drop: webui: Example of detections
-- add: new toggle "Spoof OS Patch Level Property"
-- add: webui: new section to see Suspicious Mounts
-- add: new toggle "Spoof Vendor Security Patch Level Property"
-- add: webui: Incompatible Modules again
+- refactor: "Spoof OS/Vendor Security Patch Level Property" and fix issues on some devices (1970 issue)
+- improve: add total SuSFS features to module description
+- change: enable "Hide Non-standard /storage/emulated/0 Paths" by default
+- improve: spoof ro.secureboot.devicelock prop
+- improve: webui: update descriptions, change order, and minor fixes and improvements
+- improve: spoof ro.oem_unlock_supported prop to 0 (hide OEM unlocking toggle)
