@@ -166,6 +166,9 @@ until [[ -e "/storage/emulated/0/Android" ]]; do sleep 1; done
 # Spoof System Properties
 if [[ "${config_spoof_system_properties}" == "1" ]]; then
 	spoof_system_properties
+
+	# set after vold settles so the encrypted transition still reaches vendor init triggers
+	if_prop_exits_resetprop_n "ro.crypto.state" "encrypted"
 fi
 # Spoof Fingerprint Properties
 if [[ "${config_spoof_fingerprint_properties}" == "1" ]]; then
