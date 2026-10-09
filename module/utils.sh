@@ -67,7 +67,6 @@ spoof_system_properties() {
 	if_prop_exits_resetprop_n "ro.build.type" "user"
 	if_prop_exits_resetprop_n "ro.build.tags" "release-keys"
 	if_prop_exits_resetprop_n "ro.build.keys" "release-keys"
-	if_prop_exits_resetprop_n "ro.crypto.state" "encrypted"
 	if_prop_exits_resetprop_n "ro.allow.mock.location" "0"
 	if_prop_exits_resetprop_n "ro.boot.warranty_bit" "0"
 	if_prop_exits_resetprop_n "ro.warranty_bit" "0"
