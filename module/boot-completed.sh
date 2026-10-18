@@ -91,7 +91,7 @@ fi
 # Set logcat and logd buffer to 64K
 if [[ "${config_shrink_buffer_size}" == "1" ]]; then
 	logcat -G 64K
-	resetprop -n -p persist.logd.size 65536
+	setprop persist.logd.size 64K
 fi
 
 # SELinux Enforcing
