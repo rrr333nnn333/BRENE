@@ -13,8 +13,6 @@ CUSTOM_ROM_NAMES="lineage|infinity|evolution|crdroid|mistos|axion|pixelos|rising
 # Load config
 [[ -e "${PERSISTENT_DIR}/config.sh" ]] && source "${PERSISTENT_DIR}/config.sh"
 
-update_config_date
-
 # Update Description
 susfs_total_features=10
 susfs_variant=$(${SUSFS_BIN} show variant)
@@ -428,6 +426,7 @@ if [[ "${config_hide_third_party_apps}" == "1" ]]; then
 fi
 
 resetprop -c --force
+update_config_date
 
 if [[ "${config_brene_logs}" == "1" ]]; then
 	echo "boot-completed.sh ✅" >> "${PERSISTENT_DIR}/log.txt"
