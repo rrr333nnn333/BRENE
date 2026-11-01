@@ -395,28 +395,31 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Disable child process restrictions</span>
-							<span class="card-row__sub">Disable restrictions on the system resource usage of the app child processes</span>
-						</div>
-						<md-switch icons id="disable_child_process_restrictions"></md-switch>
-						<md-ripple></md-ripple>
-					</div>
-
-					<div class="card-row">
-						<div class="card-row__body">
 							<span class="card-row__title">Max color saturation</span>
 							<span class="card-row__sub">Force maximum color saturation via SurfaceFlinger</span>
 						</div>
 						<md-switch icons id="saturation"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
+				</div>
 
+				<p class="section-label">Advanced</p>
+				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Set logcat and logd buffer to 64K</span>
 							<span class="card-row__sub">Reduce CPU overhead and battery drain by shrinking buffer size</span>
 						</div>
 						<md-switch icons id="shrink_buffer_size"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Disable child process restrictions</span>
+							<span class="card-row__sub">Disable restrictions on the system resource usage of the app child processes</span>
+						</div>
+						<md-switch icons id="disable_child_process_restrictions"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 				</div>
@@ -450,6 +453,25 @@
 						<md-switch icons id="hide_custom_recovery"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
+				</div>
+
+				<p class="section-label">Advanced</p>
+				<div class="card-group">
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Hide suspicious PTYs</span>
+						</div>
+						<md-switch icons id="hide_suspicious_pty"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Hide /data/local/tmp paths</span>
+						</div>
+						<md-switch icons id="paths_hiding__data_local_tmp"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
 
 					<div class="card-row">
 						<div class="card-row__body">
@@ -470,22 +492,6 @@
 							<span class="card-row__sub">data, media, obb</span>
 						</div>
 						<md-switch icons id="paths_hiding__non_standard_sdcard_android"></md-switch>
-						<md-ripple></md-ripple>
-					</div>
-
-					<div class="card-row">
-						<div class="card-row__body">
-							<span class="card-row__title">Hide /data/local/tmp paths</span>
-						</div>
-						<md-switch icons id="paths_hiding__data_local_tmp"></md-switch>
-						<md-ripple></md-ripple>
-					</div>
-
-					<div class="card-row">
-						<div class="card-row__body">
-							<span class="card-row__title">Hide suspicious PTYs</span>
-						</div>
-						<md-switch icons id="hide_suspicious_pty"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 				</div>
@@ -779,7 +785,7 @@
 				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Hide custom ROM paths</span>
+							<span class="card-row__title">Hide Custom ROM paths</span>
 							<span class="card-row__sub card-row__tag--danger">If your app does not work, disable umount (App Profile)</span>
 							<span class="card-row__sub card-row__tag--danger">Example: Web Browsers</span>
 						</div>
@@ -789,7 +795,7 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Hide custom ROM paths (Extended)</span>
+							<span class="card-row__title">Hide Custom ROM paths (Extended)</span>
 							<span class="card-row__sub">If your app does not work, disable umount (App Profile)</span>
 						</div>
 						<md-switch icons id="hide_custom_rom_paths_2"></md-switch>
@@ -829,10 +835,13 @@
 						<md-switch icons id="spoof_libstagefright"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
+				</div>
 
+				<p class="section-label">Advanced</p>
+				<div class="card-group">
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Remove custom ROM properties</span>
+							<span class="card-row__title">Remove Custom ROM properties</span>
 						</div>
 						<md-switch icons id="rom_props"></md-switch>
 						<md-ripple></md-ripple>
