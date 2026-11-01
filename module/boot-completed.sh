@@ -167,18 +167,6 @@ if [[ "${config_spoof_system_properties}" == "1" ]]; then
 	# set after vold settles so the encrypted transition still reaches vendor init triggers
 	if_prop_exits_resetprop_n "ro.crypto.state" "encrypted"
 fi
-# Spoof Fingerprint Properties
-if [[ "${config_spoof_fingerprint_properties}" == "1" ]]; then
-	spoof_fingerprint_properties
-fi
-# Spoof UTC Properties
-if [[ "${config_spoof_utc_properties}" == "1" ]]; then
-	spoof_utc_properties
-fi
-# Spoof Date Properties
-if [[ "${config_spoof_date_properties}" == "1" ]]; then
-	spoof_date_properties
-fi
 # Spoof OS Security Patch Level Property
 if [[ "${config_spoof_os_security_patch_level_property}" == "1" ]]; then
 	spoof_os_security_patch_level_property
