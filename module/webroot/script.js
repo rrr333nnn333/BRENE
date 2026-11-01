@@ -369,7 +369,8 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 			const APP_URL = `https://play.google.com/store/apps/details?id=${PKG}`
 			if (result.stdout.includes('package:')) {
 				exec(`
-					am start ${PKG}/.MainActivity
+					cmd activity force-stop ${PKG}
+					cmd activity start ${PKG}/.MainActivity
 					input keyevent KEYCODE_TAB
 					input keyevent KEYCODE_ENTER
 				`)
