@@ -85,7 +85,7 @@ const configs = [
 document.querySelectorAll('a[href]').forEach((element) => {
 	element.addEventListener('click', (event) => {
 		event.preventDefault()
-		exec(`am start -a android.intent.action.VIEW -d ${element.href}`)
+		exec(`cmd activity start -a android.intent.action.VIEW -d ${element.href}`)
 	})
 })
 
@@ -375,7 +375,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 					input keyevent KEYCODE_ENTER
 				`)
 			} else {
-				exec(`am start -a android.intent.action.VIEW -d ${APP_URL}`)
+				exec(`cmd activity start -a android.intent.action.VIEW -d ${APP_URL}`)
 			}
 		})
 	})
