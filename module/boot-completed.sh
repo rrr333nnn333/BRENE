@@ -16,7 +16,7 @@ CUSTOM_ROM_NAMES="lineage|infinity|evolution|crdroid|mistos|axion|pixelos|rising
 update_config_date
 
 # Update Description
-susfs_total_features=9
+susfs_total_features=10
 susfs_variant=$(${SUSFS_BIN} show variant)
 susfs_version=$(${SUSFS_BIN} show version)
 susfs_features_number=$(${SUSFS_BIN} show enabled_features | wc -l)

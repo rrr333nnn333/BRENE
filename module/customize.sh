@@ -52,7 +52,7 @@ else
 fi
 
 # Reset module description
-susfs_total_features=9
+susfs_total_features=10
 susfs_variant=$(${SUSFS_BIN} show variant)
 susfs_features_number=$(${SUSFS_BIN} show enabled_features | wc -l)
 kernel_version=$(cat /proc/version | awk '{print $3}' | grep -oE '^[0-9]+\.[0-9]+\.[0-9]+')
