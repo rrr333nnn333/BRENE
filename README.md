@@ -29,7 +29,7 @@ More information soon.
 
 ## Supported Versions
 
-- `susfs4ksu` v2.2.0+
+- `susfs4ksu` 2.2.0, 2.3.0 and 2.3.0+
 
 ## Hiding Features
 

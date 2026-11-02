@@ -1,14 +1,18 @@
 # Changelog
 
-# Supports SuSFS 2.2.0 and 2.3.0+
+# Supports SuSFS 2.2.0, 2.3.0 and 2.3.0+
 
-- fix: Hide KernelSU directories: KernelSU manager crash
-- add: webui: Re-Malwack module (Recommended)
-- improve: better use "cmd package" instead of "pm"
-- drop: Spoof /proc/[cmdline|bootconfig]: NON-GKI support
-- drop: KernelSU kernel version check
-- improve: only install on SuSFS 2.2.0, 2.3.0 and 2.4.0+
-- improve: disable other SuSFS module
-- add: webui: FuseHide module (Incompatible module)
-- add: webui: Tricky Store / TEESimulator-RS / AlwaysStrong (Incompatible modules)
-- improve: remove HMA OSS app external directory (temp)
+- add: webui: "Check Play Integrity API" button
+- add: new incompatible modules (Integrity Box, mountify)
+- add: new incompatible modules (fgetpriority, Tricky Store OSS, Oh My Keymint, Yurikey Manager, ZNNext)
+- add: SuSFS variant to module description
+- improve: webui: move "Check Play Integrity API" button to HOME section
+- add: webui: Material Files to Recommendations
+- improve: update susfs_total_features value to 10 (CONFIG_KSU_SUSFS_PRIORITY_UID_FILTER)
+- improve: webui: Check PI API: use "cmd activity" instead of "am" and use force-stop ${PKG} before start ${PKG}/.MainActivity
+- improve: webui: use "cmd activity" instead of "am" for all code
+- improve: webui: add Advanced separator
+- improve: remove Termux and BakaSU/ReSukiSU app external directory
+- improve: remove SukiSU Ultra app external directory
+- improve: move update_config_date function call atfer /storage/emulated/0/Android is accessible
+- drop: Spoof UTC/date/fingerprint properties
