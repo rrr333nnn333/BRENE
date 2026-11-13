@@ -87,10 +87,9 @@ if [[ "${config_show_refresh_rate}" == "1" ]]; then
 	service call SurfaceFlinger 1034 i32 1
 fi
 
-# Set logcat and logd buffer to 64K
+# Set logcat buffer to 64KiB
 if [[ "${config_shrink_buffer_size}" == "1" ]]; then
 	logcat -G 64K
-	resetprop -n persist.logd.size 65536
 fi
 
 # Remove Custom ROM Properties
