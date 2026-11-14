@@ -92,6 +92,11 @@ if [[ "${config_shrink_buffer_size}" == "1" ]]; then
 	logcat -G 64K
 fi
 
+# Hide OEM unlocking toggle
+if [[ "${config_hide_oem_unlocking_toggle}" == "1" ]]; then
+	if_prop_exits_resetprop_n "ro.oem_unlock_supported" "0"
+fi
+
 # Remove Custom ROM Properties
 if [[ "${config_rom_props}" == "1" ]]; then
 	resetprop | grep -iE "${CUSTOM_ROM_NAMES}" | awk -F'[][]' '{print $2}' | while read -r prop; do

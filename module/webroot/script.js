@@ -43,6 +43,10 @@ const configs = [
 		action: (enabled) => setFeature(`service call SurfaceFlinger 1034 i32 ${enabled ? 1 : 0}`),
 	},
 	{
+		id: 'hide_oem_unlocking_toggle',
+		action: (enabled) => setFeature(`resetprop -n ro.oem_unlock_supported ${enabled ? 0 : 1}`),
+	},
+	{
 		id: 'disable_child_process_restrictions',
 		action: (enabled) => {
 			setFeature(`resetprop -n persist.sys.fflag.override.settings_enable_monitor_phantom_procs ${enabled ? false : true}`)
