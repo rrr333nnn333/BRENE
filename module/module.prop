@@ -1,7 +1,7 @@
 id=brene
-name=.BRENE - SuSFS
+name=.BRENE - SUSFS
 version=v0.0.75
 versionCode=75
 author=rrr333nnn333, simonpunk, KOWX712
-description=KernelSU module with SuSFS support and more
+description=KernelSU module with SUSFS support and more
 updateJson=https://raw.githubusercontent.com/rrr333nnn333/BRENE/refs/heads/main/update.json

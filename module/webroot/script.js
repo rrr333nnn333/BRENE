@@ -99,7 +99,7 @@ exec('resetprop ro.build.version.release && resetprop ro.build.version.sdk').the
 	container.innerText = `${splits[0]} (API ${splits[1]}) | SDK ${splits[1]}`
 })
 
-// Load SuSFS Variant
+// Load SUSFS Variant
 exec('susfs show variant').then((result) => {
 	const container = document.querySelector('#susfs-variant .card-row__sub')
 

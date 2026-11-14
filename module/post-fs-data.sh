@@ -14,7 +14,7 @@ SUSFS_VARIANT=$(${SUSFS_BIN} show variant)
 # Load config
 [[ -e "${PERSISTENT_DIR}/config.sh" ]] && source "${PERSISTENT_DIR}/config.sh"
 
-# Restore SuSFS binary
+# Restore SUSFS binary
 cp -pf "${PERSISTENT_DIR}/susfs" "${DEST_BIN_DIR}"
 ln -sf "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/sus"       # For development
 ln -sf "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/ksu_susfs" # For compatibility

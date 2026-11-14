@@ -20,7 +20,7 @@ echo ""
 
 # Check Compatibility
 if [[ -z "${KSU}" ]]; then
-	abort '[❌] SuSFS is only for KernelSU or forks!'
+	abort '[❌] SUSFS is only for KernelSU or forks!'
 fi
 
 if [[ "${ARCH}" != "arm64" ]]; then
@@ -46,9 +46,9 @@ ln -sf "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/ksu_susfs" # For compatibility
 
 susfs_version=$(${SUSFS_BIN} show version)
 if [[ "${susfs_version}" == "v2.4.0" || "${susfs_version}" == "v2.3.0" || "${susfs_version}" == "v2.2.0" ]]; then
-	echo "[✅] Detected SuSFS version: ${susfs_version}"
+	echo "[✅] Detected SUSFS version: ${susfs_version}"
 else
-	abort "[❌] Not supported SuSFS version ${susfs_version}!"
+	abort "[❌] Not supported SUSFS version ${susfs_version}!"
 fi
 
 # Reset module description
@@ -56,25 +56,25 @@ susfs_total_features=10
 susfs_variant=$(${SUSFS_BIN} show variant)
 susfs_features_number=$(${SUSFS_BIN} show enabled_features | wc -l)
 kernel_version=$(cat /proc/version | awk '{print $3}' | grep -oE '^[0-9]+\.[0-9]+\.[0-9]+')
-description="KernelSU module with SuSFS support and more"
+description="KernelSU module with SUSFS support and more"
 status="Waiting for reboot ⏱️"
-${KSU_BIN} module config set override.description "[Status: ${status} | Kernel Version: ${kernel_version} | SuSFS: ${susfs_version} (${susfs_variant}) | SuSFS Kernel Features: ${susfs_features_number}/${susfs_total_features} enabled] ${description}"
+${KSU_BIN} module config set override.description "[Status: ${status} | Kernel Version: ${kernel_version} | SUSFS: ${susfs_version} (${susfs_variant}) | SUSFS Kernel Features: ${susfs_features_number}/${susfs_total_features} enabled] ${description}"
 
-# Disable other SuSFS modules
+# Disable other SUSFS modules
 [[ -e "${KSU_MODULES_DIR}/susfs4ksu" ]] && {
-	touch "${KSU_MODULES_DIR}/susfs4ksu/disable" && echo '[✅] Disabling other SuSFS module'
+	touch "${KSU_MODULES_DIR}/susfs4ksu/disable" && echo '[✅] Disabling other SUSFS module'
 }
 [[ -e "${KSU_MODULES_DIR}/susfs_manager" ]] && {
-	touch "${KSU_MODULES_DIR}/susfs_manager/disable" && echo '[✅] Disabling other SuSFS module'
+	touch "${KSU_MODULES_DIR}/susfs_manager/disable" && echo '[✅] Disabling other SUSFS module'
 }
 [[ -e "${KSU_MODULES_DIR}/ReSuSFS" ]] && {
-	touch "${KSU_MODULES_DIR}/ReSuSFS/disable" && echo '[✅] Disabling other SuSFS module'
+	touch "${KSU_MODULES_DIR}/ReSuSFS/disable" && echo '[✅] Disabling other SUSFS module'
 }
 
 echo "[✅] Preparing brene persistent directory (${PERSISTENT_DIR})"
 mkdir -p "${PERSISTENT_DIR}"
 
-# Backup SuSFS binary
+# Backup SUSFS binary
 cp -pf "${DEST_BIN_DIR}/susfs" "${PERSISTENT_DIR}"
 
 files="

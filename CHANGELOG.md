@@ -1,6 +1,6 @@
 # Changelog
 
-# Supports SuSFS 2.2.0, 2.3.0 and 2.3.0+
+# Supports SUSFS 2.2.0, 2.3.0 and 2.3.0+
 
 - add: webui: "Check Play Integrity API" button
 - add: new incompatible modules (Integrity Box, mountify)
