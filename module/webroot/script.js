@@ -73,6 +73,7 @@ const configs = [
 	{ id: 'hide_framework_res_apk' },
 	{ id: 'enable_avc_log_spoofing' },
 	{ id: 'spoof_cmdline_or_bootconfig' },
+	{ id: 'hide_all_apps_with_uid_10000_and_above' },
 	{ id: 'fix_data_local_tmp_inconsistencies' },
 	{ id: 'spoof_system_properties' },
 	{ id: 'spoof_os_security_patch_level_property' },

@@ -429,7 +429,13 @@ fi
 
 # Hide third party apps
 if [[ "${config_hide_third_party_apps}" == "1" ]]; then
-	packages=$(cmd package list packages -3 | awk -F: '{out = out (out ? "," : "") $2} END {print out}')
+	packages=$(cmd package list packages -3 | awk -F: '{pkg = pkg (pkg ? "," : "") $2} END {print pkg}')
+	${SUSFS_BIN} set_priority_uid_filter "${packages}"
+fi
+
+# Hide all apps with uid >= 10000
+if [[ "${config_hide_all_apps_with_uid_10000_and_above}" == "1" ]]; then
+	packages=$(awk '$2 >= 10000 {pkg = pkg (pkg ? "," : "") $1} END {print pkg}' /data/system/packages.list)
 	${SUSFS_BIN} set_priority_uid_filter "${packages}"
 fi
 

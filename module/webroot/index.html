@@ -472,8 +472,17 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
+							<span class="card-row__title">Hide custom recovery</span>
+							<span class="card-row__sub">TWRP, OrangeFox</span>
+						</div>
+						<md-switch icons id="hide_custom_recovery"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
 							<span class="card-row__title">Hide third party apps</span>
-							<span class="card-row__sub">Hide them using set_priority_uid_filter, HMA-OSS is needed for userspace side</span>
+							<span class="card-row__sub">Hide them using PRIORITY_UID_FILTER feature, HMA-OSS is needed for userspace side</span>
 						</div>
 						<md-switch icons id="hide_third_party_apps"></md-switch>
 						<md-ripple></md-ripple>
@@ -481,10 +490,10 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
-							<span class="card-row__title">Hide custom recovery</span>
-							<span class="card-row__sub">TWRP, OrangeFox</span>
+							<span class="card-row__title">Hide all apps with uid >= 10000</span>
+							<span class="card-row__sub">Hide them using PRIORITY_UID_FILTER feature, HMA-OSS is needed for userspace side</span>
 						</div>
-						<md-switch icons id="hide_custom_recovery"></md-switch>
+						<md-switch icons id="hide_all_apps_with_uid_10000_and_above"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 

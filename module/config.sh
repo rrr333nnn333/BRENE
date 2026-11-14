@@ -41,6 +41,7 @@ config_hide_custom_rom_paths=0
 config_hide_custom_rom_paths_2=0
 config_hide_framework_res_apk=0
 config_spoof_cmdline_or_bootconfig=0
+config_hide_all_apps_with_uid_10000_and_above=0
 
 config_spoof_verified_boot_hash=''
 config_custom_uname_kernel_release='default'
