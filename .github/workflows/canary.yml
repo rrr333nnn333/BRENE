@@ -1,0 +1,93 @@
+name: Build Canary Module
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "How to publish this build"
+        type: choice
+        default: ci
+        options:
+          - ci
+          - pre-release
+          - release
+  push:
+    branches: [main]
+    paths:
+      - "module/**"
+
+permissions:
+  contents: write
+
+env:
+  UPSTREAM: rrr333nnn333/BRENE
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Work out file name
+        id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHA="$(git rev-parse --short=7 HEAD)"
+          VERSION="$(grep '^version=' module/module.prop | cut -d= -f2 | tr -d '\r')"
+
+          BASE="$(gh release view --repo "$UPSTREAM" --json assets \
+            --jq '[.assets[] | select(.name | endswith(".zip"))][0].name' 2>/dev/null || true)"
+          BASE="${BASE%.zip}"
+          if [ -z "$BASE" ] || [ "$BASE" = "null" ]; then
+            BASE="BRENE-${VERSION}"
+          fi
+
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "name=${BASE}-canary-${SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Stage module files
+        run: |
+          mkdir -p stage
+          cp -a module/. stage/
+          sed -i '/^updateJson=/d' stage/module.prop
+          sed -i "s|^version=.*|version=${{ steps.meta.outputs.version }}-canary-${{ steps.meta.outputs.sha }}|" stage/module.prop
+          find stage -name '*.sh' -exec chmod 755 {} +
+          echo "--- module.prop ---"
+          cat stage/module.prop
+          echo "--- top level ---"
+          ls -la stage
+
+      - name: Build real zip (for Releases)
+        run: |
+          cd stage
+          zip -r9 "../${{ steps.meta.outputs.name }}.zip" . -x "*.git*"
+          cd ..
+          unzip -l "${{ steps.meta.outputs.name }}.zip" | head -30
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.name }}
+          path: stage/
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Publish release
+        if: github.event_name == 'workflow_dispatch' && inputs.release_type != 'ci'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="canary-${{ steps.meta.outputs.sha }}"
+          FLAGS=""
+          if [ "${{ inputs.release_type }}" = "pre-release" ]; then
+            FLAGS="--prerelease"
+          fi
+          gh release create "$TAG" \
+            "${{ steps.meta.outputs.name }}.zip" \
+            --target "${{ github.sha }}" \
+            --title "${{ steps.meta.outputs.name }}" \
+            --notes "Canary build from commit ${{ github.sha }}. Unreleased and may be unstable." \
+            $FLAGS
