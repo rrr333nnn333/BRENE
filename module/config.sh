@@ -20,6 +20,7 @@ config_spoof_os_security_patch_level_property=1
 config_spoof_vendor_security_patch_level_property=1
 config_disable_child_process_restrictions=1
 config_hide_oem_unlocking_toggle=1
+config_hide_vector_injection=1
 
 config_pif_props=0
 config_rom_props=0
