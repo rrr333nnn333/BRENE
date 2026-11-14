@@ -348,6 +348,16 @@ if [[ -e "${PERSISTENT_DIR}/custom_open_redirect.txt" ]]; then
 	done < "${PERSISTENT_DIR}/custom_open_redirect.txt"
 fi
 
+# Load custom_sus_path_uid_filter.txt
+if [[ -e "${PERSISTENT_DIR}/custom_sus_path_uid_filter.txt" ]]; then
+	while IFS= read -r i; do
+		# Skip empty lines or comments
+		[[ -z "${i// /}" || "${i// /}" == "#"* ]] && continue
+
+		${SUSFS_BIN} set_sus_path_uid_filter "${i}"
+	done < "${PERSISTENT_DIR}/custom_sus_path_uid_filter.txt"
+fi
+
 #### Hide the mmapped real file from various maps in /proc/self/, effective only for processes that are marked umounted with uid >= 10000 ####
 ## - *Please note that it is better to do it in boot-completed starge
 ##   Since some target path may be mounted by ksu, and make sure the

@@ -754,6 +754,16 @@
 							<span class="card-row__tag--code">Example:</span>
 							<span class="card-row__tag--code">/system/etc/hosts /data/local/tmp/hosts 3</span>
 							<!-- OPEN_REDIRECT -->
+
+							<!-- SUS_PATH_UID_FILTER -->
+							<span class="card-row__title">SUS_PATH_UID_FILTER</span>
+							<span class="card-row__sub">Only uids of added package name will be visible to sus paths, and vice versa</span>
+							<span class="card-row__sub">* Important Notes *</span>
+							<span class="card-row__sub">- App uid is resolved from /data/system/packages.list</span>
+							<span class="card-row__sub">- Only effective for all processes with uid >= 10000</span>
+							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__tag--code">com.brave.browser</span>
+							<!-- SUS_PATH_UID_FILTER -->
 						</div>
 						<md-ripple></md-ripple>
 					</div>
@@ -763,6 +773,7 @@
 							<md-primary-tab id="tab_sus_path" aria-controls="panel_sus_path">PATH</md-primary-tab>
 							<md-primary-tab id="tab_sus_path_loop" aria-controls="panel_sus_path_loop">PATH LOOP</md-primary-tab>
 							<md-primary-tab id="tab_open_redirect" aria-controls="panel_open_redirect">OPEN_REDIRECT</md-primary-tab>
+							<md-primary-tab id="tab_sus_path_uid_filter" aria-controls="panel_sus_path_uid_filter">SUS_PATH_UID_FILTER</md-primary-tab>
 						</md-tabs>
 
 						<div class="snap-container" id="horizontal_scroll_container">
@@ -781,6 +792,10 @@
 							<div class="snap-item">
 								<md-filled-text-field class="content" id="custom_open_redirect_text_field" type="textarea" rows="12" label="OPEN_REDIRECT"></md-filled-text-field>
 							</div>
+
+							<div class="snap-item">
+								<md-filled-text-field class="content" id="custom_sus_path_uid_filter_field" type="textarea" rows="12" label="SUS_PATH_UID_FILTER"></md-filled-text-field>
+							</div>
 						</div>
 
 						<div class="sus-footer">
@@ -796,8 +811,9 @@
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Hide Custom ROM paths</span>
-							<span class="card-row__sub card-row__tag--danger">If your app does not work, disable umount (App Profile)</span>
-							<span class="card-row__sub card-row__tag--danger">Example: Web Browsers</span>
+							<span class="card-row__sub card-row__tag--danger">If your app does not work:</span>
+							<span class="card-row__sub card-row__tag--danger">- Disable umount (App Profile) (SUSFS 2.4.0 and older)</span>
+							<span class="card-row__sub card-row__tag--danger">- Use sus_path_uid_filter feature (SUSFS 2.4.0+)</span>
 						</div>
 						<md-switch icons id="hide_custom_rom_paths"></md-switch>
 						<md-ripple></md-ripple>
@@ -806,7 +822,6 @@
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Hide Custom ROM paths (Extended)</span>
-							<span class="card-row__sub">If your app does not work, disable umount (App Profile)</span>
 						</div>
 						<md-switch icons id="hide_custom_rom_paths_2"></md-switch>
 						<md-ripple></md-ripple>

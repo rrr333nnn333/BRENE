@@ -482,6 +482,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	const pathField = document.getElementById('custom_sus_path_text_field')
 	const loopField = document.getElementById('custom_sus_path_loop_text_field')
 	const openRedirectField = document.getElementById('custom_open_redirect_text_field')
+	const sus_path_uid_filter_field = document.getElementById('custom_sus_path_uid_filter_field')
 	const applyButton = document.getElementById('unified_apply_button')
 	const tabs = document.getElementById('sus_tabs')
 	const scrollContainer = document.getElementById('horizontal_scroll_container')
@@ -499,6 +500,9 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	exec(`cat ${PERSISTENT_DIR}/custom_open_redirect.txt`).then((result) => {
 		openRedirectField.value = result.errno === 0 ? `${result.stdout}` : ''
 	})
+	exec(`cat ${PERSISTENT_DIR}/custom_sus_path_uid_filter.txt`).then((result) => {
+		sus_path_uid_filter_field.value = result.errno === 0 ? `${result.stdout}` : ''
+	})
 
 	// Tabs and Scroll Sync
 	tabs.addEventListener('change', () => {
@@ -510,17 +514,17 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 		})
 	})
 
-	let scrollTimeout
-	scrollContainer.addEventListener('scroll', () => {
-		clearTimeout(scrollTimeout)
-		scrollTimeout = setTimeout(() => {
-			const width = scrollContainer.getBoundingClientRect().width
-			const index = Math.round(scrollContainer.scrollLeft / width)
-			if (tabs.activeTabIndex !== index) {
-				tabs.activeTabIndex = index
-			}
-		}, 50)
-	})
+	// let scrollTimeout
+	// scrollContainer.addEventListener('scroll', () => {
+	// 	clearTimeout(scrollTimeout)
+	// 	scrollTimeout = setTimeout(() => {
+	// 		const width = scrollContainer.getBoundingClientRect().width
+	// 		const index = Math.round(scrollContainer.scrollLeft / width)
+	// 		if (tabs.activeTabIndex !== index) {
+	// 			tabs.activeTabIndex = index
+	// 		}
+	// 	}, 50)
+	// })
 
 	applyButton.onclick = () => {
 		const index = tabs.activeTabIndex
@@ -544,10 +548,24 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 				file = 'custom_open_redirect.txt'
 				content = openRedirectField.value
 				break
+			case 4:
+				file = 'custom_sus_path_uid_filter.txt'
+				content = sus_path_uid_filter_field.value
+				break
 		}
 
 		if (file) {
-			if (content === '') {
+			if (file === 'custom_sus_path_uid_filter.txt') {
+				content === '' ? (content = ' ') : (content = content.replaceAll('\n', ','))
+
+				exec(`echo "${content}" > ${PERSISTENT_DIR}/${file}`).then((result) => {
+					if (result.errno === 0) {
+						exec(`susfs set_sus_path_uid_filter "${content}"`).then((result) => {
+							toast(result.errno === 0 ? 'Saved and applied' : result.stderr)
+						})
+					}
+				})
+			} else if (content === '') {
 				exec(`printf '' > ${PERSISTENT_DIR}/${file}`).then((result) => {
 					toast(result.errno === 0 ? 'Success, reboot to apply' : result.stderr)
 				})
@@ -657,6 +675,8 @@ UNIQUE_EOF
 	bodyContent.addEventListener(
 		'touchstart',
 		(e) => {
+			if (e.target.tagName === 'MD-PRIMARY-TAB') return
+
 			touchStartX = e.touches[0].clientX
 			touchStartY = e.touches[0].clientY
 		},
@@ -666,6 +686,8 @@ UNIQUE_EOF
 	bodyContent.addEventListener(
 		'touchend',
 		(e) => {
+			if (e.target.tagName === 'MD-PRIMARY-TAB') return
+
 			if (e.target.closest('.tab-bar') === null) {
 				const touchEndX = e.changedTouches[0].clientX
 				const touchEndY = e.changedTouches[0].clientY
