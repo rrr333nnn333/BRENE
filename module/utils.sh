@@ -81,6 +81,15 @@ spoof_system_properties() {
 	if_prop_exits_resetprop_n "init.svc.adbd" "stopped"
 	if_prop_exits_resetprop_n "init.svc_debug_pid.adbd" ""
 
+	fingerprint_value=$(resetprop ro.build.fingerprint)
+	new_fingerprint_value="${fingerprint_value//userdebug/user}"
+	new_fingerprint_value="${new_fingerprint_value//test-keys/release-keys}"
+	new_fingerprint_value="${new_fingerprint_value//eng/}"
+	new_fingerprint_value="${new_fingerprint_value//crdroid/}"
+	new_fingerprint_value="${new_fingerprint_value//lineage/}"
+	new_fingerprint_value="${new_fingerprint_value//evolution/}"
+	if_prop_exits_resetprop_n "ro.build.fingerprint" "${new_fingerprint_value}"
+
 	# Realme
 	if_prop_exits_resetprop_n "ro.boot.realme.lockstate" "1"
 	if_prop_exits_resetprop_n "ro.boot.realmebootstate" "green"
