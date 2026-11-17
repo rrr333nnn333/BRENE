@@ -305,6 +305,17 @@ if [[ "${config_paths_hiding__data_local_tmp}" == "1" ]]; then
 	fi
 
 	for i in /data/local/tmp/*; do
+		if [[ -f "${PERSISTENT_DIR}/data_local_tmp_exceptions.txt" ]]; then
+			while IFS= read -r pattern || [[ -n "${pattern}" ]]; do
+				pattern=${pattern%$'\r'}
+				# Skip empty lines or comments; match full paths as shell patterns.
+				[[ -z "${pattern// /}" || "${pattern// /}" == "#"* ]] && continue
+				case "${i}" in
+					${pattern}) continue 2 ;;
+				esac
+			done < "${PERSISTENT_DIR}/data_local_tmp_exceptions.txt"
+		fi
+
 		brene_sus_path_loop "${i}"
 	done
 fi
