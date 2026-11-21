@@ -305,15 +305,34 @@ if [[ "${config_paths_hiding__data_local_tmp}" == "1" ]]; then
 	fi
 
 	for i in /data/local/tmp/*; do
-		if [[ -f "${PERSISTENT_DIR}/data_local_tmp_exceptions.txt" ]]; then
-			while IFS= read -r pattern || [[ -n "${pattern}" ]]; do
-				pattern=${pattern%$'\r'}
-				# Skip empty lines or comments; match full paths as shell patterns.
-				[[ -z "${pattern// /}" || "${pattern// /}" == "#"* ]] && continue
-				case "${i}" in
-					${pattern}) continue 2 ;;
+		[ -e "${i}" ] || continue
+
+		EXCEPTIONS_FILE="${PERSISTENT_DIR}/data_local_tmp_exceptions.txt"
+		name=$(basename "${i}")
+
+		is_excluded() {
+			[ -f "${EXCEPTIONS_FILE}" ] || return 1
+
+			local target="$1"
+			local line
+
+			while IFS= read -r line || [ -n "$line" ]; do
+				# Skip empty lines or comments
+				[[ -z "${line// /}" || "${line// /}" == "#"* ]] && continue
+
+				# shellcheck disable=SC2254
+				case "$target" in
+					$line)
+						return 0
+						;;
 				esac
-			done < "${PERSISTENT_DIR}/data_local_tmp_exceptions.txt"
+			done < "$EXCEPTIONS_FILE"
+
+			return 1
+		}
+
+		if is_excluded "$name"; then
+			continue
 		fi
 
 		brene_sus_path_loop "${i}"

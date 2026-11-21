@@ -601,9 +601,12 @@ UNIQUE_EOF
 	})
 
 	applyButton.onclick = () => {
-		// Quote as literal data so wildcard patterns and shell characters are preserved.
-		const content = exceptionsField.value.replaceAll("'", "'\\''")
-		exec(`printf '%s' '${content}' > ${file}`).then((result) => {
+		const content = exceptionsField.value
+		exec(`
+cat <<'UNIQUE_EOF' > ${file}
+${content}
+UNIQUE_EOF
+		`).then((result) => {
 			toast(result.errno === 0 ? 'Success, reboot to apply' : result.stderr)
 		})
 	}
