@@ -230,12 +230,25 @@ if [[ "${config_spoof_hosts}" == "1" ]]; then
 		EOF
 	}
 
-	brene_open_redirect "${path}" "${fake_file_path}" '3'
-
-	# add_sus_kstat_statically </path/of/file_or_directory> <ino> <dev> <nlink> <size> <atime> <atime_nsec> <mtime> <mtime_nsec> <ctime> <ctime_nsec> <blocks> <blksize>
-	# ino -> %i, dev -> %d, nlink -> %h, atime -> %X, mtime -> %Y, ctime -> %Z, size -> %s, blocks -> %b, blksize -> %B
-	# Example: stat -c %i <path>
-	${SUSFS_BIN} add_sus_kstat_statically "${path}" '100' 'default' 'default' '56' 'default' 'default' 'default' 'default' 'default' 'default' '1' '4096'
+	# Register original metadata, bind the replacement, then refresh kstat.
+	# Do not fall back to open_redirect if this fails.
+	if brene_clone_perm "${fake_file_path}" "${path}" &&
+		${SUSFS_BIN} add_sus_kstat "${path}"; then
+		if mount -o bind "${fake_file_path}" "${path}"; then
+			if ${SUSFS_BIN} update_sus_kstat "${path}"; then
+				if [[ "${config_brene_logs}" == "1" ]]; then
+					echo "[hosts_sus_bind]: ${fake_file_path} -> ${path}" >> "${PERSISTENT_DIR}/logs.txt"
+				fi
+			else
+				echo "[hosts_sus_bind]: kstat update failed; attempting rollback" >> "${PERSISTENT_DIR}/logs.txt"
+				umount "${path}" || echo "[hosts_sus_bind]: rollback failed" >> "${PERSISTENT_DIR}/logs.txt"
+			fi
+		else
+			echo "[hosts_sus_bind]: bind mount failed" >> "${PERSISTENT_DIR}/logs.txt"
+		fi
+	else
+		echo "[hosts_sus_bind]: permission cloning or kstat registration failed" >> "${PERSISTENT_DIR}/logs.txt"
+	fi
 fi
 
 ## System Property Spoofing
