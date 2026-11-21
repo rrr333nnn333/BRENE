@@ -80,6 +80,7 @@ cp -pf "${DEST_BIN_DIR}/susfs" "${PERSISTENT_DIR}"
 files="
 custom_sus_map.txt
 custom_kernel_umount.txt
+data_local_tmp_exceptions.txt
 custom_sus_path.txt
 custom_sus_path_loop.txt
 custom_open_redirect.txt

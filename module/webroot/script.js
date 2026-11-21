@@ -590,6 +590,28 @@ UNIQUE_EOF
 	}
 })()
 
+// /data/local/tmp hiding exceptions
+;(async () => {
+	const exceptionsField = document.getElementById('data_local_tmp_exceptions_text_field')
+	const applyButton = document.getElementById('data_local_tmp_exceptions_apply_button')
+	const file = `${PERSISTENT_DIR}/data_local_tmp_exceptions.txt`
+
+	exec(`cat ${file}`).then((result) => {
+		exceptionsField.value = result.errno === 0 ? result.stdout : ''
+	})
+
+	applyButton.onclick = () => {
+		const content = exceptionsField.value
+		exec(`
+cat <<'UNIQUE_EOF' > ${file}
+${content}
+UNIQUE_EOF
+		`).then((result) => {
+			toast(result.errno === 0 ? 'Success, reboot to apply' : result.stderr)
+		})
+	}
+})()
+
 // Manual Kernel Umount
 ;(async () => {
 	const mountField = document.getElementById('custom_kernel_umount_text_field')

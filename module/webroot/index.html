@@ -534,6 +534,27 @@
 
 					<div class="card-row">
 						<div class="card-row__body">
+							<span class="card-row__title">/data/local/tmp hiding exceptions</span>
+							<span class="card-row__sub">Skip matching entries in the /data/local/tmp hiding loop. Enter one name per line (shell wildcard pattern is compatible).</span>
+							<span class="card-row__sub">Blank lines and lines starting with # are ignored. Other hiding rules still apply.</span>
+							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__tag--code">BreZygisk</span>
+							<span class="card-row__tag--code">BreZygisk-*</span>
+						</div>
+						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-group sus-card">
+						<div class="snap-item">
+							<md-filled-text-field id="data_local_tmp_exceptions_text_field" class="content" type="textarea" rows="6" label="EXCEPTIONS"></md-filled-text-field>
+						</div>
+						<div class="sus-footer">
+							<md-filled-button id="data_local_tmp_exceptions_apply_button">APPLY</md-filled-button>
+						</div>
+					</div>
+
+					<div class="card-row">
+						<div class="card-row__body">
 							<span class="card-row__title">Hide non-standard /sdcard paths</span>
 							<span class="card-row__sub">Standard paths:</span>
 							<span class="card-row__sub">
