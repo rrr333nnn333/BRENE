@@ -622,17 +622,37 @@
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Spoof OS security patch level property</span>
+							<span class="card-row__sub">Leave blank to use the automatic date</span>
 						</div>
 						<md-switch icons id="spoof_os_security_patch_level_property"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 
 					<div class="card-row">
+						<div class="field-stack">
+							<md-outlined-text-field id="os_security_patch_date" label="Custom date (optional)" placeholder="YYYY-MM-DD"></md-outlined-text-field>
+							<div class="btn-row">
+								<md-filled-button id="os_security_patch_date_apply">APPLY</md-filled-button>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Spoof vendor security patch level property</span>
+							<span class="card-row__sub">Leave blank to use the automatic date</span>
 						</div>
 						<md-switch icons id="spoof_vendor_security_patch_level_property"></md-switch>
 						<md-ripple></md-ripple>
+					</div>
+
+					<div class="card-row">
+						<div class="field-stack">
+							<md-outlined-text-field id="vendor_security_patch_date" label="Custom date (optional)" placeholder="YYYY-MM-DD"></md-outlined-text-field>
+							<div class="btn-row">
+								<md-filled-button id="vendor_security_patch_date_apply">APPLY</md-filled-button>
+							</div>
+						</div>
 					</div>
 				</div>
 

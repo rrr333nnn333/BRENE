@@ -346,6 +346,31 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 	// Verified Boot Hash
 	document.getElementById('vbh_text_field').value = configValues['config_spoof_verified_boot_hash']
 
+	// Optional security patch dates; the existing switches still control spoofing.
+	const patchDateFields = [
+		['os_security_patch_date', 'spoof_os_security_patch_level_property'],
+		['vendor_security_patch_date', 'spoof_vendor_security_patch_level_property'],
+	]
+	patchDateFields.forEach(([id, spoofFunction]) => {
+		const field = document.getElementById(id)
+		field.value = configValues[`config_${id}`] || ''
+		document.getElementById(`${id}_apply`).addEventListener('click', () => {
+			const value = field.value.trim()
+			if (value && !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+				toast('Use YYYY-MM-DD')
+				return
+			}
+			const config = `config_${id}`
+			exec(`sed -i "s/^${config}=.*/${config}='${value}'/" ${PERSISTENT_DIR}/config.sh`).then((result) => {
+				if (result.errno !== 0) return toast('Failed to update config')
+				if (!document.getElementById(spoofFunction).selected) return toast('Success')
+				exec(`/data/adb/ksu/bin/busybox sh -c '. ${MODDIR}/utils.sh; CURRENT_YEAR=$(busybox date +%Y); CURRENT_MONTH=$(busybox date +%m); CURRENT_DAY=$(busybox date +%d); config_${id}="${value}"; ${spoofFunction}'`).then((result) => {
+					toast(result.errno === 0 ? 'Applied. Reboot recommended.' : result.stderr || 'Failed to update prop')
+				})
+			})
+		})
+	})
+
 	// toggle
 	configs.forEach((config) => {
 		const configId = `config_${config.id}`
@@ -405,6 +430,7 @@ exec(`cat ${PERSISTENT_DIR}/config.sh`).then((result) => {
 					}
 				})
 
+				if (result.errno === 0) patchDateFields.forEach(([id]) => (document.getElementById(id).value = ''))
 				toast(result.errno === 0 ? 'Success' : result.stderr)
 			})
 		}
