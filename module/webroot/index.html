@@ -551,7 +551,6 @@
 						</div>
 						<md-ripple></md-ripple>
 					</div>
-
 					<div class="card-group sus-card">
 						<div class="snap-item">
 							<md-filled-text-field id="data_local_tmp_exceptions_text_field" class="content" type="textarea" rows="6" label="EXCEPTIONS"></md-filled-text-field>
@@ -947,6 +946,31 @@
 			<section class="tab-panel" data-panel="advanced">
 				<p class="section-label">Advanced</p>
 				<div class="card-group">
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Remove suspicious directories in /sdcard/Android/[data | media | obb]</span>
+							<span class="card-row__sub">Enter one package name per line</span>
+							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__tag--code">com.termux</span>
+							<span class="card-row__tag--code">org.frknkrc44.hma_oss</span>
+						</div>
+						<md-ripple></md-ripple>
+					</div>
+					<div class="card-group sus-card">
+						<div class="snap-item">
+							<md-filled-text-field
+								id="remove_sus_dir_sdcard_android_data_media_obb_text_field"
+								class="content"
+								type="textarea"
+								rows="6"
+								label="Package names"
+							></md-filled-text-field>
+						</div>
+						<div class="sus-footer">
+							<md-filled-button id="remove_sus_dir_sdcard_android_data_media_obb_apply_button">APPLY</md-filled-button>
+						</div>
+					</div>
+
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Fix /data/local/tmp inconsistencies</span>

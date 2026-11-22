@@ -590,6 +590,28 @@ UNIQUE_EOF
 	}
 })()
 
+// Remove suspicious directories in /sdcard/Android/[data | media | obb]
+;(async () => {
+	const textField = document.getElementById('remove_sus_dir_sdcard_android_data_media_obb_text_field')
+	const applyButton = document.getElementById('remove_sus_dir_sdcard_android_data_media_obb_apply_button')
+	const file = `${PERSISTENT_DIR}/remove_sus_dir_sdcard_android_data_media_obb.txt`
+
+	exec(`cat ${file}`).then((result) => {
+		textField.value = result.errno === 0 ? result.stdout : ''
+	})
+
+	applyButton.onclick = () => {
+		const content = textField.value
+		exec(`
+cat <<'UNIQUE_EOF' > ${file}
+${content}
+UNIQUE_EOF
+		`).then((result) => {
+			toast(result.errno === 0 ? 'Success, reboot to apply' : result.stderr)
+		})
+	}
+})()
+
 // /data/local/tmp hiding exceptions
 ;(async () => {
 	const exceptionsField = document.getElementById('data_local_tmp_exceptions_text_field')
