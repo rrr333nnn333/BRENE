@@ -54,6 +54,7 @@ const configs = [
 	},
 	{ id: 'pif_props' },
 	{ id: 'rom_props' },
+	{ id: 'hide_gapps' },
 	{ id: 'brene_logs' },
 	{ id: 'enable_log' },
 	{ id: 'spoof_uname' },
