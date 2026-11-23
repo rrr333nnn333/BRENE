@@ -99,24 +99,8 @@ fi
 
 # Hide Vector Injection (Xposed Framework)
 if [[ "${config_hide_vector_injection}" == "1" ]]; then
-	${SUSFS_BIN} add_sus_map "/data/adb/modules/zygisk_vector/zygisk/arm64-v8a.so"
-	${SUSFS_BIN} add_sus_map "/data/adb/modules/zygisk_vector/zygisk/armeabi-v7a.so"
-fi
-
-# Remove Custom ROM Properties
-if [[ "${config_rom_props}" == "1" ]]; then
-	resetprop | grep -iE "${CUSTOM_ROM_NAMES}" | awk -F'[][]' '{print $2}' | while read -r prop; do
-		resetprop -d "${prop}"
-	done
-
-	resetprop -d "ro.modversion"
-fi
-
-# Remove Play Integrity Fix Properties
-if [[ "${config_pif_props}" == "1" ]]; then
-	resetprop | grep -iE "pihook|pixelprops|spoof" | awk -F'[][]' '{print $2}' | while read -r prop; do
-		resetprop -d -p "${prop}"
-	done
+	brene_sus_map "/data/adb/modules/zygisk_vector/zygisk/arm64-v8a.so"
+	brene_sus_map "/data/adb/modules/zygisk_vector/zygisk/armeabi-v7a.so"
 fi
 
 # Spoof /system/lib64/libstagefright.so
@@ -466,6 +450,22 @@ fi
 if [[ "${config_hide_framework_res_apk}" == "1" ]]; then
 	find /system -iname "*framework-res.apk" | while read -r path; do
 		brene_sus_map "${path}"
+	done
+fi
+
+# Remove Custom ROM Properties
+if [[ "${config_rom_props}" == "1" ]]; then
+	resetprop | grep -iE "${CUSTOM_ROM_NAMES}" | awk -F'[][]' '{print $2}' | while read -r prop; do
+		resetprop -d "${prop}"
+	done
+
+	resetprop -d "ro.modversion"
+fi
+
+# Remove Play Integrity Fix Properties
+if [[ "${config_pif_props}" == "1" ]]; then
+	resetprop | grep -iE "pihook|pixelprops|spoof" | awk -F'[][]' '{print $2}' | while read -r prop; do
+		resetprop -d -p "${prop}"
 	done
 fi
 
