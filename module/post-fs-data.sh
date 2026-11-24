@@ -175,6 +175,26 @@ if [[ "${config_hide_addon_d}" == "1" ]]; then
 	brene_sus_path_loop "/system/addon.d"
 fi
 
+# Hide Gapps
+if [[ "${config_hide_gapps}" == "1" ]]; then
+	keyword="gapps"
+
+	find /system /system_ext /vendor /product -iname "*${keyword}*" | while read -r path; do
+		brene_sus_map "${path}"
+		brene_sus_path_loop "${path}"
+	done
+
+	find /data -maxdepth 1 -iname "*${keyword}*" | while read -r path; do
+		brene_sus_map "${path}"
+		brene_sus_path_loop "${path}"
+	done
+
+	find /data/misc /data/dalvik-cache /data/resource-cache -iname "*${keyword}*" | while read -r path; do
+		brene_sus_map "${path}"
+		brene_sus_path_loop "${path}"
+	done
+fi
+
 # Hide Custom ROM Paths
 if [[ "${config_hide_custom_rom_paths}" == "1" ]]; then
 	for i in ${CUSTOM_ROM_NAMES//|/ }; do
@@ -190,7 +210,7 @@ if [[ "${config_hide_custom_rom_paths}" == "1" ]]; then
 	done
 fi
 
-# Hide Custom ROM Paths (Extreme)
+# Hide Custom ROM Paths (Extended)
 if [[ "${config_hide_custom_rom_paths_2}" == "1" ]]; then
 	for i in ${CUSTOM_ROM_NAMES//|/ }; do
 		find /data/misc /data/dalvik-cache /data/resource-cache -iname "*${i}*" | while read -r path; do

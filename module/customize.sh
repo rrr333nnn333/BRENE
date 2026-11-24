@@ -39,6 +39,7 @@ fi
 
 cp -f "${MODPATH}/tools/susfs" "${DEST_BIN_DIR}"
 chmod +x "${MODPATH}/inotify.sh"
+chmod +x "${MODPATH}/remove_sus_dir.sh"
 chmod +x "${MODPATH}/remove_ksu_directory.sh"
 chmod 755 "${DEST_BIN_DIR}/susfs"
 ln -sf "${DEST_BIN_DIR}/susfs" "${DEST_BIN_DIR}/sus"       # For development
@@ -80,12 +81,13 @@ cp -pf "${DEST_BIN_DIR}/susfs" "${PERSISTENT_DIR}"
 files="
 custom_sus_map.txt
 custom_kernel_umount.txt
-data_local_tmp_exceptions.txt
 custom_sus_path.txt
 custom_sus_path_loop.txt
 custom_open_redirect.txt
 custom_sus_path_uid_filter.txt
 remove_sus_dir_sdcard_android_data_media_obb.txt
+hide_data_local_tmp_exceptions.txt
+hide_non_standard_sdcard_paths_exceptions.txt
 "
 for file in ${files}; do
 	if [[ ! -f "${PERSISTENT_DIR}/${file}" ]]; then

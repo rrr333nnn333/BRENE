@@ -535,20 +535,11 @@
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Hide /data/local/tmp paths</span>
-						</div>
-						<md-switch icons id="paths_hiding__data_local_tmp"></md-switch>
-						<md-ripple></md-ripple>
-					</div>
-
-					<div class="card-row">
-						<div class="card-row__body">
-							<span class="card-row__title">/data/local/tmp hiding exceptions</span>
-							<span class="card-row__sub">Skip matching entries in the /data/local/tmp hiding loop. Enter one name per line (shell wildcard pattern is compatible).</span>
-							<span class="card-row__sub">Blank lines and lines starting with # are ignored. Other hiding rules still apply.</span>
+							<span class="card-row__sub">Enter one item per line (shell wildcard pattern is compatible).</span>
 							<span class="card-row__tag--code">Example:</span>
-							<span class="card-row__tag--code">BreZygisk</span>
 							<span class="card-row__tag--code">BreZygisk-*</span>
 						</div>
+						<md-switch icons id="paths_hiding__data_local_tmp"></md-switch>
 						<md-ripple></md-ripple>
 					</div>
 					<div class="card-group sus-card">
@@ -564,12 +555,21 @@
 						<div class="card-row__body">
 							<span class="card-row__title">Hide non-standard /sdcard paths</span>
 							<span class="card-row__sub">Standard paths:</span>
-							<span class="card-row__sub">
-								Alarms, Android, Audiobooks, DCIM, Documents, Download, Movies, Music, Notifications, Pictures, Podcasts, Recordings, Ringtones, (MIUI)
-							</span>
+							<span class="card-row__sub"> Alarms, Android, Audiobooks, DCIM, Documents, Download, Movies, Music, Notifications, Pictures, Podcasts, Recordings, Ringtones </span>
+							<span class="card-row__sub">Enter one item per line (shell wildcard pattern is compatible).</span>
+							<span class="card-row__tag--code">Example:</span>
+							<span class="card-row__tag--code">BreZygisk-*</span>
 						</div>
 						<md-switch icons id="paths_hiding__non_standard_sdcard"></md-switch>
 						<md-ripple></md-ripple>
+					</div>
+					<div class="card-group sus-card">
+						<div class="snap-item">
+							<md-filled-text-field id="hide_non_standard_sdcard_paths_exceptions_text_field" class="content" type="textarea" rows="6" label="EXCEPTIONS"></md-filled-text-field>
+						</div>
+						<div class="sus-footer">
+							<md-filled-button id="hide_non_standard_sdcard_paths_exceptions_apply_button">APPLY</md-filled-button>
+						</div>
 					</div>
 
 					<div class="card-row">
@@ -881,6 +881,14 @@
 			<section class="tab-panel" data-panel="rom">
 				<p class="section-label">Custom ROM</p>
 				<div class="card-group">
+					<div class="card-row">
+						<div class="card-row__body">
+							<span class="card-row__title">Hide Gapps</span>
+						</div>
+						<md-switch icons id="hide_gapps"></md-switch>
+						<md-ripple></md-ripple>
+					</div>
+
 					<div class="card-row">
 						<div class="card-row__body">
 							<span class="card-row__title">Hide Custom ROM paths</span>

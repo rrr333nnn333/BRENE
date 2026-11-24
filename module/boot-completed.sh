@@ -99,24 +99,8 @@ fi
 
 # Hide Vector Injection (Xposed Framework)
 if [[ "${config_hide_vector_injection}" == "1" ]]; then
-	${SUSFS_BIN} add_sus_map "/data/adb/modules/zygisk_vector/zygisk/arm64-v8a.so"
-	${SUSFS_BIN} add_sus_map "/data/adb/modules/zygisk_vector/zygisk/armeabi-v7a.so"
-fi
-
-# Remove Custom ROM Properties
-if [[ "${config_rom_props}" == "1" ]]; then
-	resetprop | grep -iE "${CUSTOM_ROM_NAMES}" | awk -F'[][]' '{print $2}' | while read -r prop; do
-		resetprop -d "${prop}"
-	done
-
-	resetprop -d "ro.modversion"
-fi
-
-# Remove Play Integrity Fix Properties
-if [[ "${config_pif_props}" == "1" ]]; then
-	resetprop | grep -iE "pihook|pixelprops|spoof" | awk -F'[][]' '{print $2}' | while read -r prop; do
-		resetprop -d -p "${prop}"
-	done
+	brene_sus_map "/data/adb/modules/zygisk_vector/zygisk/arm64-v8a.so"
+	brene_sus_map "/data/adb/modules/zygisk_vector/zygisk/armeabi-v7a.so"
 fi
 
 # Spoof /system/lib64/libstagefright.so
@@ -242,26 +226,23 @@ if [[ "${config_hide_custom_recovery}" == "1" ]]; then
 	[[ -e "/system/bin/install-recovery.sh" ]] && brene_sus_path_loop "/system/bin/install-recovery.sh"
 fi
 
-# Non-standard /storage/emulated/0
+# Hide non-standard /sdcard paths
 if [[ "${config_paths_hiding__non_standard_sdcard}" == "1" ]]; then
 	if [[ "${config_brene_logs}" == "1" ]]; then
 		{
 			echo ""
-			echo "####################"
-			echo "Non-standard /storage/emulated/0"
-			echo "####################"
+			echo "###############################"
+			echo "Hide non-standard /sdcard paths"
+			echo "###############################"
 		} >> "${PERSISTENT_DIR}/logs.txt"
 	fi
 
-	if [[ -z "$(resetprop ro.miui.ui.version.name)" ]]; then
-		standard_paths="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones"
-	else
-		standard_paths="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones MIUI"
-	fi
+	EXCEPTIONS_FILE="${PERSISTENT_DIR}/hide_non_standard_sdcard_paths_exceptions.txt"
+	STANDARD_PATHS="Alarms Android Audiobooks DCIM Documents Download Movies Music Notifications Pictures Podcasts Recordings Ringtones"
 
 	for i in /storage/emulated/0/*; do
 		pass=0
-		for x in ${standard_paths}; do
+		for x in ${STANDARD_PATHS}; do
 			if [[ "/storage/emulated/0/${x}" == "${i}" ]]; then
 				pass=1
 				break
@@ -270,25 +251,51 @@ if [[ "${config_paths_hiding__non_standard_sdcard}" == "1" ]]; then
 
 		[[ "${pass}" == "1" ]] && continue
 
+		is_excluded() {
+			[ -f "${EXCEPTIONS_FILE}" ] || return 1
+
+			local target="$1"
+			local line
+
+			while IFS= read -r line || [ -n "$line" ]; do
+				# Skip empty lines or comments
+				[[ -z "${line// /}" || "${line// /}" == "#"* ]] && continue
+
+				# shellcheck disable=SC2254
+				case "$target" in
+					$line)
+						return 0
+						;;
+				esac
+			done < "$EXCEPTIONS_FILE"
+
+			return 1
+		}
+
+		name=$(basename "${i}")
+		if is_excluded "$name"; then
+			continue
+		fi
+
 		brene_sus_path_loop "${i}"
 	done
 fi
 
-# Non-standard /storage/emulated/0/Android
+# Hide non-standard /sdcard/Android paths
 if [[ "${config_paths_hiding__non_standard_sdcard_android}" == "1" ]]; then
 	if [[ "${config_brene_logs}" == "1" ]]; then
 		{
 			echo ""
-			echo "############################"
-			echo "Non-standard /storage/emulated/0/Android"
-			echo "############################"
+			echo "#######################################"
+			echo "Hide non-standard /sdcard/Android paths"
+			echo "#######################################"
 		} >> "${PERSISTENT_DIR}/logs.txt"
 	fi
 
-	standard_paths="data media obb"
+	STANDARD_PATHS="data media obb"
 	for i in /storage/emulated/0/Android/*; do
 		pass=0
-		for x in ${standard_paths}; do
+		for x in ${STANDARD_PATHS}; do
 			if [[ "/storage/emulated/0/Android/${x}" == "${i}" ]]; then
 				pass=1
 				break
@@ -315,7 +322,7 @@ if [[ "${config_paths_hiding__data_local_tmp}" == "1" ]]; then
 	for i in /data/local/tmp/*; do
 		[ -e "${i}" ] || continue
 
-		EXCEPTIONS_FILE="${PERSISTENT_DIR}/data_local_tmp_exceptions.txt"
+		EXCEPTIONS_FILE="${PERSISTENT_DIR}/hide_data_local_tmp_exceptions.txt"
 		name=$(basename "${i}")
 
 		is_excluded() {
@@ -443,6 +450,22 @@ fi
 if [[ "${config_hide_framework_res_apk}" == "1" ]]; then
 	find /system -iname "*framework-res.apk" | while read -r path; do
 		brene_sus_map "${path}"
+	done
+fi
+
+# Remove Custom ROM Properties
+if [[ "${config_rom_props}" == "1" ]]; then
+	resetprop | grep -iE "${CUSTOM_ROM_NAMES}" | awk -F'[][]' '{print $2}' | while read -r prop; do
+		resetprop -d "${prop}"
+	done
+
+	resetprop -d "ro.modversion"
+fi
+
+# Remove Play Integrity Fix Properties
+if [[ "${config_pif_props}" == "1" ]]; then
+	resetprop | grep -iE "pihook|pixelprops|spoof" | awk -F'[][]' '{print $2}' | while read -r prop; do
+		resetprop -d -p "${prop}"
 	done
 fi
 
